@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import StudentTable from './components/StudentTable';
-import UserSelect from './components/UserSelect';
+import UserSelect from './components/StudentSelect';
 import data from './data/dataset.json';
 
 export default function App() {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
-  const filterData = (user) => {
-    if (user) {
-      return data.filter((item) => item.id === user.id);
+  const filterData = (student) => {
+    if (student) {
+      return data.filter((item) => item.id === student.id);
     } else {
       return data;
     }
   };
 
-  const filteredData = filterData(selectedUser);
+  const filteredData = filterData(selectedStudent);
 
   return (
     <div>
       <h1>Student Data Table</h1>
       <UserSelect
-        selectedUser={selectedUser}
-        onUserChange={setSelectedUser}
+        selectedStudent={selectedStudent}
+        onStudentChange={setSelectedStudent}
         data={data}
       />
       <StudentTable data={filteredData} />

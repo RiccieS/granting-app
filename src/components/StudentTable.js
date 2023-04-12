@@ -15,14 +15,14 @@ export default function StudentTable({ data }) {
         </tr>
       </thead>
       <tbody>
-        {data.map(user => (
-          <tr key={user.id}>
-            <td>{user.id}</td>
-            <td>{user.hodnost}</td>
-            <td>{user.prijmeni}</td>
-            <td>{user.jmeno}</td>
-            <td>{user.studjini_skupina}</td>
-            <td>{user.znamka}</td>
+        {data.map(student => (
+          <tr key={student.id}>
+            <td>{student.id}</td>
+            <td>{student.hodnost}</td>
+            <td>{student.prijmeni}</td>
+            <td>{student.jmeno}</td>
+            <td>{student.studjini_skupina}</td>
+            <td>{student.znamka}</td>
 
           </tr>
         ))}
