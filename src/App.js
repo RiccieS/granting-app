@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <div>
-      <h1>User Data Table</h1>
+      <h1>Student Data Table</h1>
       <BranchSelect selectedOption={selectedOption} onOptionChange={setSelectedOption} />
       <StudentTable data={sortedData} />
     </div>
