@@ -1,14 +1,24 @@
+import React, { useState } from 'react';
+import StudentTable from './components/StudentTable';
+import BranchSelect from './components/BranchSelect';
+import data from './data/dataset.json'; // import the data
 
-import './App.css';
+export default function App() {
+  const [selectedOption, setSelectedOption] = useState('id');
 
-function App() {
+  const sortData = (option) => {
+    // sort the data based on the selected option
+    const sortedData = [...data].sort((a, b) => (a[option] > b[option] ? 1 : -1));
+    return sortedData;
+  };
+
+  const sortedData = sortData(selectedOption);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        
-      </header>
+    <div>
+      <h1>User Data Table</h1>
+      <BranchSelect selectedOption={selectedOption} onOptionChange={setSelectedOption} />
+      <StudentTable data={sortedData} />
     </div>
   );
 }
-
-export default App;

@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-export function UserTable({ data }) {
-  const [data, setData] = useState([]);
+export default function StudentTable({ data }) {
   return (
     <table>
       <thead>
         <tr>
           <th>ID</th>
-          <th>Hodnost</th>
-          <th>Jmeno</th>
-          <th>Prijmeni</th>
-          <th>Studijni skupina</th>
-          <th>Prumerna znamka</th>
+          <th>HODNOST</th>
+          <th>PRIJMENI</th>
+          <th>JMENO</th>
+          <th>ZNAMKA</th>
+          <th>STUDIJNI SKUPINA</th>
         </tr>
       </thead>
       <tbody>
         {data.map(user => (
           <tr key={user.id}>
-            <td>{user.id}</td>
-            <td>{user.rank}</td>
-            <td>{user.name}</td>
-            <td>{user.surname}</td>
-            <td>{user.branch}</td>
-            <td>{user.avg_grade}</td>
+            <td>{user.hodnost}</td>
+            <td>{user.jmeno}</td>
+            <td>{user.prijmeni}</td>
+            <td>{user.studjini_skupina}</td>
+            <td>{user.znamka}</td>
+
           </tr>
         ))}
       </tbody>
     </table>
   );
 }
-
