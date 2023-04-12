@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import StudentTable from './components/StudentTable';
-import BranchSelect from './components/BranchSelect';
-import data from './data/dataset.json'; // import the data
+import UserSelect from './components/UserSelect';
+import data from './data/dataset.json';
 
 export default function App() {
-  const [selectedOption, setSelectedOption] = useState('id');
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  const sortData = (option) => {
-    // sort the data based on the selected option
-    const sortedData = [...data].sort((a, b) => (a[option] > b[option] ? 1 : -1));
-    return sortedData;
+  const filterData = (user) => {
+    if (user) {
+      return data.filter((item) => item.id === user.id);
+    } else {
+      return data;
+    }
   };
 
-  const sortedData = sortData(selectedOption);
+  const filteredData = filterData(selectedUser);
 
   return (
     <div>
       <h1>Student Data Table</h1>
-      <BranchSelect selectedOption={selectedOption} onOptionChange={setSelectedOption} />
-      <StudentTable data={sortedData} />
+      <UserSelect
+        selectedUser={selectedUser}
+        onUserChange={setSelectedUser}
+        data={data}
+      />
+      <StudentTable data={filteredData} />
     </div>
   );
 }
