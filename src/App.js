@@ -4,7 +4,7 @@ import StudentSelect from './components/StudentSelect';
 import data from './data/dataset.json';
 
 export default function App() {
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(data[0]);//Tady to editneme aby to brala uzivatele dle účtu ze kterého se přihlásil data[0] specifikuje kdo bude zobrazen
 
   const filterData = (student) => {
     if (student) {
