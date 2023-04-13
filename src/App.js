@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StudentTable from './components/StudentTable';
-import UserSelect from './components/StudentSelect';
+import StudentSelect from './components/StudentSelect';
 import data from './data/dataset.json';
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <div>
       <h1>Student Data Table</h1>
-      <UserSelect
+      <StudentSelect
         selectedStudent={selectedStudent}
         onStudentChange={setSelectedStudent}
         data={data}
