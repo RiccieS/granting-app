@@ -1,8 +1,9 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function StudentTable({ data }) {
   return (
-    <table>
+    <table className="table table-striped table-hover table-sm">
       <thead>
         <tr>
           <th>ID</th>
