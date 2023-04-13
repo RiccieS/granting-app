@@ -1,0 +1,112 @@
+[
+    {
+      "id_student": 1,
+      "semester": 1,
+      "subject": "Matematika",
+      "grade": 1
+      
+    },
+    {
+      "id_student": 1,
+      "semester": 1,
+      "subject": "Metodologie",
+      "grade": 1.5
+    },
+    {
+        "id_student": 1,
+        "semester": 2,
+        "subject": "Matematika",
+        "grade": 1.5
+        
+      },
+      {
+        "id_student": 1,
+        "semester": 2,
+        "subject": "Cislicova technika",
+        "grade": 2
+      },
+      {
+        "id_student": 2,
+        "semester": 1,
+        "subject": "Matematika",
+        "grade": 1.5
+        
+      },
+      {
+        "id_student": 2,
+        "semester": 1,
+        "subject": "Metodologie",
+        "grade": 2
+      },
+      {
+          "id_student": 2,
+          "semester": 2,
+          "subject": "Matematika",
+          "grade": 1
+          
+        },
+        {
+          "id_student": 2,
+          "semester": 2,
+          "subject": "Cislicova technika",
+          "grade": 2
+        },
+        {
+            "id_student": 3,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 1.5
+            
+        },
+        {
+            "id_student": 4,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 2
+            
+        },
+        {
+            "id_student": 5,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 2.5
+            
+        },
+        {
+            "id_student": 6,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 2.5
+            
+        },
+        {
+            "id_student": 7,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 2.5
+            
+        },
+        {
+            "id_student": 8,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 2.5
+            
+        },
+        {
+            "id_student": 9,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 1
+            
+        }
+        ,
+        {
+            "id_student": 10,
+            "semester": 1,
+            "subject": "Matematika",
+            "grade": 2
+            
+        }
+
+  ]
