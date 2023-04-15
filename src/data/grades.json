@@ -1,5 +1,6 @@
 [
     {
+      "id_grade": 1,
       "id_student": 1,
       "semester": 1,
       "subject": "Matematika",
@@ -7,12 +8,14 @@
       
     },
     {
+      "id_grade": 2,
       "id_student": 1,
       "semester": 1,
       "subject": "Metodologie",
       "grade": 1.5
     },
     {
+        "id_grade": 3,
         "id_student": 1,
         "semester": 2,
         "subject": "Matematika",
@@ -20,12 +23,14 @@
         
       },
       {
+        "id_grade": 4,
         "id_student": 1,
         "semester": 2,
         "subject": "Cislicova technika",
         "grade": 2
       },
       {
+        "id_grade": 5,
         "id_student": 2,
         "semester": 1,
         "subject": "Matematika",
@@ -33,12 +38,14 @@
         
       },
       {
+        "id_grade": 6,
         "id_student": 2,
         "semester": 1,
         "subject": "Metodologie",
         "grade": 2
       },
       {
+          "id_grade": 7,
           "id_student": 2,
           "semester": 2,
           "subject": "Matematika",
@@ -46,12 +53,14 @@
           
         },
         {
+          "id_grade": 8,
           "id_student": 2,
           "semester": 2,
           "subject": "Cislicova technika",
           "grade": 2
         },
         {
+           "id_grade": 9,
             "id_student": 3,
             "semester": 1,
             "subject": "Matematika",
@@ -59,6 +68,7 @@
             
         },
         {
+            "id_grade": 10,
             "id_student": 4,
             "semester": 1,
             "subject": "Matematika",
@@ -66,6 +76,7 @@
             
         },
         {
+            "id_grade": 11,
             "id_student": 5,
             "semester": 1,
             "subject": "Matematika",
@@ -73,6 +84,7 @@
             
         },
         {
+            "id_grade": 12,
             "id_student": 6,
             "semester": 1,
             "subject": "Matematika",
@@ -80,6 +92,7 @@
             
         },
         {
+            "id_grade": 13,
             "id_student": 7,
             "semester": 1,
             "subject": "Matematika",
@@ -87,6 +100,7 @@
             
         },
         {
+            "id_grade": 14,
             "id_student": 8,
             "semester": 1,
             "subject": "Matematika",
@@ -94,6 +108,7 @@
             
         },
         {
+            "id_grade": 15,
             "id_student": 9,
             "semester": 1,
             "subject": "Matematika",
@@ -102,6 +117,7 @@
         }
         ,
         {
+            "id_grade": 16,
             "id_student": 10,
             "semester": 1,
             "subject": "Matematika",
