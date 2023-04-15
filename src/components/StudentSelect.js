@@ -10,7 +10,7 @@ export default function StudentSelect({ selectedStudent, onStudentChange, data }
   return (
     <div>
       <label htmlFor="student-select">Vyberte studenta:</label>
-      <select id="student-select" value={selectedStudent ? selectedStudent.id : ''} onChange={handleChange}>
+      <select className="form-select" id="student-select" value={selectedStudent ? selectedStudent.id : ''} onChange={handleChange}>
         {data.map((student) => (
           <option key={student.id} value={student.id}>
             {student.jmeno} {student.prijmeni}

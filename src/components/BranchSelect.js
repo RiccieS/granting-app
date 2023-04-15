@@ -11,7 +11,7 @@ export default function ComboBox({ value, onBranchChange, data }) {
   return (
     <div>
       <label htmlFor="combo-box">Studijní skupina:</label>
-      <select id="combo-box" value={value} onChange={handleChange}>
+      <select className="form-select" id="combo-box" value={value} onChange={handleChange}>
         {uniqueStudjiniSkupina.map((studjiniSkupina) => (
           <option key={studjiniSkupina} value={studjiniSkupina}>
             {studjiniSkupina}

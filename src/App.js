@@ -36,19 +36,35 @@ export default function App() {
 
   return (
     <div>
-      <h1>Student Data Table</h1>
-      <BranchSelect data={data} selectedBranch={selectedBranch} onBranchChange={setSelectedBranch} />
-      <BranchTable data={data} />
-      <StudentSelect selectedStudent={selectedStudent} onStudentChange={setSelectedStudent} data={data} />
-      <div>
-        <StudentTable data={filteredData} />
+      <div className="container-fluid p-5 bg-success text-white text-center">
+        <h1>Students granting App</h1>
       </div>
-
-      <h1>Student's Grades Table</h1>
-      <SemesterSelect selectedSemester={selectedSemester} onSemesterChange={setSelectedSemester} />
-      <div>
-        <GradesTable data={filteredGradesData} />
-      </div>
+      <div className="container mt-5">
+        <div className="card">
+        <h2 className="card-header">Prehled studentu</h2>
+        <div className="card-body">
+          <BranchSelect data={data} selectedBranch={selectedBranch} onBranchChange={setSelectedBranch} />
+          <BranchTable data={data} />
+          <StudentSelect selectedStudent={selectedStudent} onStudentChange={setSelectedStudent} data={data} />
+          <div>
+            <StudentTable data={filteredData} />
+          </div>
+        </div>
+        
+        </div>
+        
+        <div className="card">
+        <h2 className="card-header">Prehled znamek</h2>
+        <div className="card-body">
+          <SemesterSelect selectedSemester={selectedSemester} onSemesterChange={setSelectedSemester} />
+          <div>
+            <GradesTable data={filteredGradesData} />
+          </div>
+        </div>
+          
+        </div>
     </div>
+    </div>
+    
   );
 }

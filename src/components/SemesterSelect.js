@@ -8,7 +8,7 @@ export default function SemesterSelect({ selectedSemester, onSemesterChange}) {
   return (
     <div>
       <label htmlFor="semester-select">Vyberte semestr:</label>
-      <select id="semester-select" value={selectedSemester ? selectedSemester : ''} onChange={handleChange}>
+      <select className="form-select" id="semester-select" value={selectedSemester ? selectedSemester : ''} onChange={handleChange}>
         <option key="all" value="all">-</option>
         {[...Array(10)].map((_, i) => (   //cyklus 1-10 (pocet celkem semestru)
           <option key={i + 1} value={i + 1}>{i + 1}</option>
