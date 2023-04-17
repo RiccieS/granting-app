@@ -15,7 +15,7 @@ export default function GradesTable({ data }) {
       <tbody>
         {data.map(grade => ( // výpis dat ze vstupního pole data
           <tr key={grade.id_grade}> {/* unikátní klíč pro každý řádek tabulky*/}
-            <td>{grade.semester}</td> {/*data pro sloupece */}
+            <td>{grade.semester}</td> {/*data pro sloupce */}
             <td>{grade.subject}</td> 
             <td>{grade.grade}</td> 
             <td>{grade.id_student}</td> 

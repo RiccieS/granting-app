@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function StudentTable({ data }) {
   return (
-    // ytvoření tabulky s třídami Bootstrap pro stylování
+    // Vytvoření tabulky s třídami Bootstrap pro stylování
     <table className="table table-striped table-hover table-sm">
       <thead>
         <tr>

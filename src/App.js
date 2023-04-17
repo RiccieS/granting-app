@@ -10,7 +10,7 @@ import SemesterSelect from './components/SemesterSelect';
 
 export default function App() {
   const [selectedStudent, setSelectedStudent] = useState(data[0]); //Tady to později upravíme aby to brala uzivatele dle účtu ze kterého se přihlásil, data[0] specifikuje kdo bude zobrazen
-  const [selectedBranch, setSelectedBranch] = useState(data[0]); //State pro zvolenou stuidjní skupinu
+  const [selectedBranch, setSelectedBranch] = useState(data[0]); //State pro zvolenou studijní skupinu
   const [selectedSemester, setSelectedSemester] = useState('all');//State pro zvolený semestr
   //Funkce filtrující data pro zvoleného studenta
   const filterData = (student) => {

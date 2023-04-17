@@ -22,7 +22,7 @@ export default function BranchSelect({ value, onBranchChange, data, grades_data 
   return (
     <div>
       <label htmlFor="branch-select">Studijní skupina:</label>
-      {/* Vytvoření comoboBoxu se nazvy skupin */}
+      {/* Vytvoření comoboBoxu s nazvy skupin */}
       <select className="form-select" id="branch-select" value={selectedStudjiniSkupina} onChange={handleChange}>
         {uniqueStudjiniSkupina.map((studjiniSkupina) => (
           <option key={studjiniSkupina} value={studjiniSkupina}>
