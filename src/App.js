@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import StudentTable from './components/StudentTable';
 import StudentSelect from './components/StudentSelect';
 import data from './data/students.json';
+import grades_data from './data/grades.json';
+import BranchSelect from './components/BranchSelect';
+import GradesTable from './components/GradesTable';
+import SemesterSelect from './components/SemesterSelect';
+import AddEntryForm from './components/AddEntryForm';
 
 export default function App() {
-  const [selectedStudent, setSelectedStudent] = useState(data[0]);//Tady to editneme aby to brala uzivatele dle účtu ze kterého se přihlásil data[0] specifikuje kdo bude zobrazen
+  const [selectedStudent, setSelectedStudent] = useState(data[0]); 
+  const [selectedBranch, setSelectedBranch] = useState(data[0]); 
+  const [selectedSemester, setSelectedSemester] = useState('all');
 
   const filterData = (student) => {
     if (student) {
@@ -16,15 +23,43 @@ export default function App() {
 
   const filteredData = filterData(selectedStudent);
 
+  const filteredGradesData = grades_data.filter(
+    (item) => item.id_student === selectedStudent.id && 
+              (selectedSemester === 'all' || item.semester === parseInt(selectedSemester))
+  );
+
+  const handleAddEntry = (entry) => {
+    // Add the new entry to the grades_data JSON file
+    // You can use the same method you used in the AddEntryForm component to add the new entry
+  }
+
   return (
     <div>
-      <h1>Student Data Table</h1>
-      <StudentSelect
-        selectedStudent={selectedStudent}
-        onStudentChange={setSelectedStudent}
-        data={data}
-      />
-      <StudentTable data={filteredData} />
+      <div className="container-fluid p-5 bg-success text-white text-center">
+        <h1>Students granting App</h1>
+      </div>
+      <div className="container mt-5">
+        <div className="card">
+          <h2 className="card-header">Přehled studentů</h2>
+          <div className="card-body">
+            <BranchSelect data={data} grades_data={grades_data} selectedBranch={selectedBranch} onBranchChange={setSelectedBranch} />
+            <StudentSelect selectedStudent={selectedStudent} onStudentChange={setSelectedStudent} data={data} />
+            <div>
+              <StudentTable data={filteredData} />
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <h2 className="card-header">Přehled známek</h2>
+          <div className="card-body">
+            <SemesterSelect selectedSemester={selectedSemester} onSemesterChange={setSelectedSemester} />
+            <div>
+              <GradesTable data={filteredGradesData} />
+              <AddEntryForm onAddEntry={handleAddEntry} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
