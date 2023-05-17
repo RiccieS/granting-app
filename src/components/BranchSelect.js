@@ -1,36 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BranchGradeTable from './BranchGradeTable';
+import { GroupsSelectQuery } from '../queries/GroupsSelectQuery';
 
 export default function BranchSelect({ value, onBranchChange, data, grades_data }) {
-  //Vytvoření Setu unikátních hodnot dle atributu "studijní_skupina" z "data"
-  const studjiniSkupinaSet = new Set(data.map((student) => student.studjini_skupina));
-  //Konverze setu na pole
-  const uniqueStudjiniSkupina = Array.from(studjiniSkupinaSet);
-  // Definice state "selectedStudjiniSkupina" a funkce pro změnu stavu "setSelectedStudjiniSkupina"
-  const [selectedStudjiniSkupina, setSelectedStudjiniSkupina] = useState(uniqueStudjiniSkupina[0]);
+  const [selectedStudjiniSkupina, setSelectedStudjiniSkupina] = useState('');
+  const [groupNames, setGroupNames] = useState([]);
 
-  // Funkce pro změnu hodnoty comboBoxu
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GroupsSelectQuery();
+        const data = await response.json();
+        setGroupNames(data.data.groupPage);
+        setSelectedStudjiniSkupina(data.data.groupPage[0]?.name || '');
+      } catch (error) {
+        console.error('Error fetching group names:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleChange = (event) => {
     const newValue = event.target.value;
-    // Nastavení nové hodnoty state
     setSelectedStudjiniSkupina(newValue);
-    //Volánífunkci "onBranchChange" s novou hodnotou jako parametrem
     onBranchChange(newValue);
   };
 
-  // Vykreslení komponenty
   return (
     <div>
       <label htmlFor="branch-select">Studijní skupina:</label>
-      {/* Vytvoření comoboBoxu s nazvy skupin */}
       <select className="form-select" id="branch-select" value={selectedStudjiniSkupina} onChange={handleChange}>
-        {uniqueStudjiniSkupina.map((studjiniSkupina) => (
-          <option key={studjiniSkupina} value={studjiniSkupina}>
-            {studjiniSkupina}
+        {groupNames.map((group) => (
+          <option key={group.name} value={group.name}>
+            {group.name}
           </option>
         ))}
       </select>
-      {/* Vykreslení komponenty "BranchGradeTable"*/}
       <BranchGradeTable data={data} grades_data={grades_data} studjiniSkupina={selectedStudjiniSkupina} />
     </div>
   );

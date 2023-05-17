@@ -1,13 +1,17 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addGrade } from '../features/grade';
 
-function AddEntryForm({ jsonObject, onUpdate }) {
+function AddEntryForm({}) {
+  const dispatch = useDispatch();
+
   const [idGrade, setIdGrade] = useState('');
   const [idStudent, setIdStudent] = useState('');
   const [semester, setSemester] = useState('');
   const [subject, setSubject] = useState('');
   const [grade, setGrade] = useState('');
 
-  const handleSubmit = (event) => {
+  /*const handleSubmit = (event) => {
     event.preventDefault();
     const newEntry = { 
       id_grade: idGrade,
@@ -16,33 +20,15 @@ function AddEntryForm({ jsonObject, onUpdate }) {
       subject,
       grade
     };
-    const updatedObject = { ...jsonObject, newEntry };
+    const updatedObject = { ...jsonObject, entry: newEntry };
     onUpdate(updatedObject);
-  };
+  };*/
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        ID Grade:
-        <input type="text" value={idGrade} onChange={(e) => setIdGrade(e.target.value)} />
-      </label>
-      <label>
-        ID Student:
-        <input type="text" value={idStudent} onChange={(e) => setIdStudent(e.target.value)} />
-      </label>
-      <label>
-        Semester:
-        <input type="text" value={semester} onChange={(e) => setSemester(e.target.value)} />
-      </label>
-      <label>
-        Subject:
-        <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} />
-      </label>
-      <label>
-        Grade:
-        <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)} />
-      </label>
-      <button type="submit">Add Entry</button>
+    <form /*onSubmit={handleSubmit}*/>
+      <button type="submit" onClick={()=>{
+        dispatch(addGrade({semester: 666, subject: "nejaky", grade: 666}))
+        }}>Add Entry</button>
     </form>
   );
 }
