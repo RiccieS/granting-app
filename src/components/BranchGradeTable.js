@@ -25,7 +25,7 @@ export default function BranchGradeTable({ data, grades_data, studjiniSkupina })
     <table className="table table-striped table-hover table-sm">
       <caption>Studijní skupina: {studjiniSkupina}</caption>
       <thead>
-        <tr>
+        <tr> 
           <th>PREDMET</th>
           <th>PRUMER</th>
         </tr>

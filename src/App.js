@@ -6,8 +6,8 @@ import grades_data from './data/grades.json';
 import BranchSelect from './components/BranchSelect';
 import GradesTable from './components/GradesTable';
 import SemesterSelect from './components/SemesterSelect';
-import AddEntryForm from './components/AddEntryForm';
-
+import GradeInputForm from './components/GradeInputForm';
+import ButtonQuery from './components/querryButton';
 export default function App() {
   const [selectedStudent, setSelectedStudent] = useState(data[0]); 
   const [selectedBranch, setSelectedBranch] = useState(data[0]); 
@@ -28,10 +28,7 @@ export default function App() {
               (selectedSemester === 'all' || item.semester === parseInt(selectedSemester))
   );
 
-  const handleAddEntry = (entry) => {
-    // Add the new entry to the grades_data JSON file
-    // You can use the same method you used in the AddEntryForm component to add the new entry
-  }
+  
 
   return (
     <div>
@@ -55,7 +52,14 @@ export default function App() {
             <SemesterSelect selectedSemester={selectedSemester} onSemesterChange={setSelectedSemester} />
             <div>
               <GradesTable data={filteredGradesData} />
-              <AddEntryForm onAddEntry={handleAddEntry} />
+              
+            </div>
+            <div>
+            <GradeInputForm />
+            </div>
+            <div>
+            <ButtonQuery/>
+
             </div>
           </div>
         </div>
