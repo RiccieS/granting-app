@@ -7,11 +7,13 @@ import BranchSelect from './components/BranchSelect';
 import GradesTable from './components/GradesTable';
 import SemesterSelect from './components/SemesterSelect';
 import AddEntryForm from './components/AddEntryForm';
+import SubjectSelect from './components/SubjectSelect';
 
 export default function App() {
   const [selectedStudent, setSelectedStudent] = useState(data[0]); 
   const [selectedBranch, setSelectedBranch] = useState(data[0]); 
   const [selectedSemester, setSelectedSemester] = useState('all');
+  const [selectedSubject, setSelectedSubject] = useState('');
 
   const filterData = (student) => {
     if (student) {
@@ -32,7 +34,11 @@ export default function App() {
     // Add the new entry to the grades_data JSON file
     // You can use the same method you used in the AddEntryForm component to add the new entry
   }
-
+  
+  const handleSubjectChange = (newValue) => {
+    setSelectedSubject(newValue);
+    // Perform any necessary logic or actions based on the selected subject value
+  };
   return (
     <div>
       <div className="container-fluid p-5 bg-success text-white text-center">
@@ -57,6 +63,12 @@ export default function App() {
               <GradesTable data={filteredGradesData} />
               <AddEntryForm onAddEntry={handleAddEntry} />
             </div>
+          </div>
+        </div>
+        <div className="card">
+          <h2 className="card-header">Přehled předmět/absolvující lidi</h2>
+          <div className="card-body">
+            <SubjectSelect value={selectedSubject} onSubjectChange={handleSubjectChange} />
           </div>
         </div>
       </div>
