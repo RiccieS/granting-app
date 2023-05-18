@@ -7,8 +7,8 @@ import { authorizedFetch } from '../queries/authorizedFetch'
 export const GroupsSelectQueryJSON = () => ({
     "query":
         `query {
-            groupPage{
-              name
+            surveyPage{
+              id
             }
         }`
 })
@@ -16,6 +16,7 @@ export const GroupsSelectQueryJSON = () => ({
 /**
  * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
  */
+
 export const GroupsSelectQuery = () =>
     authorizedFetch('/gql', {
         body: JSON.stringify(GroupsSelectQueryJSON()),
