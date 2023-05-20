@@ -1,4 +1,4 @@
-import { authorizedFetch } from 'queries/authorizedFetch'
+import { authorizedFetch } from '../queries/authorizedFetch'
 
 /**
  * Funkce, ktera id namapuje na json predstavujici "velky" (podrobny) dotaz na server
@@ -6,8 +6,8 @@ import { authorizedFetch } from 'queries/authorizedFetch'
  * @returns 
  */
 export const StudentsQueryJSON = () => ({
-    "query":
-        `query {
+  "query":
+    `query {
             userPage {
               id
               name
@@ -29,6 +29,6 @@ export const StudentsQueryJSON = () => ({
  * @returns 
  */
 export const StudentsQuery = () =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(StudentsQueryJSON()),
-    })
+  authorizedFetch('/gql', {
+    body: JSON.stringify(StudentsQueryJSON()),
+  })

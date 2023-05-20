@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
 import { StudentsQuery } from './queries/StudentsQuery';
-
+import GradesTable from './components/GradesTable';
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
   const [selectedStudent, setSelectedStudent] = useState('');
@@ -17,7 +17,9 @@ export default function App() {
   const handleStudentChange = (studentId) => {
     setSelectedStudent(studentId);
   };
-
+  const handleStudentReset = () => {
+    setSelectedStudent(''); // Reset the selected student to an empty value
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,10 +36,7 @@ export default function App() {
     fetchUserData();
   }, []);
 
-  const filteredData = userPageData.filter((user) => {
-    const memberships = user.membership || [];
-    return selectedBranch === 'all' || memberships.some((membership) => membership.group.name === selectedBranch);
-  });
+
 
   return (
     <div>
@@ -48,13 +47,16 @@ export default function App() {
         <div className="card">
           <h2 className="card-header">Přehled studentů</h2>
           <div className="card-body">
-            <BranchSelect onBranchChange={handleBranchChange} />
+            <BranchSelect onBranchChange={handleBranchChange} onStudentReset={handleStudentReset} />
             <StudentSelect
+              key={selectedBranch}
               selectedStudent={selectedStudent}
               onStudentChange={handleStudentChange}
               selectedBranch={selectedBranch}
             />
-
+          </div>
+          <div>
+            <GradesTable selectedStudent={selectedStudent} />
           </div>
         </div>
         <div className="card">

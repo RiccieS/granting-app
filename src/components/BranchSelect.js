@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GroupsSelectQuery } from '../queries/GroupsSelectQuery';
 
-export default function BranchSelect({ onBranchChange }) {
+export default function BranchSelect({ onBranchChange, onStudentReset }) {
   const [selectedStudjiniSkupina, setSelectedStudjiniSkupina] = useState('all');
   const [groupNames, setGroupNames] = useState([]);
 
@@ -23,6 +23,7 @@ export default function BranchSelect({ onBranchChange }) {
     const newValue = event.target.value;
     setSelectedStudjiniSkupina(newValue);
     onBranchChange(newValue);
+    onStudentReset(); // Reset the selected student when a branch is selected
   };
 
   useEffect(() => {

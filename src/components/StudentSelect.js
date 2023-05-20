@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StudentsQuery } from '../queries/StudentsQuery';
 
-export default function StudentSelect({ onStudentChange, selectedBranch }) {
+export default function StudentSelect({ onStudentChange, selectedBranch, key }) {
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,8 +15,6 @@ export default function StudentSelect({ onStudentChange, selectedBranch }) {
                     const memberships = user.membership || [];
                     return selectedBranch === 'all' || memberships.some((membership) => membership.group.name === selectedBranch);
                 });
-                console.log(filteredData);
-                console.log(selectedBranch);
 
                 setStudents(filteredData);
                 setLoading(false);
@@ -38,7 +36,8 @@ export default function StudentSelect({ onStudentChange, selectedBranch }) {
     }
 
     return (
-        <select onChange={(e) => onStudentChange(e.target.value)}>
+        <select key={key} onChange={(e) => onStudentChange(e.target.value)}>
+            <option value="">Vyber studenta</option>
             {students.map((student) => (
                 <option key={student.id} value={student.id}>
                     {student.name} {student.surname}
