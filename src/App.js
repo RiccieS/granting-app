@@ -57,7 +57,7 @@ export default function App() {
               selectedBranch={selectedBranch}
             />
           </div>
-          <div>
+          <div className="card-body">
             <GradesTable selectedStudent={selectedStudent} />
           </div>
         </div>
