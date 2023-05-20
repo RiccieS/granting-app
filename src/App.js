@@ -4,6 +4,8 @@ import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
 import { StudentsQuery } from './queries/StudentsQuery';
 import GradesTable from './components/GradesTable';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
   const [selectedStudent, setSelectedStudent] = useState('');

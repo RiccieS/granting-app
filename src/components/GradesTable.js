@@ -40,7 +40,7 @@ export default function GradesTable({ selectedStudent }) {
             {gradesData.length === 0 ? (
                 <div>No grades available.</div>
             ) : (
-                <table>
+                <table  className="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
                             <th>Subject</th>

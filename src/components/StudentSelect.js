@@ -36,13 +36,16 @@ export default function StudentSelect({ onStudentChange, selectedBranch, key }) 
     }
 
     return (
-        <select key={key} onChange={(e) => onStudentChange(e.target.value)}>
-            <option value="">Vyber studenta</option>
-            {students.map((student) => (
-                <option key={student.id} value={student.id}>
-                    {student.name} {student.surname}
-                </option>
-            ))}
-        </select>
+        <div>
+            <label htmlFor="student-select">Student:</label>
+            <select className="form-select" id="student-select" key={key} onChange={(e) => onStudentChange(e.target.value)}>
+                <option value="">Vyber studenta</option>
+                {students.map((student) => (
+                    <option key={student.id} value={student.id}>
+                        {student.name} {student.surname}
+                    </option>
+                ))}
+            </select>
+        </div>
     );
 }
