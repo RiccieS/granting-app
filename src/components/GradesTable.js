@@ -145,7 +145,7 @@ export default function GradesTable({ selectedStudent }) {
                               </option>
                             ))}
                           </select>
-                          <button onClick={() => handleSaveClick(index, grade.id, editableColumns[index])}>Save</button>
+                          <button onClick={() => handleSaveClick(index, grade.id, levelOptions[index]?.level?.id)}>Save</button>
                           <button onClick={() => handleDiscardClick(index)}>Discard</button>
                         </div>
                       ) : (
