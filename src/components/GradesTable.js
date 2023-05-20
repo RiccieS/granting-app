@@ -1,34 +1,70 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { GradesQuery } from '../queries/GradesQuery';
 
-export default function GradesTable({ data }) {
-  const grade = useSelector((state) => state.grade.value)
-  return (
-    <table className="table table-striped table-hover table-sm">
-      <thead>
-        <tr>
-          <th>SEMESTR</th> {/*záhlaví sloupců */}
-          <th>PREDMET</th> 
-          <th>ZNAMKA</th> 
-          <th>ID STUDENT</th> 
-        </tr>
-      </thead>
-      <tbody>
-        {data.map(grade => ( // výpis dat ze vstupního pole data
-          <tr key={grade.id_grade}> {/* unikátní klíč pro každý řádek tabulky*/}
-            <td>{grade.semester}</td> {/*data pro sloupce */}
-            <td>{grade.subject}</td> 
-            <td>{grade.grade}</td> 
-            <td>{grade.id_student}</td> 
-          </tr>
-        ))}
-        <tr> {/* unikátní klíč pro každý řádek tabulky*/}
-            <td>{grade.semester}</td> {/*data pro sloupce */}
-            <td>{grade.subject}</td> 
-            <td>{grade.grade}</td>
-          </tr>
-      </tbody>
-    </table>
-  );
+export default function GradesTable({ selectedStudent }) {
+    const [gradesData, setGradesData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchGradesData = async () => {
+            try {
+                const response = await GradesQuery();
+                const data = await response.json();
+                const grades = data?.data?.acclassificationPage || [];
+                const filteredGrades = grades.filter(
+                    (grade) => grade.user?.id === selectedStudent
+                );
+                setGradesData(filteredGrades);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+
+        fetchGradesData();
+    }, [selectedStudent]);
+
+    if (loading) {
+        return <div>Loading grades...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    return (
+        <div>
+            <h2>Grades</h2>
+            {gradesData.length === 0 ? (
+                <div>No grades available.</div>
+            ) : (
+                <table  className="table table-striped table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Semester</th>
+                            <th>Level</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {gradesData.map((grade) => (
+                            <tr key={grade.id}>
+                                <td>{grade.semester?.subject?.name}</td>
+                                <td>{grade.semester?.order}</td>
+                                <td>
+                                    {grade.semester?.classifications?.map((classification) => (
+                                        <span key={classification.level.name}>{classification.level.name} </span>
+                                    ))}
+                                </td>
+                                <td>{grade.type?.name}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
+    );
 }
