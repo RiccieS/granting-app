@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
-import StudentTable from './components/StudentTable';
-import StudentSelect from './components/StudentSelect';
-import data from './data/students.json';
-import grades_data from './data/grades.json';
+import React, { useState, useEffect } from 'react';
 import BranchSelect from './components/BranchSelect';
+import StudentSelect from './components/StudentSelect';
+import { StudentsQuery } from './queries/StudentsQuery';
 import GradesTable from './components/GradesTable';
-import SemesterSelect from './components/SemesterSelect';
-import AddEntryForm from './components/AddEntryForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
-  const [selectedStudent, setSelectedStudent] = useState(data[0]); 
-  const [selectedBranch, setSelectedBranch] = useState(data[0]); 
-  const [selectedSemester, setSelectedSemester] = useState('all');
+  const [selectedBranch, setSelectedBranch] = useState('all');
+  const [selectedStudent, setSelectedStudent] = useState('');
+  const [userPageData, setUserPageData] = useState([]);
 
-  const filterData = (student) => {
-    if (student) {
-      return data.filter((item) => item.id === student.id);
-    } else {
-      return data;
-    }
+  const handleBranchChange = (branch) => {
+    setSelectedBranch(branch);
   };
 
-  const filteredData = filterData(selectedStudent);
+  const handleStudentChange = (studentId) => {
+    setSelectedStudent(studentId);
+  };
+  const handleStudentReset = () => {
+    setSelectedStudent(''); // Reset the selected student to an empty value
+  };
 
-  const filteredGradesData = grades_data.filter(
-    (item) => item.id_student === selectedStudent.id && 
-              (selectedSemester === 'all' || item.semester === parseInt(selectedSemester))
-  );
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await StudentsQuery();
+        const data = await response.json();
+        const filteredData = data?.data?.userPage || [];
+        setUserPageData(filteredData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
-  const handleAddEntry = (entry) => {
-    // Add the new entry to the grades_data JSON file
-    // You can use the same method you used in the AddEntryForm component to add the new entry
-  }
+    fetchUserData();
+  }, []);
+
+
 
   return (
     <div>
@@ -42,21 +47,22 @@ export default function App() {
         <div className="card">
           <h2 className="card-header">Přehled studentů</h2>
           <div className="card-body">
-            <BranchSelect data={data} grades_data={grades_data} selectedBranch={selectedBranch} onBranchChange={setSelectedBranch} />
-            <StudentSelect selectedStudent={selectedStudent} onStudentChange={setSelectedStudent} data={data} />
-            <div>
-              <StudentTable data={filteredData} />
-            </div>
+            <BranchSelect onBranchChange={handleBranchChange} onStudentReset={handleStudentReset} />
+            <StudentSelect
+              key={selectedBranch}
+              selectedStudent={selectedStudent}
+              onStudentChange={handleStudentChange}
+              selectedBranch={selectedBranch}
+            />
+          </div>
+          <div className="card-body">
+            <GradesTable selectedStudent={selectedStudent} />
           </div>
         </div>
         <div className="card">
           <h2 className="card-header">Přehled známek</h2>
           <div className="card-body">
-            <SemesterSelect selectedSemester={selectedSemester} onSemesterChange={setSelectedSemester} />
-            <div>
-              <GradesTable data={filteredGradesData} />
-              <AddEntryForm onAddEntry={handleAddEntry} />
-            </div>
+
           </div>
         </div>
       </div>

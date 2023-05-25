@@ -1,22 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { StudentsQuery } from '../queries/StudentsQuery';
 
-export default function StudentSelect({ selectedStudent, onStudentChange, data }) {
-  const handleChange = (event) => {
-    const studentId = parseInt(event.target.value);  //Převedení "vybrané" hodnoty na číslo 
-    const student = data.find((item) => item.id === studentId); //Vyhledání studenta dle ID
-    onStudentChange(student);  //Vyvolání funkce onStudentChange s argumentem student tzn. ten nalezený
-  };
+export default function StudentSelect({ onStudentChange, selectedBranch, key }) {
+    const [students, setStudents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  return (
-    <div>
-      <label htmlFor="student-select">Vyberte studenta:</label>
-      <select className="form-select" id="student-select" value={selectedStudent ? selectedStudent.id : ''} onChange={handleChange}>
-        {data.map((student) => (   //Pro každého studenta v data je vytvořen záznam v comboBoxu
-          <option key={student.id} value={student.id}>
-            {student.jmeno} {student.prijmeni}   {/*Text záznamu v comboBoxu nastaven na jméno a příjmení studenta*/}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
+    useEffect(() => {
+        const fetchStudents = async () => {
+            try {
+                const response = await StudentsQuery();
+                const data = await response.json();
+                const filteredData = data.data.userPage.filter((user) => {
+                    const memberships = user.membership || [];
+                    return selectedBranch === 'all' || memberships.some((membership) => membership.group.name === selectedBranch);
+                });
+
+                setStudents(filteredData);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+
+        fetchStudents();
+    }, [selectedBranch]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    return (
+        <div>
+            <label htmlFor="student-select">Student:</label>
+            <select className="form-select" id="student-select" key={key} onChange={(e) => onStudentChange(e.target.value)}>
+                <option value="">Vyber studenta</option>
+                {students.map((student) => (
+                    <option key={student.id} value={student.id}>
+                        {student.name} {student.surname}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
 }
