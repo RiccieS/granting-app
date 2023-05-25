@@ -30,10 +30,6 @@ export const GradesQueryJSON = () => ({
               }
             }
           }
-        type {
-          id
-          name
-        }
       }         
 }`
 });

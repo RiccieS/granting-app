@@ -18,9 +18,11 @@ export default function GradesTable({ selectedStudent }) {
         const gradesResponse = await GradesQuery();
         const gradesData = await gradesResponse.json();
         const grades = gradesData?.data?.acclassificationPage || [];
+        console.log(grades);
         const filteredGrades = grades.filter(
           (grade) => grade.user?.id === selectedStudent
         );
+        console.log(selectedStudent);
         setGradesData(filteredGrades);
         setLoading(false);
       } catch (error) {

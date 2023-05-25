@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
@@ -13,7 +12,6 @@ export default function App() {
 
   const handleBranchChange = (branch) => {
     setSelectedBranch(branch);
-
   };
 
   const handleStudentChange = (studentId) => {
