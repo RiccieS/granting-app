@@ -3,14 +3,15 @@ import { GradesQuery } from '../queries/GradesQuery';
 import { GradesLevelsQuery } from '../queries/GradesLevelsQuery';
 import { authorizedFetch } from '../queries/authorizedFetch';
 import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
+import fakeQueryLevel from '../queries/fakeQueryLevels.json'; // Import the JSON data
 
 export default function GradesTable({ selectedStudent }) {
   const [gradesData, setGradesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editableColumns, setEditableColumns] = useState([]);
+  const [refreshTable, setRefreshTable] = useState(false);
   const [levelOptions, setLevelOptions] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,9 +31,8 @@ export default function GradesTable({ selectedStudent }) {
 
     const fetchLevelOptions = async () => {
       try {
-        const levelsResponse = await GradesLevelsQuery();
-        const levelsData = await levelsResponse.json();
-        const levels = levelsData?.data?.acclassificationPage || [];
+        // Replace the API call with the fakeQueryLevel data
+        const levels = fakeQueryLevel.classificationLevels || [];
         setLevelOptions(levels);
       } catch (error) {
         console.error('Failed to fetch level options:', error);
@@ -41,7 +41,7 @@ export default function GradesTable({ selectedStudent }) {
 
     fetchData();
     fetchLevelOptions();
-  }, [selectedStudent]);
+  }, [selectedStudent, refreshTable]);
 
   const handleEditClick = (index, columnIndex) => {
     setEditableColumns((prevColumns) => {
@@ -64,18 +64,18 @@ export default function GradesTable({ selectedStudent }) {
   };
 
   const handleSaveClick = async (index, classificationId, levelId, lastChange) => {
-    console.log(levelId)
-    console.log(lastChange)
-
+    const selectedLevel = levelOptions.find((level) => level.id === levelId); // Find the selected level object
+    const selectedLevelId = selectedLevel ? selectedLevel.id : ''; // Get the id of the selected level
+  
     const mutation = {
       query: ClassificationUpdateMutation,
       variables: {
         id: classificationId,
-        lastchange: lastChange, // Replace with the desired lastchange value
-        classificationlevelId: "5faea134-b095-11ed-9bd8-0242ac110002",
+        lastchange: lastChange,
+        classificationlevelId: selectedLevelId, // Pass the selected level id to the mutation
       },
     };
-
+    
     try {
       const response = await authorizedFetch('/gql', {
         body: JSON.stringify(mutation),
@@ -83,6 +83,8 @@ export default function GradesTable({ selectedStudent }) {
       const data = await response.json();
       // Handle the response data as needed
       console.log(data);
+      setRefreshTable(prevRefreshTable => !prevRefreshTable);
+
     } catch (error) {
       // Handle the error
       console.error(error);
@@ -167,15 +169,15 @@ export default function GradesTable({ selectedStudent }) {
 
   function renderLevelColumns(gradesGroup) {
     const levelCount = 3; // Assuming 3 levels
-    const levelNames = gradesGroup.map((grade) => grade.level.name);
+    const levelOptions = fakeQueryLevel.classificationLevels || []; // Define levelOptions within the function scope
     const columns = [];
     for (let i = 0; i < levelCount; i++) {
       const grade = gradesGroup[i]; // Get the corresponding grade object
-      const levelName = levelNames[i] || '-';
+      const levelName = grade ? grade.level.name : '-';
       const isEditable = editableColumns[i] === i;
       const selectedGrade = levelOptions.find(
-        (level) => level.level.id === editableColumns[i]
-      )?.level.level;
+        (level) => level.id === editableColumns[i]
+      );
       columns.push(
         <td key={i}>
           {isEditable ? (
@@ -186,10 +188,10 @@ export default function GradesTable({ selectedStudent }) {
             >
               {levelOptions.map((level) => (
                 <option
-                  key={level.level.id}
-                  value={level.level.id}
+                  key={level.id}
+                  value={level.id}
                 >
-                  {level.level.name}
+                  {level.name}
                 </option>
               ))}
             </select>
