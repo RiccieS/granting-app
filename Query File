@@ -1,0 +1,31 @@
+Lidi a predmety a znamky
+query {
+            acclassificationPage{
+              semester{               
+                subject{
+                  name                  
+                  semesters{
+                    order                   
+                  }                
+                }
+              }
+              level{
+                name
+              }
+              user{               
+                name
+                surname
+                membership{
+                  group{
+                    name
+                  }
+                }                
+              }              
+            }
+        }
+        
+----------------------------------------------------------------
+
+ID levelu:
+C:5faea21a-b095-11ed-9bd8-0242ac110002
+D:5faea2d8-b095-11ed-9bd8-0242ac110002

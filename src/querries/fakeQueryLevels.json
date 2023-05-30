@@ -1,0 +1,28 @@
+{
+    "classificationLevels": [
+        {
+            "id": "5fae9dd8-b095-11ed-9bd8-0242ac110002",
+            "name": "A"
+        },
+        {
+            "id": "5faea134-b095-11ed-9bd8-0242ac110002",
+            "name": "B"
+        },
+        {
+            "id": "5faea21a-b095-11ed-9bd8-0242ac110002",
+            "name": "C"
+        },
+        {
+            "id": "5faea2d8-b095-11ed-9bd8-0242ac110002",
+            "name": "D"
+        },
+        {
+            "id": "5faea332-b095-11ed-9bd8-0242ac110002",
+            "name": "E"
+        },
+        {
+            "id": "5faea396-b095-11ed-9bd8-0242ac110002",
+            "name": "F"
+        }
+    ]
+}
