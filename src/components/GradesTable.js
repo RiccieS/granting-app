@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { GradesQuery } from '../queries/GradesQuery';
 import { GradesLevelsQuery } from '../queries/GradesLevelsQuery';
-import {ClassificationUpdateMutation} from '../queries/ClassificationUpdateMutation';
-import { authorizedFetch } from '../queries/authorizedFetch'
-//import { handleSaveClick } from '../queries/GradesMutationFetch';
+import { authorizedFetch } from '../queries/authorizedFetch';
+import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
 
 export default function GradesTable({ selectedStudent }) {
   const [gradesData, setGradesData] = useState([]);
@@ -63,12 +62,13 @@ export default function GradesTable({ selectedStudent }) {
     });
   };
 
-  const handleSaveClick = async (index, classificationId, levelId) => {
+  const handleSaveClick = async (index, classificationId, levelId, lastchange) => {
     const mutation = {
       query: ClassificationUpdateMutation,
       variables: {
-        classificationId,
-        levelId,
+        id: classificationId,
+        lastchange: lastchange, // Use the received lastchange value
+        classificationlevelId: levelId,
       },
     };
   
@@ -140,14 +140,13 @@ export default function GradesTable({ selectedStudent }) {
                             value={editableColumns[index]}
                             onChange={(event) => handleSelectChange(event, index)}
                           >
-                            
                             {levelOptions.map((level) => (
                               <option key={level.level.id} value={level.level.id}>
                                 {level.level.name}
                               </option>
                             ))}
                           </select>
-                          <button onClick={() => handleSaveClick(index, grade.id, levelOptions[index]?.level?.id)}>Save</button>
+                          <button onClick={() => handleSaveClick(index, classification.id, levelOptions[index]?.level?.id)}>Save</button>
                           <button onClick={() => handleDiscardClick(index)}>Discard</button>
                         </div>
                       ) : (

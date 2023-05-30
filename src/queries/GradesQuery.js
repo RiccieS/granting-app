@@ -18,6 +18,7 @@ export const GradesQueryJSON = () => ({
             id
             order
             classifications{
+              lastchange
               level{
                 name
               }
