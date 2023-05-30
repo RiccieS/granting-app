@@ -1,6 +1,6 @@
 
 export const ClassificationUpdateMutation = `
-mutation UpdateClassification($id: ID!, $lastchange: String!, $classificationlevelId: ID!) {
+mutation UpdateClassification($id: ID!, $lastchange: DateTime!, $classificationlevelId: ID!) {
   classificationUpdate(
     classification: {
       id: $id
