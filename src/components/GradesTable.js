@@ -60,7 +60,7 @@ export default function GradesTable({ selectedStudent }) {
     });
     const selectedAcclassificationPageId = grade?.id; // Get the id of the acclassificationPage
     const selectedLastChange = grade?.lastchange; // Use the existing lastchange value
-    handleSaveClick(index, selectedAcclassificationPageId, selectedLastChange); // Call handleSaveClick with the updated parameters
+    handleSaveClick(index, selectedAcclassificationPageId, value, selectedLastChange); // Pass the value as the levelId parameter
   };
 
   const handleSaveClick = async (index, classificationId, levelId, lastChange) => {
@@ -71,7 +71,7 @@ export default function GradesTable({ selectedStudent }) {
       query: ClassificationUpdateMutation,
       variables: {
         id: classificationId,
-       lastchange: lastChange, // Replace with the desired lastchange value
+        lastchange: lastChange, // Replace with the desired lastchange value
         classificationlevelId: "5faea134-b095-11ed-9bd8-0242ac110002",
       },
     };
