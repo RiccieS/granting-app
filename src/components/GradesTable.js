@@ -1,41 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { GradesQuery } from '../queries/GradesQuery';
-<<<<<<< Updated upstream
-=======
 import { GradesLevelsQuery } from '../queries/GradesLevelsQuery';
 import { authorizedFetch } from '../queries/authorizedFetch';
 import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
->>>>>>> Stashed changes
 
 export default function GradesTable({ selectedStudent }) {
-    const [gradesData, setGradesData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [gradesData, setGradesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [editableColumns, setEditableColumns] = useState([]);
+  const [levelOptions, setLevelOptions] = useState([]);
 
-    useEffect(() => {
-        const fetchGradesData = async () => {
-            try {
-                const response = await GradesQuery();
-                const data = await response.json();
-                const grades = data?.data?.acclassificationPage || [];
-                const filteredGrades = grades.filter(
-                    (grade) => grade.user?.id === selectedStudent
-                );
-                setGradesData(filteredGrades);
-                setLoading(false);
-            } catch (error) {
-                setError(error);
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const gradesResponse = await GradesQuery();
+        const gradesData = await gradesResponse.json();
+        const grades = gradesData?.data?.acclassificationPage || [];
+        console.log(grades);
+        const filteredGrades = grades.filter(
+          (grade) => grade.user?.id === selectedStudent
+        );
+        console.log(selectedStudent);
+        setGradesData(filteredGrades);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
 
-        fetchGradesData();
-    }, [selectedStudent]);
+    const fetchLevelOptions = async () => {
+      try {
+        const levelsResponse = await GradesLevelsQuery();
+        const levelsData = await levelsResponse.json();
+        const levels = levelsData?.data?.acclassificationPage || [];
+        setLevelOptions(levels);
+      } catch (error) {
+        console.error('Failed to fetch level options:', error);
+      }
+    };
 
-<<<<<<< Updated upstream
-    if (loading) {
-        return <div>Loading grades...</div>;
-=======
     fetchData();
     fetchLevelOptions();
   }, [selectedStudent]);
@@ -77,48 +82,23 @@ export default function GradesTable({ selectedStudent }) {
     } catch (error) {
       // Handle the error
       console.error(error);
->>>>>>> Stashed changes
     }
+  
+    setEditableColumns((prevColumns) => {
+      const updatedColumns = [...prevColumns];
+      updatedColumns[index] = null;
+      return updatedColumns;
+    });
+  };
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+  const handleDiscardClick = (index) => {
+    setEditableColumns((prevColumns) => {
+      const updatedColumns = [...prevColumns];
+      updatedColumns[index] = null;
+      return updatedColumns;
+    });
+  };
 
-<<<<<<< Updated upstream
-    return (
-        <div>
-            <h2>Grades</h2>
-            {gradesData.length === 0 ? (
-                <div>No grades available.</div>
-            ) : (
-                <table  className="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Subject</th>
-                            <th>Semester</th>
-                            <th>Level</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {gradesData.map((grade) => (
-                            <tr key={grade.id}>
-                                <td>{grade.semester?.subject?.name}</td>
-                                <td>{grade.semester?.order}</td>
-                                <td>
-                                    {grade.semester?.classifications?.map((classification) => (
-                                        <span key={classification.level.name}>{classification.level.name} </span>
-                                    ))}
-                                </td>
-                                <td>{grade.type?.name}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
-    );
-=======
   if (loading) {
     return <div>Loading grades...</div>;
   }
@@ -193,5 +173,4 @@ export default function GradesTable({ selectedStudent }) {
       )}
     </div>
   );
->>>>>>> Stashed changes
 }
