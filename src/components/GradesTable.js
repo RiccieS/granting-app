@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { GradesQuery } from '../queries/GradesQuery';
-import { GradesLevelsQuery } from '../queries/GradesLevelsQuery';
-import {ClassificationUpdateMutation} from '../queries/ClassificationUpdateMutation';
-import { authorizedFetch } from '../queries/authorizedFetch'
-//import { handleSaveClick } from '../queries/GradesMutationFetch';
+import { authorizedFetch } from '../queries/authorizedFetch';
+import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
+import fakeQueryLevel from '../queries/fakeQueryLevels.json'; // Importujte JSON data
 
 export default function GradesTable({ selectedStudent }) {
-  const [gradesData, setGradesData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [editableColumns, setEditableColumns] = useState([]);
-  const [levelOptions, setLevelOptions] = useState([]);
+  const [gradesData, setGradesData] = useState([]); // Stav pro uchování dat o známkách
+  const [loading, setLoading] = useState(true); // Stav pro zobrazení načítání
+  const [error, setError] = useState(null); // Stav pro zobrazení chyby
+  const [editableColumns, setEditableColumns] = useState([]); // Stav pro uchování informace o úpravách
+  const [refreshTable, setRefreshTable] = useState(false); // Stav pro obnovu tabulky
+  const [levelOptions, setLevelOptions] = useState([]); // Stav pro uchování možností úrovní
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const gradesResponse = await GradesQuery();
-        const gradesData = await gradesResponse.json();
-        const grades = gradesData?.data?.acclassificationPage || [];
-        console.log(grades);
+        const gradesResponse = await GradesQuery(); // Získání dat o známkách pomocí dotazu
+        const gradesData = await gradesResponse.json(); // Převedení odpovědi na JSON formát
+        const grades = gradesData?.data?.acclassificationPage || []; // Získání seznamu známek
         const filteredGrades = grades.filter(
           (grade) => grade.user?.id === selectedStudent
-        );
-        console.log(selectedStudent);
+        ); // Filtrace známek pro vybraného studenta
         setGradesData(filteredGrades);
         setLoading(false);
       } catch (error) {
@@ -33,19 +31,19 @@ export default function GradesTable({ selectedStudent }) {
 
     const fetchLevelOptions = async () => {
       try {
-        const levelsResponse = await GradesLevelsQuery();
-        const levelsData = await levelsResponse.json();
-        const levels = levelsData?.data?.acclassificationPage || [];
+        // Nahraďte volání API fiktivními daty z fakeQueryLevel
+        const levels = fakeQueryLevel.classificationLevels || []; // Získání seznamu úrovní z fiktivních dat
         setLevelOptions(levels);
       } catch (error) {
-        console.error('Failed to fetch level options:', error);
+        console.error('Selhalo načítání možností úrovní:', error);
       }
     };
 
     fetchData();
     fetchLevelOptions();
-  }, [selectedStudent]);
+  }, [selectedStudent, refreshTable]);
 
+  // Funkce pro obsluhu události kliknutí na tlačítko úpravy
   const handleEditClick = (index, columnIndex) => {
     setEditableColumns((prevColumns) => {
       const updatedColumns = [...prevColumns];
@@ -54,36 +52,47 @@ export default function GradesTable({ selectedStudent }) {
     });
   };
 
-  const handleSelectChange = (event, index) => {
+  // Funkce pro obsluhu události změny výběru v rozbalovacím seznamu
+  const handleSelectChange = (event, index, grade) => {
     const { value } = event.target;
     setEditableColumns((prevColumns) => {
       const updatedColumns = [...prevColumns];
       updatedColumns[index] = value;
       return updatedColumns;
     });
+    const selectedAcclassificationPageId = grade?.id; // Získání id záznamu známky
+    const selectedLastChange = grade?.lastchange; // Použití stávající hodnoty lastchange
+    handleSaveClick(index, selectedAcclassificationPageId, value, selectedLastChange); // Předání hodnoty jako parametr levelId
   };
 
-  const handleSaveClick = async (index, classificationId, levelId) => {
+  // Funkce pro obsluhu události kliknutí na tlačítko uložit
+  const handleSaveClick = async (index, classificationId, levelId, lastChange) => {
+    const selectedLevel = levelOptions.find((level) => level.id === levelId); // Vyhledání vybraného objektu úrovně
+    const selectedLevelId = selectedLevel ? selectedLevel.id : ''; // Získání id vybrané úrovně
+  
     const mutation = {
       query: ClassificationUpdateMutation,
       variables: {
-        classificationId,
-        levelId,
+        id: classificationId,
+        lastchange: lastChange,
+        classificationlevelId: selectedLevelId, // Předání vybraného id úrovně do mutace
       },
     };
-  
+    
     try {
       const response = await authorizedFetch('/gql', {
         body: JSON.stringify(mutation),
       });
       const data = await response.json();
-      // Handle the response data as needed
+      // Zpracování odpovědi dle potřeby
       console.log(data);
+      setRefreshTable(prevRefreshTable => !prevRefreshTable);
+
     } catch (error) {
-      // Handle the error
+      // Zpracování chyby
       console.error(error);
     }
-  
+
     setEditableColumns((prevColumns) => {
       const updatedColumns = [...prevColumns];
       updatedColumns[index] = null;
@@ -91,87 +100,123 @@ export default function GradesTable({ selectedStudent }) {
     });
   };
 
-  const handleDiscardClick = (index) => {
-    setEditableColumns((prevColumns) => {
-      const updatedColumns = [...prevColumns];
-      updatedColumns[index] = null;
-      return updatedColumns;
-    });
-  };
-
+  // Pokud probíhá načítání dat, zobrazí se zpráva "Načítání známek..."
   if (loading) {
-    return <div>Loading grades...</div>;
+    return <div>Načítání známek...</div>;
   }
 
+  // Pokud nastala chyba při načítání dat, zobrazí se zpráva s chybovou zprávou
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Chyba: {error.message}</div>;
   }
 
-  return (
-    <div>
-      <h2>Grades</h2>
-      {gradesData.length === 0 ? (
-        <div>No grades available.</div>
-      ) : (
-        <table className="table table-striped table-hover table-sm">
-          <thead>
-            <tr>
-              <th>Subject</th>
-              <th>Semester</th>
-              <th>Level 1</th>
-              <th>Level 2</th>
-              <th>Level 3</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {gradesData.map((grade, index) => (
-              <tr key={grade.id}>
-                <td>{grade.semester?.subject?.name}</td>
-                <td>{grade.semester?.order}</td>
+  // Funkce pro seskupení známek podle semestru a předmětu
+  function groupGradesByOrderAndSubject(grades) {
+    return grades.reduce((result, grade) => {
+      const { semester } = grade;
+      const key = `${semester.order}-${semester.subject.name}`;
+      if (result[key]) {
+        result[key].push(grade);
+      } else {
+        result[key] = [grade];
+      }
+      return result;
+    }, {});
+  }
 
-                {grade.semester?.classifications?.slice(0, 3).map((classification, i) => {
-                  const isEditable = editableColumns[index] === i;
-                  return (
-                    <td key={classification.level.name}>
-                      {isEditable ? (
-                        <div>
-                          <select
-                            value={editableColumns[index]}
-                            onChange={(event) => handleSelectChange(event, index)}
-                          >
-                            
-                            {levelOptions.map((level) => (
-                              <option key={level.level.id} value={level.level.id}>
-                                {level.level.name}
-                              </option>
-                            ))}
-                          </select>
-                          <button onClick={() => handleSaveClick(index, grade.id, levelOptions[index]?.level?.id)}>Save</button>
-                          <button onClick={() => handleDiscardClick(index)}>Discard</button>
-                        </div>
-                      ) : (
-                        <>
-                          {classification.level.name}
-                          <button onClick={() => handleEditClick(index, i)}>Edit</button>
-                        </>
-                      )}
-                    </td>
-                  );
-                })}
+  // Funkce pro vykreslení záhlaví úrovní
+  function renderLevelHeaders() {
+    const levelCount = 3; // Předpokládáme 3 úrovně
+    const headers = [];
+    for (let i = 1; i <= levelCount; i++) {
+      headers.push(<th key={i}>Pokus {i}</th>);
+    }
+    return headers;
+  }
 
-                {grade.semester?.classifications && grade.semester?.classifications.length < 3 && (
-                  Array(3 - grade.semester?.classifications.length)
-                    .fill()
-                    .map((_, i) => <td key={i}>-</td>)
-                )}
+  // Funkce pro vykreslení sloupců úrovní
+function renderLevelColumns(gradesGroup) {
+  const levelCount = 3; // Předpokládáme 3 úrovně
 
-                <td>{grade.type?.name}</td>
-              </tr>
+  // Definujte možnosti úrovní v rámci funkce
+  const levelOptions = fakeQueryLevel.classificationLevels || [];
+
+  const columns = [];
+  for (let i = 0; i < levelCount; i++) {
+    const grade = gradesGroup[i]; // Získání odpovídajícího objektu známky
+    const levelName = grade ? grade.level.name : '-';
+    const isEditable = editableColumns[i] === i;
+
+    // Najděte vybranou úroveň podle id v editableColumns
+    const selectedGrade = levelOptions.find(
+      (level) => level.id === editableColumns[i]
+    );
+
+    columns.push(
+      <td key={i}>
+        {isEditable ? (
+          // Select pro úpravu úrovně
+          <select
+            className="form-select"
+            value={selectedGrade?.id || ""}
+            onChange={(event) => handleSelectChange(event, i, grade)} // Předání známky jako parametr
+          >
+            {levelOptions.map((level) => (
+              <option key={level.id} value={level.id}>
+                {level.name}
+              </option>
             ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
+          </select>
+        ) : (
+          // Zobrazení názvu úrovně a tlačítka pro úpravu
+          <>
+            {levelName}
+            <button
+              className="btn btn-link"
+              onClick={() => handleEditClick(i, i)}
+            >
+              Upravit
+            </button>
+          </>
+        )}
+      </td>
+    );
+  }
+  return columns;
+}
+
+const groupedGrades = groupGradesByOrderAndSubject(gradesData);
+
+return (
+  <div>
+    <h2>Známky</h2>
+    {Object.keys(groupedGrades).length === 0 ? (
+      <div>Nejsou k dispozici žádné známky.</div>
+    ) : (
+      <table className="table table-striped table-hover table-sm">
+        <thead>
+          <tr>
+            <th>Předmět</th>
+            <th>Semestr</th>
+            {renderLevelHeaders()}
+            <th>Typ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(groupedGrades).map(([key, gradesGroup]) => {
+            const [order, subject] = key.split('-');
+            return (
+              <tr key={key}>
+                <td>{subject}</td>
+                <td>{order}</td>
+                {renderLevelColumns(gradesGroup)}
+                <td>{gradesGroup[0].type?.name}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    )}
+  </div>
+);
 }

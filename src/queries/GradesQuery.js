@@ -10,28 +10,21 @@ export const GradesQueryJSON = () => ({
     `query {
       acclassificationPage{
           id
-          user{
+        	user{
             id
+          }
+        	semester{
+            order
+            subject{
+               name
+            }
+          }
+        	lastchange
+        	level{
             name
           }
-          semester{
-            id
-            order
-            classifications{
-              level{
-                name
-              }
-            }
-            subject{
-              name
-              id
-              semesters{
-                order 
-              }
-            }
-          }
-      }         
-}`
+        	       
+      }}`
 });
 
 

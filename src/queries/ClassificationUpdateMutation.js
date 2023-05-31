@@ -1,19 +1,19 @@
 
 export const ClassificationUpdateMutation = `
-  mutation ClassificationUpdate($classificationId: ID!, $levelId: ID!) {
-    classificationUpdate(
-      classification: {
-        id: $classificationId
-        lastchange: "${new Date().toISOString()}"
-        classificationlevelId: $levelId
-      }
-    ) {
+mutation UpdateClassification($id: ID!, $lastchange: DateTime!, $classificationlevelId: ID!) {
+  classificationUpdate(
+    classification: {
+      id: $id
+      lastchange: $lastchange
+      classificationlevelId: $classificationlevelId
+    }
+  ) {
+    id
+    msg
+    classification {
       id
-      msg
-      classification {
-        id
-        lastchange
-      }
+      lastchange
     }
   }
+}
 `;

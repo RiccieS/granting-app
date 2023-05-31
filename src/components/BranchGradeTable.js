@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //UPRAVIT KOD filteredGrades je mozna zbytecne
 export default function BranchGradeTable({ data, grades_data, studjiniSkupina }) {
@@ -40,4 +40,4 @@ export default function BranchGradeTable({ data, grades_data, studjiniSkupina })
       </tbody>
     </table>
   );
-}
+}*/

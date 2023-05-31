@@ -12,7 +12,7 @@ export default function BranchSelect({ onBranchChange, onStudentReset }) {
         const data = await response.json();
         setGroupNames(data.data.groupPage);
       } catch (error) {
-        console.error('Error fetching group names:', error);
+        console.error('Chyba při načítání názvů skupin:', error);
       }
     };
 
@@ -23,7 +23,7 @@ export default function BranchSelect({ onBranchChange, onStudentReset }) {
     const newValue = event.target.value;
     setSelectedStudjiniSkupina(newValue);
     onBranchChange(newValue);
-    onStudentReset(); // Reset the selected student when a branch is selected
+    onStudentReset(); // Resetuje vybraného studenta při výběru oboru
   };
 
   useEffect(() => {
@@ -32,9 +32,12 @@ export default function BranchSelect({ onBranchChange, onStudentReset }) {
 
   return (
     <div>
+      {/* Výběr studijní skupiny */}
       <label htmlFor="branch-select">Studijní skupina:</label>
       <select className="form-select" id="branch-select" value={selectedStudjiniSkupina} onChange={handleChange}>
-        <option value="all">- All branches -</option>
+        {/* Výchozí volba "Všechny obory" */}
+        <option value="all">- Všechny obory -</option>
+        {/* Možnosti výběru skupin */}
         {groupNames.map((group) => (
           <option key={group.name} value={group.name}>
             {group.name}
