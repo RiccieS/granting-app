@@ -1,0 +1,41 @@
+Lidi a predmety a znamky
+query {
+            acclassificationPage{
+              semester{               
+                subject{
+                  name                  
+                  semesters{
+                    order                   
+                  }                
+                }
+              }
+              level{
+                name
+              }
+              user{               
+                name
+                surname
+                membership{
+                  group{
+                    name
+                  }
+                }                
+              }              
+            }
+        }
+
+        
+        Komentáře k funkcím:
+
+GradesTable: Komponenta pro zobrazení tabulky se známkami. Přijímá props selectedStudent pro výběr studenta.
+useEffect: Efekt pro načítání dat o známkách a možnostech úrovní při změně vybraného studenta nebo obnovení tabulky.
+handleEditClick: Funkce pro obsluhu události kliknutí na tlačítko úpravy. Aktualizuje stavy pro úpravy sloupců.
+handleSelectChange: Funkce pro obsluhu události změny výběru v rozbalovacím seznamu. Aktualizuje stavy pro úpravy sloupců a volá funkci handleSaveClick.
+handleSaveClick: Funkce pro uložení změn úrovní. Vytváří mutaci s údaji pro aktualizaci úrovně a odesílá ji na server. Po úspěšném uložení aktualizuje tabulku.
+groupGradesByOrderAndSubject: Funkce pro seskupení známek podle semestru a předmětu.
+renderLevelHeaders: Funkce pro vykreslení záhlaví úrovní.
+renderLevelColumns: Funkce pro vykreslení sloupců úrovní. Zobrazuje buď select pro úpravu úrovně nebo zobrazuje název úrovně s tlačítkem pro úpravu.
+groupedGrades: Seskupené známky podle semestru a předmětu.
+Tento kód využívá simulovaná data pro dotaz na úrovně známek, která jsou uložena v JSON souboru fakeQueryLevels.json. Ujistěte se, že data jsou dostupná a správně importována.
+
+Mějte na paměti, že tento kód je pouze ukázkou a předpokládá se, že máte další soubory pro definici dotazů a mutací, které jsou importovány do komponenty.
