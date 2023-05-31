@@ -1,3 +1,5 @@
+
+//DEPRECATED
 import React from 'react';
 
 export default function SemesterSelect({ selectedSemester, onSemesterChange}) {

@@ -129,7 +129,7 @@ export default function GradesTable({ selectedStudent }) {
     const levelCount = 3; // Předpokládáme 3 úrovně
     const headers = [];
     for (let i = 1; i <= levelCount; i++) {
-      headers.push(<th key={i}>Úroveň {i}</th>);
+      headers.push(<th key={i}>Pokus {i}</th>);
     }
     return headers;
   }
