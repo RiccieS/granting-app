@@ -134,7 +134,7 @@ export default function GradesTable({ selectedStudent }) {
     return headers;
   }
 
-  // Funkce pro vykreslení sloupců úrovní
+  // Funkce pro vykreslení slo upců úrovní
 function renderLevelColumns(gradesGroup) {
   const levelCount = 3; // Předpokládáme 3 úrovně
 

@@ -4,6 +4,8 @@ import StudentSelect from './components/StudentSelect';
 //import { StudentsQuery } from './queries/StudentsQuery';
 import GradesTable from './components/GradesTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SemesterClassificationsTableConstant from "./components/SemesterClasificationTableConstant";
+//import UserClassificationsTableConstant from "./components/UserClassificationsTableConstant";
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
@@ -22,21 +24,6 @@ export default function App() {
     setSelectedStudent(''); // Resetuje vybraného studenta na prázdnou hodnotu
   };
 
-  /*useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        //const response = await StudentsQuery();
-        //const data = await response.json();
-        //const filteredData = data?.data?.userPage || [];
-        //setUserPageData(filteredData);
-      } catch (error) {
-        console.error('Chyba při načítání dat uživatele:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []); */
-
   return (
     <div>
       <div className="container-fluid p-5 bg-success text-white text-center">
@@ -50,7 +37,7 @@ export default function App() {
             <BranchSelect onBranchChange={handleBranchChange} onStudentReset={handleStudentReset} />
             {/* Výběr studenta */}
             <StudentSelect
-              key={selectedBranch}
+              uniqueKey={selectedBranch}
               selectedStudent={selectedStudent}
               onStudentChange={handleStudentChange}
               selectedBranch={selectedBranch}

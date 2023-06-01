@@ -8,6 +8,7 @@ export const GroupsSelectQueryJSON = () => ({
     "query":
         `query {
             groupPage{
+              id
               name
             }
         }`

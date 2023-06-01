@@ -39,7 +39,7 @@ export default function BranchSelect({ onBranchChange, onStudentReset }) {
         <option value="all">- Všechny obory -</option>
         {/* Možnosti výběru skupin */}
         {groupNames.map((group) => (
-          <option key={group.name} value={group.name}>
+          <option key={group.id} value={group.id}>
             {group.name}
           </option>
         ))}
