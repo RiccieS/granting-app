@@ -10,3 +10,5 @@ const pivotmap = (a, f) => {
     });
     return result;
   };
+
+  export default pivotmap;
