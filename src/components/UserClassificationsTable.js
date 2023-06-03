@@ -2,10 +2,11 @@ import React from "react";
 import UserClassificationsRow from "./UserClassificationsRow";
 import Table from "react-bootstrap/Table";
 import pivotmap from "../utils/pivotmap"; // Import the pivotmap function
-import { keyedmap } from "../utils/keyedmap";
+import keyedmap from "../utils/keyedmap";
 
 const UserClassificationsTable = ({ user }) => {
     const classifications = user?.classifications || []
+    console.log(classifications);
     const classificationsBySemester = pivotmap(
         classifications, classification => [classification.semester.id, classification]
     )  

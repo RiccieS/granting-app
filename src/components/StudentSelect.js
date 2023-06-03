@@ -1,55 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { StudentsQuery } from '../queries/StudentsQuery';
+import { setStudents, setLoading, setError } from '../slices/StudentSelectSlice';
 
-export default function StudentSelect({ onStudentChange, selectedBranch, uniqueKey  }) {
-    const [students, setStudents] = useState([]); // Stav pro uchování seznamu studentů
-    const [loading, setLoading] = useState(true); // Stav pro zobrazení načítání
-    const [error, setError] = useState(null); // Stav pro zobrazení chybového stavu
+export default function StudentSelect({ onStudentChange, selectedBranch, uniqueKey }) {
+  const dispatch = useDispatch();
+  const { students, loading, error } = useSelector((state) => state.studentSelect);
 
-    useEffect(() => {
-        const fetchStudents = async () => {
-            try {
-                const response = await StudentsQuery(); // Volání dotazu na seznam studentů
-                const data = await response.json();
-                console.log(selectedBranch);
-                const filteredData = data.data.userPage.filter((user) => {
-                    const memberships = user.membership || [];
-                    return selectedBranch === 'all' || memberships.some((membership) => membership.group.id === selectedBranch);
-                }); // Filtrace seznamu studentů na základě vybraného oboru
+  useEffect(() => {
+    const fetchStudents = async () => {
+      dispatch(setLoading(true)); // Set loading state to true
 
-                setStudents(filteredData); // Nastavení filtrovaného seznamu studentů
-                setLoading(false); // Ukončení načítání
-            } catch (error) {
-                setError(error); // Nastavení chybového stavu
-                setLoading(false); // Ukončení načítání
-            }
-        };
+      try {
+        const response = await StudentsQuery();
+        const data = await response.json();
+        console.log(selectedBranch);
+        const filteredData = data.data.userPage.filter((user) => {
+          const memberships = user.membership || [];
+          return selectedBranch === 'all' || memberships.some((membership) => membership.group.id === selectedBranch);
+        });
 
-        fetchStudents(); // Zavolání funkce pro načtení seznamu studentů
-    }, [selectedBranch]); // Znovu vyvolání efektu při změně vybraného oboru
+        dispatch(setStudents(filteredData)); // Dispatch action to set students data
+      } catch (error) {
+        dispatch(setError(error)); // Dispatch action to set error state
+      } finally {
+        dispatch(setLoading(false)); // Set loading state to false
+      }
+    };
 
-    if (loading) {
-        return <div>Loading...</div>; // Zobrazení načítání, pokud ještě probíhá načítání dat
-    }
+    fetchStudents();
+  }, [dispatch, selectedBranch]);
 
-    if (error) {
-        return <div>Chyba: {error.message}</div>; // Zobrazení chybového stavu v případě chyby při načítání dat
-    }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-    return (
-        <div>
-            {/* Výběr studenta */}
-            <label htmlFor="student-select">Student:</label>
-            <select className="form-select" id="student-select" uniqueKey={uniqueKey} onChange={(e) => onStudentChange(e.target.value)}>
-                {/* Výchozí volba */}
-                <option value="">Vyber studenta</option>
-                {/* Možnosti výběru studentů */}
-                {students.map((student) => (
-                    <option uniqueKey={student.id} value={student.id}>
-                        {student.name} {student.surname}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
+  if (error) {
+    return <div>Chyba: {error.message}</div>;
+  }
+
+  return (
+    <div>
+      <label htmlFor="student-select">Student:</label>
+      <select className="form-select" id="student-select" uniqueKey={uniqueKey} onChange={(e) => onStudentChange(e.target.value)}>
+        <option value="">Vyber studenta</option>
+        {students.map((student) => (
+          <option key={student.id} value={student.id}>
+            {student.name} {student.surname}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }

@@ -6,6 +6,9 @@ import GradesTable from './components/GradesTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SemesterClassificationsTableConstant from "./components/SemesterClasificationTableConstant";
 //import UserClassificationsTableConstant from "./components/UserClassificationsTableConstant";
+import { Provider } from 'react-redux';
+import store from './store'; // Import your Redux store
+
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
@@ -25,6 +28,7 @@ export default function App() {
   };
 
   return (
+    <Provider store={store}>
     <div>
       <div className="container-fluid p-5 bg-success text-white text-center">
         <h1>Aplikace pro správu studentů</h1>
@@ -56,5 +60,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </Provider>
   );
 }
