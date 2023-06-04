@@ -30,7 +30,7 @@ export const ClassificationByUserQueryJSON = (id) => ({
 /**
  * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
  */
-export const ClassificationByUserQuery = () =>
+export const ClassificationByUserQuery = (id) =>
     authorizedFetch('/gql', {
-        body: JSON.stringify(ClassificationByUserQueryJSON()),
+        body: JSON.stringify(ClassificationByUserQueryJSON(id)),
     })

@@ -1,30 +1,31 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   students: [],
-  loading: true,
+  loading: false,
   error: null,
+  selectedStudent: '', // Add selectedStudent field to the initial state
 };
 
-const StudentSelectSlice = createSlice({
+const studentSelectSlice = createSlice({
   name: 'studentSelect',
   initialState,
   reducers: {
     setStudents: (state, action) => {
       state.students = action.payload;
-      state.loading = false;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
-      state.loading = false;
+    },
+    setSelectedStudent: (state, action) => {
+      state.selectedStudent = action.payload; // Update the selectedStudent field
     },
   },
 });
 
-export const { setStudents, setLoading, setError } = StudentSelectSlice.actions;
+export const { setStudents, setLoading, setError, setSelectedStudent } = studentSelectSlice.actions;
 
-export default StudentSelectSlice.reducer;
+export default studentSelectSlice.reducer;

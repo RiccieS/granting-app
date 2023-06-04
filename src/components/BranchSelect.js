@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GroupsSelectQuery } from '../queries/GroupsSelectQuery';
-import { setBranch, resetStudent } from '../slices/BranchSelectSlice';
+import { setBranch, setGroupNames } from '../slices/BranchSelectSlice';
 
 export default function BranchSelect({ onStudentReset }) {
   const dispatch = useDispatch();
@@ -23,12 +23,12 @@ export default function BranchSelect({ onStudentReset }) {
 
   const handleChange = (event) => {
     const newValue = event.target.value;
-    dispatch(setSelectedBranch(newValue)); // Dispatch action to set selected branch
+    dispatch(setBranch(newValue)); // Dispatch action to set selected branch
     onStudentReset(); // Reset selected student when branch changes
   };
 
   useEffect(() => {
-    dispatch(setSelectedBranch(selectedBranch)); // Dispatch action when selected branch changes
+    dispatch(setBranch(selectedBranch)); // Dispatch action when selected branch changes
   }, [dispatch, selectedBranch]);
 
   return (

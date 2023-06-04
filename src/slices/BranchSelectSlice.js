@@ -15,10 +15,13 @@ const branchSelectSlice = createSlice({
     setSelectedBranch: (state, action) => {
       state.selectedBranch = action.payload;
     },
+    setBranch: (state, action) => {
+      state.selectedBranch = action.payload;
+    },
   },
 });
 
-export const { setGroupNames, setSelectedBranch } = branchSelectSlice.actions;
+export const { setGroupNames, setSelectedBranch, setBranch} = branchSelectSlice.actions;
 
 export default branchSelectSlice.reducer;
 

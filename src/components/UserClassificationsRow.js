@@ -6,7 +6,7 @@ const UserClassificationsRow = ({ classifications, children, cols = 5 }) => {
   const dummy = new Array(cols - 1 - sorted.length).fill("");
 
   return (
-    <tr>
+    <>
       {children}
       {sorted.map((classification) => (
         <UserClassificationCell
@@ -14,10 +14,10 @@ const UserClassificationsRow = ({ classifications, children, cols = 5 }) => {
           classification={classification}
         />
       ))}
-      {dummy.map((i, index) => (
+      {dummy.map((_, index) => (
         <td key={index}></td>
       ))}
-    </tr>
+    </>
   );
 };
 

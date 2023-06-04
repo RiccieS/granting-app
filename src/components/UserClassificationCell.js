@@ -1,7 +1,8 @@
 import React from "react";
 
 const UserClassificationCell = ({ classification }) => {
-  return <td>{classification?.level?.name}</td>;
+  const levelName = classification?.level?.name || "";
+  return <td>{levelName}</td>;
 };
 
 export default UserClassificationCell;
