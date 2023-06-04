@@ -3,7 +3,7 @@ import classificationLevels from "../queries/fakeQueryLevels.json";
 import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
 import { authorizedFetch } from '../queries/authorizedFetch';
 
-const EditGradeButton = ({ label, classificationId,classificationLastChange }) => {
+const EditGradeButton = ({ label, classificationId,classificationLastChange, onTableReload  }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
@@ -30,6 +30,7 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange }) =
           lastchange: classificationLastChange,
           classificationlevelId: selectedLevel.id,
         },
+        
       };
   
       try {
@@ -40,6 +41,10 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange }) =
         // Process the response as needed
         console.log(data);
         //setRefreshTable(prevRefreshTable => !prevRefreshTable);
+        if (onTableReload) {
+          onTableReload();
+        }
+
       } catch (error) {
         // Handle the error
         console.error(error);

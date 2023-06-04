@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import pivotmap from "../utils/pivotmap";
 import keyedmap from "../utils/keyedmap";
 
-const UserClassificationsTable = ({ user }) => {
+const UserClassificationsTable = ({ user, onTableReload  }) => {
   const classifications = user || [];
   console.log(classifications);
   
@@ -32,8 +32,8 @@ const UserClassificationsTable = ({ user }) => {
       <tbody>
         {Object.entries(classificationsBySemester).map(
           ([semesterId, clist]) => (
-            <UserClassificationsRow key={semesterId} classifications={clist}>
-              <td>{semesterIndex[semesterId].order}</td>
+            <UserClassificationsRow key={semesterId} classifications={clist} onTableReload={onTableReload}>
+            <td>{semesterIndex[semesterId].order}</td>
             </UserClassificationsRow>
           )
         )}

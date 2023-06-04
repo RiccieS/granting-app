@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import UserClassificationsTable from './UserClassificationsTable';
 import { fetchClassifications } from '../actions/classificationActions';
 
@@ -9,7 +9,15 @@ const UserClassificationsTableConstant = () => {
   const loading = useSelector((state) => state.classifications.loading);
   const error = useSelector((state) => state.classifications.error);
   const dispatch = useDispatch();
- 
+
+  const handleTableReload = useCallback(() => {
+    // Perform any necessary actions before reloading the table
+    // ...
+
+    // Dispatch the fetchClassifications action again to reload the table
+    dispatch(fetchClassifications(selectedStudent));
+  }, [dispatch, selectedStudent]);
+
   useEffect(() => {
     if (selectedStudent) {
       dispatch(fetchClassifications(selectedStudent));
@@ -24,7 +32,7 @@ const UserClassificationsTableConstant = () => {
     return <div>Error fetching user classifications: {error}</div>;
   }
 
-  return <UserClassificationsTable user={classifications} />;
+  return <UserClassificationsTable user={classifications} onTableReload={handleTableReload} />;
 };
 
 export default UserClassificationsTableConstant;

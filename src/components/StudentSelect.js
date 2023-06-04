@@ -31,12 +31,9 @@ export default function StudentSelect({ onStudentChange, selectedBranch, uniqueK
   }, [dispatch, selectedBranch]);
 
   const handleStudentChange = (e) => {
-    console.log("Skupina "+selectedBranch);
     const studentId = e.target.value;
-    dispatch(setSelectedStudent(studentId)); // Dispatch action to set the selected student
+    dispatch(setSelectedStudent(studentId));
     onStudentChange(studentId);
-
-
   };
 
   if (loading) {
@@ -48,22 +45,22 @@ export default function StudentSelect({ onStudentChange, selectedBranch, uniqueK
   }
 
   return (
-  <div>
-    <label htmlFor="student-select">Student:</label>
-    <select
-      className="form-select"
-      id="student-select"
-      uniqueKey={uniqueKey}
-      value={selectedStudent} // Set the value of the select element to selectedStudent
-      onChange={handleStudentChange} // Use the updated handleStudentChange function
-    >
-      <option value="">Vyber studenta</option> {/* Update the value here */}
-      {students.map((student) => (
-        <option key={student.id} value={student.id}>
-          {student.name} {student.surname}
-        </option>
-      ))}
-    </select>
-  </div>
-);
+    <div>
+      <label htmlFor="student-select">Student:</label>
+      <select
+        className="form-select"
+        id="student-select"
+        uniqueKey={uniqueKey}
+        value={selectedStudent}
+        onChange={handleStudentChange}
+      >
+        <option value="">Vyber studenta</option>
+        {students.map((student) => (
+          <option key={student.id} value={student.id}>
+            {student.name} {student.surname}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }

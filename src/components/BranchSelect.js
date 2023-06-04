@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GroupsSelectQuery } from '../queries/GroupsSelectQuery';
-import { setBranch, setGroupNames } from '../slices/BranchSelectSlice';
+import { setGroupNames, setBranch } from '../slices/BranchSelectSlice';
 
-export default function BranchSelect({ onStudentReset }) {
+export default function BranchSelect({ onStudentReset, onBranchSelect }) {
   const dispatch = useDispatch();
   const { groupNames, selectedBranch } = useSelector((state) => state.branchSelect);
 
@@ -12,7 +12,7 @@ export default function BranchSelect({ onStudentReset }) {
       try {
         const response = await GroupsSelectQuery();
         const data = await response.json();
-        dispatch(setGroupNames(data.data.groupPage)); // Dispatch action to set group names
+        dispatch(setGroupNames(data.data.groupPage));
       } catch (error) {
         console.error('Chyba při načítání názvů skupin:', error);
       }
@@ -23,22 +23,16 @@ export default function BranchSelect({ onStudentReset }) {
 
   const handleChange = (event) => {
     const newValue = event.target.value;
-    dispatch(setBranch(newValue)); // Dispatch action to set selected branch
-    onStudentReset(); // Reset selected student when branch changes
+    dispatch(setBranch(newValue));
+    onStudentReset();
+    onBranchSelect(newValue); // Call the onBranchSelect prop with the new branch value
   };
-
-  useEffect(() => {
-    dispatch(setBranch(selectedBranch)); // Dispatch action when selected branch changes
-  }, [dispatch, selectedBranch]);
 
   return (
     <div>
-      {/* Výběr studijní skupiny */}
       <label htmlFor="branch-select">Studijní skupina:</label>
       <select className="form-select" id="branch-select" value={selectedBranch} onChange={handleChange}>
-        {/* Výchozí volba "Všechny obory" */}
         <option value="all">- Všechny obory -</option>
-        {/* Možnosti výběru skupin */}
         {groupNames.map((group) => (
           <option key={group.id} value={group.id}>
             {group.name}

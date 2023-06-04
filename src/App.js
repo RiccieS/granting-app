@@ -1,21 +1,16 @@
-import React, { useState, /*useEffect*/ } from 'react';
+import React, { useState } from 'react';
+import { Provider } from 'react-redux';
+import store from './store';
 import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
-//import { StudentsQuery } from './queries/StudentsQuery';
 import GradesTable from './components/GradesTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SemesterClassificationsTableConstant from "./components/SemesterClasificationTableConstant";
-//import UserClassificationsTableConstant from "./components/UserClassificationsTableConstant";
-import { Provider } from 'react-redux';
-import store from './store'; // Import your Redux store
-
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
   const [selectedStudent, setSelectedStudent] = useState('');
-  //const [userPageData, setUserPageData] = useState([]);
 
-  const handleBranchChange = (branch) => {
+  const handleBranchSelect = (branch) => {
     setSelectedBranch(branch);
   };
 
@@ -24,42 +19,37 @@ export default function App() {
   };
 
   const handleStudentReset = () => {
-    setSelectedStudent(''); // Resetuje vybraného studenta na prázdnou hodnotu
+    setSelectedStudent('');
   };
 
   return (
     <Provider store={store}>
-    <div>
-      <div className="container-fluid p-5 bg-success text-white text-center">
-        <h1>Aplikace pro správu studentů</h1>
-      </div>
-      <div className="container mt-5">
-        <div className="card">
-          <h2 className="card-header">Přehled studentů</h2>
-          <div className="card-body">
-            {/* Výběr oboru */}
-            <BranchSelect onBranchChange={handleBranchChange} onStudentReset={handleStudentReset} />
-            {/* Výběr studenta */}
-            <StudentSelect
-              uniqueKey={selectedBranch}
-              selectedStudent={selectedStudent}
-              onStudentChange={handleStudentChange}
-              selectedBranch={selectedBranch}
-            />
-          </div>
-          <div className="card-body">
-            {/* Tabulka se známkami */}
-            <GradesTable selectedStudent={selectedStudent} />
-          </div>
+      <div>
+        <div className="container-fluid p-5 bg-success text-white text-center">
+          <h1>Aplikace pro správu studentů</h1>
         </div>
-        <div className="card">
-          <h2 className="card-header">Přehled známek</h2>
-          <div className="card-body">
-            {/* Další obsah */}
+        <div className="container mt-5">
+          <div className="card">
+            <h2 className="card-header">Přehled studentů</h2>
+            <div className="card-body">
+              <BranchSelect onStudentReset={handleStudentReset} onBranchSelect={handleBranchSelect} />
+              <StudentSelect
+                uniqueKey={selectedBranch}
+                selectedStudent={selectedStudent}
+                onStudentChange={handleStudentChange}
+                selectedBranch={selectedBranch}
+              />
+            </div>
+            <div className="card-body">
+              <GradesTable selectedStudent={selectedStudent} />
+            </div>
+          </div>
+          <div className="card">
+            <h2 className="card-header">Přehled známek</h2>
+            <div className="card-body">{/* Additional content */}</div>
           </div>
         </div>
       </div>
-    </div>
     </Provider>
   );
 }
