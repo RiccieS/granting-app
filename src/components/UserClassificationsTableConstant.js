@@ -9,7 +9,7 @@ const UserClassificationsTableConstant = () => {
   const loading = useSelector((state) => state.classifications.loading);
   const error = useSelector((state) => state.classifications.error);
   const dispatch = useDispatch();
-
+ 
   useEffect(() => {
     if (selectedStudent) {
       dispatch(fetchClassifications(selectedStudent));
