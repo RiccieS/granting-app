@@ -1,10 +1,4 @@
-//import React from "react";
 
-//const UserClassificationCell = ({ classification }) => {
-//  const levelName = classification?.level?.name || "";
-//  return <td>{levelName}</td>;
-//};
-//export default UserClassificationCell;
 import React from "react";
 import EditGradeButton from "./EditGradeButton";
 

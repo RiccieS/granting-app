@@ -25,7 +25,7 @@ export default function BranchSelect({ onStudentReset, onBranchSelect }) {
     const newValue = event.target.value;
     dispatch(setBranch(newValue));
     onStudentReset();
-    onBranchSelect(newValue); // Call the onBranchSelect prop with the new branch value
+    onBranchSelect(newValue); 
   };
 
   return (

@@ -16,7 +16,6 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange, onT
   };
 
   const handleSaveClick = async () => {
-    // Perform the save action or update the data with the selected value
     setIsEditing(false);
   
     const selectedLevel = classificationLevels.classificationLevels.find(level => level.name === selectedValue);
@@ -38,7 +37,6 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange, onT
           body: JSON.stringify(mutation),
         });
         const data = await response.json();
-        // Process the response as needed
         console.log(data);
         //setRefreshTable(prevRefreshTable => !prevRefreshTable);
         if (onTableReload) {
@@ -46,12 +44,10 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange, onT
         }
 
       } catch (error) {
-        // Handle the error
         console.error(error);
       }
     }
   
-    // Additional logic here if needed
   };
 
   if (isEditing) {

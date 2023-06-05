@@ -11,10 +11,7 @@ const UserClassificationsTableConstant = () => {
   const dispatch = useDispatch();
 
   const handleTableReload = useCallback(() => {
-    // Perform any necessary actions before reloading the table
-    // ...
-
-    // Dispatch the fetchClassifications action again to reload the table
+    
     dispatch(fetchClassifications(selectedStudent));
   }, [dispatch, selectedStudent]);
 
