@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
-import GradesTable from './components/GradesTable';
+import UserClassificationsTableConstant from 'components/UserClassificationsTableConstant';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
@@ -41,7 +41,8 @@ export default function App() {
               />
             </div>
             <div className="card-body">
-              <GradesTable selectedStudent={selectedStudent} />
+            <UserClassificationsTableConstant />
+             {/*<GradesTable selectedStudent={selectedStudent} />*/}
             </div>
           </div>
           <div className="card">

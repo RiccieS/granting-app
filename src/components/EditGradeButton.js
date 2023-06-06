@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,dispatch } from "react";
+import { useSelector } from 'react-redux';
 import classificationLevels from "../queries/fakeQueryLevels.json";
 import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
 import { authorizedFetch } from '../queries/authorizedFetch';
+import {fetchClassifications} from "../actions/classificationActions"
 
 const EditGradeButton = ({ label, classificationId,classificationLastChange, onTableReload  }) => {
+  const selectedStudent = useSelector((state) => state.studentSelect.selectedStudent);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
@@ -42,7 +45,7 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange, onT
         if (onTableReload) {
           onTableReload();
         }
-
+        dispatch(fetchClassifications(selectedStudent));
       } catch (error) {
         console.error(error);
       }
