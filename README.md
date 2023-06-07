@@ -20,8 +20,10 @@ Harmonogram:
 22.6. - odlazení a odprezentování finální verze
 
 
-Tasks:
+
 ***************************************************************************************************************************************************
+Tasks:
+
 Naše tabulka:
 select pro zobrazení konkrétního semestru (1-10) pro studenta (akorát se přidá další select)
 select pro vybrání zobrazovaného předmětu (PRG, AJ atd...)
