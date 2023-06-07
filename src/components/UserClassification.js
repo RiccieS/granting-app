@@ -1,25 +1,30 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { UserClassificationFetchAsyncAction } from '../actions/classificationActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchClassifications } from '../actions/classificationActions';
 import UserClassificationsTable from './UserClassificationsTable';
+import UserClassificationsTableEditable from './UserClassificationsTableEditable';
 
 export const UserClassification = ({ user }) => {
-  //console.log("Tady"+user);
   const dispatch = useDispatch();
-  
-  const classifications = user?.classifications;
-  
+  const classifications = useSelector(state => state.classifications);
+  const selectedStudent = useSelector(state => state.selectedStudent); // Assuming you have a selectedStudent state in your Redux store
+
   useEffect(() => {
-    if (user && !classifications) {
-      dispatch(UserClassificationFetchAsyncAction(user.id));
+    if (user && !classifications.length) {
+      dispatch(fetchClassifications(selectedStudent));
     }
-  }, [classifications, dispatch, user]);
+  }, [user, classifications.length, dispatch, selectedStudent]);
 
   if (!user) {
     return null; // Add a condition to handle the case when the 'user' object is null or undefined
   }
 
-  return <UserClassificationsTable user={user} />;
+  return (
+    <div>
+      <UserClassificationsTable user={user} />
+      <UserClassificationsTableEditable user={user} />
+    </div>
+  );
 };
 
 export default UserClassification;

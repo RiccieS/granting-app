@@ -17,28 +17,14 @@ export default function App() {
   };
 
   const handleStudentChange = async (studentId) => {
-    console.log("TED");
     setSelectedStudent(studentId);
     try {
       const response = await ClassificationByUserQuery(studentId);
       const data = await response.json();
       const userData = data.data.result
       setUser(userData)
-
-      /*
-      if (response.ok) {
-        const userData = response.result;
-        console.log(userData);
-        setUser(userData);
-      } else {
-        // Handle the error if the query was not successful
-        console.error('Error fetching user classifications:', response.error);
-      }
-      console.log(response.result);
-      */
     } catch (error) {
       console.error('Error fetching user classifications:', error);
-      // Handle the error if needed
     }
   };
 

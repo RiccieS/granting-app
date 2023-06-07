@@ -1,3 +1,7 @@
+import Table from "react-bootstrap/Table";
+import pivotmap from "../utils/pivotmap";
+import keyedmap from "../utils/keyedmap";
+import {UserClassificationsRowEditable} from "./UserClassificationsRowEditable";
 export const UserClassificationsTableEditable = ({user}) => {
     const classifications = user?.classifications || []
     const classificationsBySemester = pivotmap(
