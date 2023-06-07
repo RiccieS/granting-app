@@ -3,19 +3,39 @@ import { Provider } from 'react-redux';
 import store from './store';
 import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
-import UserClassificationsTableConstant from 'components/UserClassificationsTableConstant';
+import UserClassification from 'components/UserClassification';
+import { ClassificationByUserQuery } from './queries/UserClassificationQuery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
   const [selectedStudent, setSelectedStudent] = useState('');
+  const [user, setUser] = useState(null);
 
   const handleBranchSelect = (branch) => {
     setSelectedBranch(branch);
   };
 
-  const handleStudentChange = (studentId) => {
+  const handleStudentChange = async (studentId) => {
+    console.log("TED");
     setSelectedStudent(studentId);
+    try {
+      const response = await ClassificationByUserQuery(studentId);
+
+      if (response.ok) {
+        const userData = response.result;
+        console.log(userData);
+        setUser(userData);
+      } else {
+        // Handle the error if the query was not successful
+        console.error('Error fetching user classifications:', response.error);
+      }
+      console.log(response.result);
+
+    } catch (error) {
+      console.error('Error fetching user classifications:', error);
+      // Handle the error if needed
+    }
   };
 
   const handleStudentReset = () => {
@@ -41,8 +61,8 @@ export default function App() {
               />
             </div>
             <div className="card-body">
-            <UserClassificationsTableConstant />
-             {/*<GradesTable selectedStudent={selectedStudent} />*/}
+              <UserClassification user={user} />
+              {/*<GradesTable selectedStudent={selectedStudent} />*/}
             </div>
           </div>
           <div className="card">

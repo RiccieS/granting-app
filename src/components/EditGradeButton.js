@@ -1,7 +1,7 @@
 import React, { useState,dispatch } from "react";
 import { useSelector } from 'react-redux';
 import classificationLevels from "../queries/fakeQueryLevels.json";
-import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
+import { UserClassificationMutationQuery } from '../queries/UserClassificationMutationQuery';
 import { authorizedFetch } from '../queries/authorizedFetch';
 import {fetchClassifications} from "../actions/classificationActions"
 
@@ -26,7 +26,7 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange, onT
     
   
       const mutation = {
-        query: ClassificationUpdateMutation,
+        query: UserClassificationMutationQuery,
         variables: {
           id: classificationId,
           lastchange: classificationLastChange,
@@ -40,7 +40,7 @@ const EditGradeButton = ({ label, classificationId,classificationLastChange, onT
           body: JSON.stringify(mutation),
         });
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         //setRefreshTable(prevRefreshTable => !prevRefreshTable);
         if (onTableReload) {
           onTableReload();

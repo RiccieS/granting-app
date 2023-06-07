@@ -1,20 +1,8 @@
+import React from 'react';
 
-import React from "react";
-import EditGradeButton from "./EditGradeButton";
-
-const UserClassificationCell = ({ classification, onTableReload  }) => {
-  const levelName = classification?.level?.name || "";
-  const classificationId = classification?.id || null;
-  const classificationLastChange = classification?.lastchange || null;
-
-
-  return (
-    <td>
-      <span>{levelName} </span>
-      <EditGradeButton classificationId={classificationId} classificationLastChange={classificationLastChange} label="Edit"   onTableReload={onTableReload}
-/>
-    </td>
-  );
+export const UserClassificationCell = ({ classification, children }) => {
+  console.log("Tady");
+  console.log("ADWad"+classification?.level?.name);
+  return <td>{classification?.level?.name} {children}</td>;
 };
-
 export default UserClassificationCell;
