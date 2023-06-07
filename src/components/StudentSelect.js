@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StudentsQuery } from '../queries/StudentsQuery';
 import { setStudents, setLoading, setError, setSelectedStudent } from '../slices/StudentSelectSlice';
 
-export default function StudentSelect({ onStudentChange, selectedBranch, uniqueKey }) {
+export default function StudentSelect({ onStudentChange, selectedBranch }) {
   const dispatch = useDispatch();
   const { students, loading, error, selectedStudent } = useSelector((state) => state.studentSelect);
 
@@ -50,7 +50,6 @@ export default function StudentSelect({ onStudentChange, selectedBranch, uniqueK
       <select
         className="form-select"
         id="student-select"
-        uniqueKey={uniqueKey}
         value={selectedStudent}
         onChange={handleStudentChange}
       >

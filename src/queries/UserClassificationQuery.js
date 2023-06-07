@@ -3,7 +3,7 @@ import { authorizedFetch } from '../queries/authorizedFetch'
 export const ClassificationByUserQueryJSON = (id) => ({
 "query":`
   query {        
-    result: userById(id: '2d9dc5ca-a4a2-11ed-b9df-0242ac120003') {
+    result: userById(id: "${id}") {
       id
       name
       surname
@@ -22,7 +22,6 @@ export const ClassificationByUserQueryJSON = (id) => ({
       }
     }
   }`,
-  variables: { id },
 });
 
 export const ClassificationByUserQuery = (id) =>
