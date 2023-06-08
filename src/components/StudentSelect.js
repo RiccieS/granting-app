@@ -2,10 +2,24 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StudentsQuery } from '../queries/StudentsQuery';
 import { setStudents, setLoading, setError, setSelectedStudent } from '../slices/StudentSelectSlice';
+import { ClassificationByUserQuery } from 'queries/UserClassificationQuery';
 
-export default function StudentSelect({ onStudentChange, selectedBranch }) {
+export default function StudentSelect({ selectedBranch }) {
   const dispatch = useDispatch();
   const { students, loading, error, selectedStudent } = useSelector((state) => state.studentSelect);
+
+  const handleStudentChange = async (studentId) => {
+    try {
+      const response = await ClassificationByUserQuery(studentId);
+      const data = await response.json();
+      console.log(data);
+      const user = data.data.acclassificationPageByUser
+      console.log(user)
+      dispatch(setSelectedStudent(user));
+    } catch (error) {
+      console.error('Error fetching user classifications:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -30,12 +44,6 @@ export default function StudentSelect({ onStudentChange, selectedBranch }) {
     fetchStudents();
   }, [dispatch, selectedBranch]);
 
-  const handleStudentChange = (e) => {
-    const studentId = e.target.value;
-    dispatch(setSelectedStudent(studentId));
-    onStudentChange(studentId);
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -51,7 +59,7 @@ export default function StudentSelect({ onStudentChange, selectedBranch }) {
         className="form-select"
         id="student-select"
         value={selectedStudent}
-        onChange={handleStudentChange}
+        onChange={(e) => { handleStudentChange(selectedStudent)}}
       >
         <option value="">Vyber studenta</option>
         {students.map((student) => (

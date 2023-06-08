@@ -4,32 +4,20 @@ import store from './store';
 import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
 import UserClassification from 'components/UserClassification';
-import { ClassificationByUserQuery } from './queries/UserClassificationQuery';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector } from 'react-redux';
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
-  const [selectedStudent, setSelectedStudent] = useState('');
-  const [user, setUser] = useState(null);
+  const [selectedStudent, setSelectedStudentBox] = useState('');
+  const user = useSelector((state) => state.selectedStudent);
 
   const handleBranchSelect = (branch) => {
     setSelectedBranch(branch);
   };
 
-  const handleStudentChange = async (studentId) => {
-    setSelectedStudent(studentId);
-    try {
-      const response = await ClassificationByUserQuery(studentId);
-      const data = await response.json();
-      const userData = data.data.result
-      setUser(userData)
-    } catch (error) {
-      console.error('Error fetching user classifications:', error);
-    }
-  };
-
   const handleStudentReset = () => {
-    setSelectedStudent('');
+    setSelectedStudentBox('');
   };
 
   return (
@@ -46,7 +34,6 @@ export default function App() {
               <StudentSelect
                 key={selectedBranch}
                 selectedStudent={selectedStudent}
-                onStudentChange={handleStudentChange}
                 selectedBranch={selectedBranch}
               />
             </div>

@@ -6,14 +6,13 @@ import UserClassificationsTableEditable from './UserClassificationsTableEditable
 
 export const UserClassification = ({ user }) => {
   const dispatch = useDispatch();
-  const classifications = useSelector(state => state.classifications);
   const selectedStudent = useSelector(state => state.selectedStudent); // Assuming you have a selectedStudent state in your Redux store
 
   useEffect(() => {
-    if (user && !classifications.length) {
+    if (user) {
       dispatch(fetchClassifications(selectedStudent));
     }
-  }, [user, classifications.length, dispatch, selectedStudent]);
+  }, [user, dispatch, selectedStudent]);
 
   if (!user) {
     return null; // Add a condition to handle the case when the 'user' object is null or undefined
