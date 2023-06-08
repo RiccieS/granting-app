@@ -3,10 +3,11 @@ import { UserClassificationsRow } from "./UserClassificationsRow";
 import Table from "react-bootstrap/Table";
 import pivotmap from "../utils/pivotmap";
 import keyedmap from "../utils/keyedmap";
+import { useSelector } from "react-redux";
 
-export const UserClassificationsTable = ({user}) => {
+export const UserClassificationsTable = () => {
 
-  const classifications = user?.classifications || []
+  const classifications = useSelector((state) => state.gradesTable)
   const classificationsBySemester = pivotmap(
       classifications, classification => [classification.semester.id, classification]
   )  

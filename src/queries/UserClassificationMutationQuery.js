@@ -1,12 +1,12 @@
 import { authorizedFetch } from '../queries/authorizedFetch';
 
-export const UserClassificationMutationQueryJSON = ({id, lastchange, level_id}) => ({
+export const UserClassificationMutationQueryJSON = (id, lastchange, level_id) => ({
   query: `
-  mutation($id: ID! $lastchange: DateTime! $level_id: ID!) {
+  mutation {
       result: classificationUpdate(classification: {
-        id: $id,
-        lastchange: $lastchange,
-        classificationlevelId: $level_id
+        id: "${id}",
+        lastchange: "${lastchange}",
+        classificationlevelId: "${level_id}"
       }) {
         id
         msg
@@ -29,9 +29,8 @@ export const UserClassificationMutationQueryJSON = ({id, lastchange, level_id}) 
       }
     }
   `,
-  variables: {id, level_id, lastchange}
 })
-export const UserClassificationMutationQuery = ({id, lastchange, level_id}) =>
+export const UserClassificationMutationQuery = (id, lastchange, level_id) =>
     authorizedFetch('/gql', {
-        body: JSON.stringify(UserClassificationMutationQueryJSON({id, lastchange, level_id}))
+        body: JSON.stringify(UserClassificationMutationQueryJSON(id, lastchange, level_id))
     })

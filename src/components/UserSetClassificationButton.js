@@ -1,26 +1,37 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { UserClassificationUpdateAsyncAction } from '../actions/classificationActions';
-import { fetchClassifications } from '../actions/classificationActions';
+import { useDispatch } from 'react-redux';
+import { loadClassification } from '../slices/GradesTableSlice';
 import Button from "react-bootstrap/Button"
+import { UserClassificationMutationQuery } from 'queries/UserClassificationMutationQuery';
 
 export const UserSetClassificationButton = ({ classification, newlevel }) => {
   const dispatch = useDispatch();
-  const selectedStudent = useSelector((state) => state.selectedStudent); // Assuming you have a selectedStudent state in your Redux store
 
-  const onClick = () => {
-    dispatch(
-      UserClassificationUpdateAsyncAction({
-        id: classification.id,
-        lastchange: classification.lastchange,
-        level_id: newlevel.id,
+  const mutateData = () => (dispatch, getState) => {
+
+    console.log(classification)
+
+    UserClassificationMutationQuery(classification.id, classification.lastchange, newlevel.id)
+      .then(response => response.json())
+      .then(json => {
+        // Extract the projects data from the JSON response
+        const classifications = json.data?.result.classification.user.classifications
+
+        if (classifications) {
+          // Dispatch the 'loadProjects' action with the fetched projects
+          dispatch(loadClassification(classifications))
+        }
+        return json
       })
-    );
-    dispatch(fetchClassifications(selectedStudent));
-    // Dispatch the fetchClassifications action to refresh the table
   };
 
-  return <Button onClick={onClick}>{newlevel.name}</Button>;
+  const onClick = () => {
+
+    dispatch(mutateData(classification));
+   
+  };
+
+  return <Button onClick={() => {onClick()}}>{newlevel.name}</Button>;
 };
 
 export default UserSetClassificationButton;

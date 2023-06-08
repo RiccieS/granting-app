@@ -1,17 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  // Define your initial state here
-};
-
 const gradesTableSlice = createSlice({
   name: 'gradesTable',
-  initialState,
+  initialState: [],
   reducers: {
-    // Define your reducer actions here
+    loadClassification: (state, action) => {
+      state = action.payload
+      return state
+    },
   },
 });
 
-export const { /* Export your reducer actions */ } = gradesTableSlice.actions;
+export const { loadClassification } = gradesTableSlice.actions;
 
 export default gradesTableSlice.reducer;

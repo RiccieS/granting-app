@@ -12,9 +12,7 @@ export default function StudentSelect({ selectedBranch }) {
     try {
       const response = await ClassificationByUserQuery(studentId);
       const data = await response.json();
-      console.log(data);
-      const user = data.data.acclassificationPageByUser
-      console.log(user)
+      const user = data.data.result.id
       dispatch(setSelectedStudent(user));
     } catch (error) {
       console.error('Error fetching user classifications:', error);
@@ -47,27 +45,27 @@ export default function StudentSelect({ selectedBranch }) {
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  if (error) {
+  else if (error) {
     return <div>Chyba: {error.message}</div>;
   }
-
-  return (
-    <div>
-      <label htmlFor="student-select">Student:</label>
-      <select
-        className="form-select"
-        id="student-select"
-        value={selectedStudent}
-        onChange={(e) => { handleStudentChange(selectedStudent)}}
-      >
-        <option value="">Vyber studenta</option>
-        {students.map((student) => (
-          <option key={student.id} value={student.id}>
-            {student.name} {student.surname}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
+  else {
+    return (
+      <div>
+        <label htmlFor="student-select">Student:</label>
+        <select
+          className="form-select"
+          id="student-select"
+          value={selectedStudent}
+          onChange={(e) => { handleStudentChange(e.target.value)}}
+        >
+          <option value="">Vyber studenta</option>
+          {students.map((student) => (
+            <option key={student.id} value={student.id}>
+              {student.name} {student.surname}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 }
