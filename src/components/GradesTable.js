@@ -7,7 +7,6 @@ import fakeQueryLevel from '../queries/fakeQueryLevels.json';*/
 import UserClassificationsTableConstant from './UserClassificationsTableConstant';
 
 
-import { /* Import your actions */ } from '../slices/GradesTableSlice';
 
 export default function GradesTable({ selectedStudent }) {
   const dispatch = useDispatch();

@@ -12,6 +12,7 @@ export const ClassificationByUserQueryJSON = (id) => ({
         lastchange
         semester {
           id
+          order
         }
         level {
           id
