@@ -16,6 +16,7 @@ export const StudentsQueryJSON = () => ({
                 id
                 group {
                   name
+                  id
                 }
               }
             }

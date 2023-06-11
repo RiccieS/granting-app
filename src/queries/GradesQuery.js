@@ -8,23 +8,31 @@ import { authorizedFetch } from '../queries/authorizedFetch'
 export const GradesQueryJSON = () => ({
   "query":
     `query {
-      acclassificationPage{
+      acsemesterPage{
+        classifications{
           id
-        	user{
+          order
+          semester{
             id
-          }
-        	semester{
-            order
             subject{
-               name
+              id
+              name
             }
           }
-        	lastchange
-        	level{
+          level{
+            id
             name
           }
-        	       
-      }}`
+          user{
+            id
+            email
+          }
+          
+        }
+        
+      }
+    
+    }`
 });
 
 
