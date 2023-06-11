@@ -9,8 +9,10 @@ export const SubjectSelectQueryJSON = () => ({
         `query {
             acsemesterPage {
                 subject {
+                  id
                   name
                   semesters {
+                    id
                     order
                   }
                 }

@@ -29,7 +29,7 @@ export default function ProgramSelect() {
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedProgram(newValue));
-    const filteredData = await fetchClassificationStatData(selectedProgram);
+    const filteredData = await fetchClassificationStatData(newValue);
     const levelsOverview = createLevelsOverview(filteredData);
 
     // Output the levels overview for each group name
@@ -52,7 +52,7 @@ export default function ProgramSelect() {
     <div>
       <label htmlFor="program-select">Studijní program:</label>
       <select className="form-select" id="program-select" value={selectedProgram} onChange={handleChange}>
-        <option value="none">- Všechny programy -</option>
+        <option value="none">- Vyberte -</option>
         {programNames.map((program) => (
           <option key={program.id} value={program.id}>
             {program.name} - {program.type.title.name}
@@ -60,7 +60,7 @@ export default function ProgramSelect() {
         ))}
       </select>
       <div className="card-body">
-        <canvas id="chart"></canvas>
+        <canvas id="program-chart"></canvas>
       </div>
     </div>
   );

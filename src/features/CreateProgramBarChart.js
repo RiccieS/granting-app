@@ -5,8 +5,8 @@ Chart.register(LinearScale, CategoryScale, ...registerables);
 
 const createBarChart = (groupName, levels) => {
   // Get the canvas element
-  const canvas = document.getElementById('chart');
-
+  const canvas = document.getElementById('program-chart');
+  console.log("canvas "+canvas);
   if (canvas.chart) {
     // Dispose of the existing chart
     canvas.chart.destroy();
@@ -20,7 +20,7 @@ const createBarChart = (groupName, levels) => {
       labels: ['A', 'B', 'C', 'D', 'E', 'F'],
       datasets: [
         {
-          label: 'Grades',
+          label: 'Počty známek',
           data: [
             levels.countOfA,
             levels.countOfB,
@@ -41,20 +41,20 @@ const createBarChart = (groupName, levels) => {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Count',
+            text: 'Počet',
           },
         },
         x: {
           title: {
             display: true,
-            text: 'Grade',
+            text: 'Známka',
           },
         },
       },
       plugins: {
         title: {
           display: true,
-          text: `Bar Chart for Group: ${groupName}`,
+          text: `Bar diagram pro skupinu: ${groupName}`,
           padding: {
             top: 10,
             bottom: 20,

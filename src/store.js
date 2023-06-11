@@ -5,6 +5,7 @@ import BranchSelectReducer from './slices/BranchSelectSlice';
 import GradesTableReducer from './slices/GradesTableSlice'; 
 import ProgramSelectReducer from './slices/ProgramSelectSlice';
 import ClassificationStatDataReducer from 'slices/ClassificationStatDataSlice';
+import SubjectSelectReducer from './slices/SubjectSelectSlice';
 
 
 const rootReducer = {
@@ -13,6 +14,7 @@ const rootReducer = {
   gradesTable: GradesTableReducer,
   programSelect: ProgramSelectReducer,
   classificationStatData: ClassificationStatDataReducer,
+  subjectSelect: SubjectSelectReducer,
 };
 
 const store = configureStore({
