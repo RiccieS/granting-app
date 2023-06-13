@@ -29,7 +29,8 @@ export default function ProgramSelect() {
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedProgram(newValue));
-    const filteredData = await fetchClassificationStatData(newValue);
+    const parameters = [1,newValue];
+    const filteredData = await fetchClassificationStatData(parameters);
     const levelsOverview = createLevelsOverview(filteredData);
 
     // Output the levels overview for each group name
@@ -42,7 +43,7 @@ export default function ProgramSelect() {
         console.log(`Count of E: ${levels.countOfE}`);
         console.log(`Count of F: ${levels.countOfF}`);
         console.log('-----------------------------------');
-        createBarChart(groupName, levels);
+        createBarChart(groupName, levels, 'program-chart');
     });
     dispatch(setClassificationData(filteredData));
 

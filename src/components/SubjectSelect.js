@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
-import {setSubjectNames, setSelectedSubject} from '../slices/SubjectSelectSlice';
+import {setSubjectNames, setSelectedSubject, setClassificationsData} from '../slices/SubjectSelectSlice';
+import createLevelsOverview from '../features/CreateGroupLevelsOverview';
+import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
+import createBarChart  from '../features/CreateProgramBarChart'
 
 export default function SubjectSelect() {
   //const [selectedSubject, setSelectedSubject] = useState(''); // Stav pro uložení vybraného předmětu
@@ -21,16 +24,18 @@ export default function SubjectSelect() {
 
 data.data.acsemesterPage.forEach(item => {
   item.subject.semesters.forEach(semester => {
-    const subjectSemesterID = {
+   /* const subjectSemesterID = {
       semesterID: semester.id,
       subjectID: item.subject.id,
-    };
+    };*/
     const subject = {
       //subjectID: item.subject.id,
       //semesterID: semester.id,
       subjectName: item.subject.name,
       semesterOrder: semester.order,
-      subjectSemesterID: subjectSemesterID,
+      semesterID: semester.id,
+      subjectID: item.subject.id,
+      //subjectSemesterID: subjectSemesterID,
     };
     subjectNames.push(subject);
   });
@@ -50,11 +55,27 @@ dispatch(setSubjectNames(subjectNames));
     fetchData(); // Zavolání funkce pro načtení seznamu předmětů
   }, [dispatch]);
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedSubject(newValue)); // Nastavení vybraného předmětu
     //onSubjectChange(newValue); // Volání zadané funkce při změně vybraného předmětu
     console.log("Selected subject: "+newValue);
+    const [subjectID, semesterID ] = newValue.split(',');
+    const parameters = [2,subjectID,semesterID];
+    const filteredData = await fetchClassificationStatData(parameters);
+    const levelsOverview = createLevelsOverview(filteredData);
+    dispatch(setClassificationsData(filteredData));
+    Object.entries(levelsOverview).forEach(([groupName, levels]) => {
+      console.log(`Group Name: ${groupName}`);
+      console.log(`Count of A: ${levels.countOfA}`);
+      console.log(`Count of B: ${levels.countOfB}`);
+      console.log(`Count of C: ${levels.countOfC}`);
+      console.log(`Count of D: ${levels.countOfD}`);
+      console.log(`Count of E: ${levels.countOfE}`);
+      console.log(`Count of F: ${levels.countOfF}`);
+      console.log('-----------------------------------');
+      createBarChart(groupName, levels, 'subject-chart');
+  });
   };
 
   return (
@@ -62,10 +83,10 @@ dispatch(setSubjectNames(subjectNames));
       {/* Výběr předmětu */}
       <label htmlFor="subject-select">Předmět:</label>
       <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
-       <option value="none">- Vyberte -</option>
+       <option value="">- Vyberte -</option>
         {subjectNames.map((subject) => (
           
-          <option key={subject.subjectSemesterID} value={subject.subjectSemesterID}>
+          <option key={[subject.subjectID,subject.semesterID]} value={[subject.subjectID,subject.semesterID]}>
             {subject.subjectName}-{subject.semesterOrder}
           </option>
         ))}

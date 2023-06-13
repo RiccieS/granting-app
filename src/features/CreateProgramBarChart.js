@@ -3,9 +3,9 @@ import { Chart, LinearScale, CategoryScale, registerables } from 'chart.js';
 // Create a single Chart instance
 Chart.register(LinearScale, CategoryScale, ...registerables);
 
-const createBarChart = (groupName, levels) => {
+const createBarChart = (groupName, levels, id) => {
   // Get the canvas element
-  const canvas = document.getElementById('program-chart');
+  const canvas = document.getElementById(id);
   console.log("canvas "+canvas);
   if (canvas.chart) {
     // Dispose of the existing chart

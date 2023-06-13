@@ -2,7 +2,7 @@ import { authorizedFetch } from '../queries/authorizedFetch'
 
 //klasifikace pro budouci trideni podle studijnich programu
 
-export const ProgramClassificationQueryJSON = () => ({
+export const SubjectClassificationQueryJSON = () => ({
     "query":
         `query {
             acsemesterPage {
@@ -38,7 +38,7 @@ export const ProgramClassificationQueryJSON = () => ({
 /**
  * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
  */
-export const ProgramClassificationQuery = () =>
+export const SubjectClassificationQuery = () =>
     authorizedFetch('/gql', {
-        body: JSON.stringify(ProgramClassificationQueryJSON()),
+        body: JSON.stringify(SubjectClassificationQueryJSON()),
     })
