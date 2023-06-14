@@ -1,74 +1,60 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
-import {setSubjectNames, setSelectedSubject, setClassificationsData} from '../slices/SubjectSelectSlice';
+import { setSubjectNames, setSelectedSubject, setClassificationsData } from '../slices/SubjectSelectSlice';
 import createLevelsOverview from '../features/CreateGroupLevelsOverview';
 import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
-import createBarChart  from '../features/CreateProgramBarChart'
+import createBarChart from '../features/CreateProgramBarChart';
 
 export default function SubjectSelect() {
-  //const [selectedSubject, setSelectedSubject] = useState(''); // Stav pro uložení vybraného předmětu
-  //const [subjectOptions, setSubjectOptions] = useState([]); // Stav pro uložení seznamu možností předmětů
   const dispatch = useDispatch();
-  const { subjectNames, selectedSubject} = useSelector((state) => state.subjectSelect);
-
+  const { subjectNames, selectedSubject } = useSelector((state) => state.subjectSelect);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await SubjectSelectQuery(); // Volání dotazu na seznam předmětů
-        //console.log(response);
+        const response = await SubjectSelectQuery();
         const data = await response.json();
-        //dispatch(setSubjectNames(data.data.acsemesterPage));
-        const subjectNames = [];
 
-/*data.data.acsemesterPage.forEach(item => {
-  /*item.subject.forEach(s => {
-    const subject = {
-      subjectID: s.id,
-      subjectName: s.name,
-    };
-    subjectNames.push(subject);*/
-    /*const subject = {
-      subjectID: item.subject.id,
-      subjectName: item.subject.name,
-    };
-    subjectNames.push(subject);
-  });
-});*/
-data.data.acsemesterPage.forEach((item) => {
-  if (Array.isArray(item.subject)) {
-    item.subject.forEach((s) => {
-      const subject = {
-        subjectID: s.id,
-        subjectName: s.name,
-      };
-      subjectNames.push(subject);
-    });
-  } else {
-    const subject = {
-      subjectID: item.subject.id,
-      subjectName: item.subject.name,
-    };
-    subjectNames.push(subject);
-  }
-});
+        const uniqueSubjectIds = new Set(); // Store unique subject IDs
+        const subjectNames = data.data.acsemesterPage.reduce((subjects, item) => {
+          if (Array.isArray(item.subject)) {
+            item.subject.forEach((s) => {
+              if (!uniqueSubjectIds.has(s.id)) { // Check if the subject ID is already added
+                const subject = {
+                  subjectID: s.id,
+                  subjectName: s.name,
+                };
+                subjects.push(subject);
+                uniqueSubjectIds.add(s.id);
+              }
+            });
+          } else {
+            if (!uniqueSubjectIds.has(item.subject.id)) {
+              const subject = {
+                subjectID: item.subject.id,
+                subjectName: item.subject.name,
+              };
+              subjects.push(subject);
+              uniqueSubjectIds.add(item.subject.id);
+            }
+          }
+          return subjects;
+        }, []);
 
-dispatch(setSubjectNames(subjectNames));
+        dispatch(setSubjectNames(subjectNames));
       } catch (error) {
-        console.error('Error fetching subject names:', error); // Výpis chyby při načítání seznamu předmětů
+        console.error('Error fetching subject names:', error);
       }
     };
 
-    fetchData(); // Zavolání funkce pro načtení seznamu předmětů
+    fetchData();
   }, [dispatch]);
 
-  
   const handleChange = async (event) => {
     const newValue = event.target.value;
-    dispatch(setSelectedSubject(newValue)); // Nastavení vybraného předmětu
-    //onSubjectChange(newValue); // Volání zadané funkce při změně vybraného předmětu
-    const parameters = [3,newValue];
+    dispatch(setSelectedSubject(newValue));
+    const parameters = [3, newValue];
     const filteredData = await fetchClassificationStatData(parameters);
     const levelsOverview = createLevelsOverview(filteredData);
     dispatch(setClassificationsData(filteredData));
@@ -82,18 +68,16 @@ dispatch(setSubjectNames(subjectNames));
       console.log(`Count of F: ${levels.countOfF}`);
       console.log('-----------------------------------');
       createBarChart(groupName, levels, 'subject-chart');
-  });
+    });
   };
 
   return (
     <div>
-      {/* Výběr předmětu */}
       <label htmlFor="subject-select">Předmět:</label>
       <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
-       <option value="">- Vyberte -</option>
+        <option value="">- Vyberte -</option>
         {subjectNames.map((subject) => (
-          
-          <option key={[subject.subjectID]} value={[subject.subjectID]}>
+          <option key={subject.subjectID} value={subject.subjectID}>
             {subject.subjectName}
           </option>
         ))}
