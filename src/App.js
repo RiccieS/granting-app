@@ -3,6 +3,7 @@ import BranchSelect from './components/BranchSelect';
 import StudentSelect from './components/StudentSelect';
 import UserClassification from 'components/UserClassification';
 import ProgramSelect from 'components/ProgramSelect';
+import SubjectSemesterSelect from 'components/SubjectSemesterSelect';
 import SubjectSelect from 'components/SubjectSelect';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
@@ -38,6 +39,9 @@ export default function App() {
             <h2 className="card-header">Přehled statistik</h2>
             <div className="card-body">
               <ProgramSelect/>
+            </div>
+            <div className="card-body">
+              <SubjectSemesterSelect/>
             </div>
             <div className="card-body">
               <SubjectSelect/>
