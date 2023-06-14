@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux';
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
-  const user = useSelector((state) => state.studentSelect.selectedStudent);
+  const users = useSelector((state) => state.studentSelect.selectedStudent);
+  //console.log(users);
 
   const handleBranchSelect = (branch) => {
     setSelectedBranch(branch);
@@ -29,7 +30,7 @@ export default function App() {
               <StudentSelect key={selectedBranch} selectedBranch={selectedBranch} />
             </div>
             <div className="card-body">
-              <UserClassification user={user} />
+              <UserClassification users={users} />
               {/*<GradesTable selectedStudent={selectedStudent} />*/}
             </div>
            </div>
