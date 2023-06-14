@@ -15,7 +15,6 @@ export const UserClassification = ({ users }) => {
   }, [users, dispatch]);
 
   const classifications = useSelector((state) => state.gradesTable);
-  console.log(classifications);
   if (!classifications || !classifications.length) {
     return null; // Add a condition to handle the case when the 'classifications' array is null or empty
   } else {

@@ -10,7 +10,6 @@ export const UserClassificationsTable = ({ classifications }) => {
     classifications,
     (classification) => [classification.semester.id, classification]
   );
-  console.log(classificationsBySemester);
   const semesterIndex = keyedmap(
     classifications,
     (classification) => [classification.semester.id, classification.semester]

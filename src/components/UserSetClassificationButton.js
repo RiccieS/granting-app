@@ -15,8 +15,8 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
       .then(response => response.json())
       .then(json => {
         // Extract the projects data from the JSON response
+        //const classifications = json.data?.result.classification.user.classifications
         const classifications = json.data?.result.classification.user.classifications
-
         if (classifications) {
           // Dispatch the 'loadProjects' action with the fetched projects
           dispatch(loadClassification(classifications))
