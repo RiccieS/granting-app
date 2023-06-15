@@ -58,9 +58,15 @@ dispatch(setSubjectNames(subjectNames));
   };
 
   return (
+<<<<<<< Updated upstream
     <div>
       {/* Výběr předmětu */}
       <label htmlFor="subject-select">Předmět:</label>
+=======
+    <div className="card">
+      <h3 className="card-header" htmlFor="subject-select">Předmět:</h3>
+      <div className="card-body">
+>>>>>>> Stashed changes
       <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
        <option value="none">- Vyberte -</option>
         {subjectNames.map((subject) => (
@@ -70,9 +76,11 @@ dispatch(setSubjectNames(subjectNames));
           </option>
         ))}
       </select>
-      <div className="card-body">
+      <div>
         <canvas id="subject-chart"></canvas>
       </div>
+      </div>
+
     </div>
   );
 }

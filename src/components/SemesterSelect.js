@@ -1,13 +1,18 @@
 
-//DEPRECATED
 import React from 'react';
+import { useDispatch, useSelector} from 'react-redux';
+import { setSelectedSemester } from 'slices/SemesterSelectSlice';
 
-export default function SemesterSelect({ selectedSemester, onSemesterChange}) {
-
+export default function SemesterSelect({onSemesterChange}) {
+  const dispatch = useDispatch();
+  const { selectedSemester } = useSelector((state) => state.semesterSelect);
+  
   // Funkce pro změnu vybraného semestru
   const handleChange = (event) => {
-    const selectedValue = event.target.value;
-    onSemesterChange(selectedValue);
+    const selectedSemester = event.target.value;
+    dispatch(setSelectedSemester(selectedSemester));
+    onSemesterChange(selectedSemester);
+    //onSemesterChange(selectedValue);
   };
 
   return (
@@ -15,7 +20,7 @@ export default function SemesterSelect({ selectedSemester, onSemesterChange}) {
       <label htmlFor="semester-select">Vyberte semestr:</label>
 
       {/* Menu s výběrem semestru */}
-      <select className="form-select" id="semester-select" value={selectedSemester ? selectedSemester : ''} onChange={handleChange}>
+      <select className="form-select" id="semester-select" value={selectedSemester} onChange={handleChange}>
 
         {/* Možnost zobrazit všechny semestry */}
         <option key="all" value="all">-</option>

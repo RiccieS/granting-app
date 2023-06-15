@@ -1,9 +1,5 @@
 import React from 'react';
 import { useDispatch} from 'react-redux';
-/*import { GradesQuery } from '../queries/GradesQuery';
-import { authorizedFetch } from '../queries/authorizedFetch';
-import { ClassificationUpdateMutation } from '../queries/ClassificationUpdateMutation';
-import fakeQueryLevel from '../queries/fakeQueryLevels.json';*/
 import UserClassificationsTableConstant from './UserClassificationsTableConstant';
 
 

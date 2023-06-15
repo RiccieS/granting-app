@@ -5,21 +5,24 @@ import { fetchClassifications } from '../actions/classificationActions';
 
 const UserClassificationsTableConstant = () => {
   const selectedStudent = useSelector((state) => state.studentSelect.selectedStudent);
+  const selectedSemester = useSelector((state) => state.semesterSelect);
   const classifications = useSelector((state) => state.classifications.classifications);
   const loading = useSelector((state) => state.classifications.loading);
   const error = useSelector((state) => state.classifications.error);
+  
   const dispatch = useDispatch();
 
   const handleTableReload = useCallback(() => {
-    
-    dispatch(fetchClassifications(selectedStudent));
-  }, [dispatch, selectedStudent]);
+    console.log("semester: "+selectedSemester);
+    dispatch(fetchClassifications(selectedStudent, selectedSemester));
+  }, [dispatch, selectedStudent, selectedSemester]);
 
   useEffect(() => {
-    if (selectedStudent) {
-      dispatch(fetchClassifications(selectedStudent));
+    if (selectedStudent && selectedSemester) {
+      console.log("semester: "+selectedSemester);
+      dispatch(fetchClassifications(selectedStudent, selectedSemester));
     }
-  }, [dispatch, selectedStudent]);
+  }, [dispatch, selectedStudent, selectedSemester]);
 
   if (loading) {
     return <div>Loading...</div>;

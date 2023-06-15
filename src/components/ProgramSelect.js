@@ -49,8 +49,9 @@ export default function ProgramSelect() {
   };
 
   return (
-    <div>
-      <label htmlFor="program-select">Studijní program:</label>
+    <div className="card">
+      <h3 className="card-header" htmlFor="program-select">Studijní program:</h3>
+      <div className="card-body">
       <select className="form-select" id="program-select" value={selectedProgram} onChange={handleChange}>
         <option value="none">- Vyberte -</option>
         {programNames.map((program) => (
@@ -59,9 +60,11 @@ export default function ProgramSelect() {
           </option>
         ))}
       </select>
-      <div className="card-body">
+      <div>
         <canvas id="program-chart"></canvas>
       </div>
+      </div>
+      
     </div>
   );
 }

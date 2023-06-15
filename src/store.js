@@ -6,11 +6,13 @@ import GradesTableReducer from './slices/GradesTableSlice';
 import ProgramSelectReducer from './slices/ProgramSelectSlice';
 import ClassificationStatDataReducer from 'slices/ClassificationStatDataSlice';
 import SubjectSelectReducer from './slices/SubjectSelectSlice';
+import SemesterSelectReducer from './slices/SemesterSelectSlice';
 
 
 const rootReducer = {
   studentSelect: StudentSelectReducer,
   branchSelect: BranchSelectReducer,
+  semesterSelect: SemesterSelectReducer,
   gradesTable: GradesTableReducer,
   programSelect: ProgramSelectReducer,
   classificationStatData: ClassificationStatDataReducer,
