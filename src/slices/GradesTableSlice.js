@@ -8,9 +8,16 @@ const gradesTableSlice = createSlice({
       state = action.payload
       return state
     },
+
+    updateClassification: (state, action) => {
+      const newTable = state.map((user) => user.result.id === action.payload.result.id ? action.payload : user)
+
+      state = newTable;
+      return state;
+    },
   },
 });
 
-export const { loadClassification } = gradesTableSlice.actions;
+export const { loadClassification, updateClassification } = gradesTableSlice.actions;
 
 export default gradesTableSlice.reducer;

@@ -2,10 +2,8 @@ import Table from "react-bootstrap/Table";
 import pivotmap from "../utils/pivotmap";
 import keyedmap from "../utils/keyedmap";
 import {UserClassificationsRowEditable} from "./UserClassificationsRowEditable";
-import { useSelector } from "react-redux";
 
-export const UserClassificationsTableEditable = ({user}) => {
-    const classifications = useSelector((state) => state.gradesTable);
+export const UserClassificationsTableEditable = ({classifications}) => {
     const classificationsBySemester = pivotmap(
         classifications, classification => [classification.semester.id, classification]
     )  

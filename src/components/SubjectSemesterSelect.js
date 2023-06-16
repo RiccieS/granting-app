@@ -79,7 +79,6 @@ export default function SubjectSemesterSelect() {
         <canvas id="subjectSemester-chart"></canvas>
       </div>
       </div>
-      
     </div>
   );
 }

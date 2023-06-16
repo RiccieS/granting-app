@@ -3,36 +3,27 @@ import { useDispatch,useSelector } from 'react-redux';
 import { fetchClassifications } from '../actions/classificationActions';
 import UserClassificationsTable from './UserClassificationsTable';
 import UserClassificationsTableEditable from './UserClassificationsTableEditable';
+import { useSelector } from "react-redux";
 
-<<<<<<< Updated upstream
-export const UserClassification = ({ user }) => {
-=======
+
 export const UserClassification = ({ users }) => {
   const selectedSemester = useSelector((state) => state.semesterSelect);
->>>>>>> Stashed changes
+
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-<<<<<<< Updated upstream
-    if (user) {
-      dispatch(fetchClassifications(user));
-=======
+
     if (users && users.length > 0) {
       dispatch(fetchClassifications(String(users),selectedSemester.selectedSemester)); // Dispatch the action to fetch classifications
->>>>>>> Stashed changes
     }
-  }, [user, dispatch]);
+  }, [users, dispatch]);
 
-  if (!user) {
-    return null; // Add a condition to handle the case when the 'user' object is null or undefined
-  }
-  else{
+  const classifications = useSelector((state) => state.gradesTable);
+  if (!classifications || !classifications.length) {
+    return null; // Add a condition to handle the case when the 'classifications' array is null or empty
+  } else {
     return (
       <div>
-<<<<<<< Updated upstream
-        <UserClassificationsTable />
-        <UserClassificationsTableEditable />
-=======
         {classifications.map((clasificationOfStudent) => (
           <div key={clasificationOfStudent.result?.id} className="card">
             <h3 className="card-header">Student: {clasificationOfStudent.result?.name} {clasificationOfStudent.result?.surname}</h3>
@@ -42,10 +33,10 @@ export const UserClassification = ({ users }) => {
             </div>
           </div>
         ))}
->>>>>>> Stashed changes
       </div>
     );
   }
+  
 };
 
 export default UserClassification;

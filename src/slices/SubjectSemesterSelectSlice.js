@@ -6,8 +6,8 @@ const initialState = {
   selectedSubject: [],
 };
 
-const subjectSelectSlice = createSlice({
-  name: 'subjectSelect',
+const subjectSemesterSelectSlice = createSlice({
+  name: 'subjectSemesterSelect',
   initialState,
   reducers: {
     setSubjectNames: (state, action) => {
@@ -22,6 +22,6 @@ const subjectSelectSlice = createSlice({
   },
 });
 
-export const { setSubjectNames, setSelectedSubject, setClassificationsData} = subjectSelectSlice.actions;
+export const { setSubjectNames, setSelectedSubject, setClassificationsData} = subjectSemesterSelectSlice.actions;
 
-export default subjectSelectSlice.reducer;
+export default subjectSemesterSelectSlice.reducer;

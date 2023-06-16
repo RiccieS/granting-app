@@ -15,12 +15,11 @@ export const UserClassificationMutationQueryJSON = (id, lastchange, level_id) =>
             id
             name
             surname
-            email
             classifications {
               id
               lastchange
               order
-              semester { id }
+              semester { id, order }
               level { id name }
               date
             }

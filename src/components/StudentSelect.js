@@ -2,21 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StudentsQuery } from '../queries/StudentsQuery';
 import { setStudents, setLoading, setError, setSelectedStudent } from '../slices/StudentSelectSlice';
-import { ClassificationByUserQuery } from 'queries/UserClassificationQuery';
 
 export default function StudentSelect({ selectedBranch }) {
   const dispatch = useDispatch();
-  const { students, loading, error, selectedStudent } = useSelector((state) => state.studentSelect);
+  const { students, loading, error, selectedStudents } = useSelector((state) => state.studentSelect);
 
-  const handleStudentChange = async (studentId) => {
-    try {
-      const response = await ClassificationByUserQuery(studentId);
-      const data = await response.json();
-      const user = data.data.result.id
-      dispatch(setSelectedStudent(user));
-    } catch (error) {
-      console.error('Error fetching user classifications:', error);
-    }
+  const handleStudentChange = (selectedOptions) => {
+    const selectedValues = Array.from(selectedOptions).map((option) => option.value);
+    dispatch(setSelectedStudent(selectedValues));
   };
 
   useEffect(() => {
@@ -44,21 +37,20 @@ export default function StudentSelect({ selectedBranch }) {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-  else if (error) {
-    return <div>Chyba: {error.message}</div>;
-  }
-  else {
+  } else if (error) {
+    return <div>Error: {error.message}</div>;
+  } else {
     return (
       <div>
-        <label htmlFor="student-select">Student:</label>
+        <label htmlFor="student-select">Students:</label>
         <select
           className="form-select"
           id="student-select"
-          value={selectedStudent}
-          onChange={(e) => { handleStudentChange(e.target.value)}}
+          value={selectedStudents}
+          multiple
+          onChange={(e) => handleStudentChange(e.target.selectedOptions)}
         >
-          <option value="">Vyber studenta</option>
+          <option value="">Select students</option>
           {students.map((student) => (
             <option key={student.id} value={student.id}>
               {student.name} {student.surname}

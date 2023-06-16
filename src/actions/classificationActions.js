@@ -1,41 +1,3 @@
-/*import { ClassificationByUserQuery } from '../queries/UserClassificationQuery';
-import { loadClassification } from '../slices/GradesTableSlice';
-
-<<<<<<< Updated upstream
-export const fetchClassifications = (selectedStudent) => async (dispatch, getState) => {
-
-  try {
-    const response = await ClassificationByUserQuery(selectedStudent);
-    const data = await response.json();
-    const classification = data.data.result.classifications;
-    dispatch(loadClassification(classification))
-=======
-export const fetchClassifications = (selectedStudent, selectedSemester) => async (dispatch, getState) => {
-
-
-  try {
-    const studentIds = selectedStudent.split(",").map((id) => id.trim()); // Explode selectedStudent by comma
-    const classificationResults = [];
-
-    for (const studentId of studentIds) {
-      const response = await ClassificationByUserQuery(studentId);
-      const data = await response.json();
-      const classification = data.data;
-      console.log(classification);
-      classificationResults.push(classification);
-    }
-    //console.log(classificationResults);
-
-    dispatch(loadClassification(classificationResults));
->>>>>>> Stashed changes
-  } catch (error) {
-    console.log(error)
-  }
-<<<<<<< Updated upstream
-};
-=======
-};*/
-
 import { ClassificationByUserQuery } from '../queries/UserClassificationQuery';
 import { loadClassification } from '../slices/GradesTableSlice';
 
@@ -78,4 +40,4 @@ export const fetchClassifications = (selectedStudent, selectedSemester) => async
   }
 };
 
->>>>>>> Stashed changes
+};

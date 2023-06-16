@@ -3,36 +3,43 @@ import { UserClassificationsRow } from "./UserClassificationsRow";
 import Table from "react-bootstrap/Table";
 import pivotmap from "../utils/pivotmap";
 import keyedmap from "../utils/keyedmap";
-import { useSelector } from "react-redux";
 
-export const UserClassificationsTable = () => {
+export const UserClassificationsTable = ({ classifications }) => {
 
-  const classifications = useSelector((state) => state.gradesTable)
   const classificationsBySemester = pivotmap(
-      classifications, classification => [classification.semester.id, classification]
-  )  
+    classifications,
+    (classification) => [classification.semester.id, classification]
+  );
   const semesterIndex = keyedmap(
-      classifications, classification => [classification.semester.id, classification.semester]
-  )  
+    classifications,
+    (classification) => [classification.semester.id, classification.semester]
+  );
+
   return (
-      <Table>
-          <thead>
-              <tr>
-                  <td>semester</td>
-                  <td>1.</td>
-                  <td>2.</td>
-                  <td>3.</td>
-                  <td></td>
-              </tr>
-          </thead>
-          <tbody>
-            
-              {Object.entries(classificationsBySemester).map(
-                  ([semesterId, clist]) => <UserClassificationsRow key={semesterId} classifications={clist}><td>{semesterIndex[semesterId].order}</td></UserClassificationsRow>
-              )}                
-          </tbody>
-      </Table>
-  )
-}
+    <Table>
+      <thead>
+        <tr>
+          <th>semester</th>
+          <th>1.</th>
+          <th>2.</th>
+          <th>3.</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.entries(classificationsBySemester).map(
+          ([semesterId, clist]) => (
+            <UserClassificationsRow
+              key={semesterId}
+              classifications={clist}
+            >
+              <td>{semesterIndex[semesterId].order}</td>
+            </UserClassificationsRow>
+          )
+        )}
+      </tbody>
+    </Table>
+  );
+};
 
 export default UserClassificationsTable;
