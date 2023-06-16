@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+/*import React, { useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchClassifications } from '../actions/classificationActions';
 import UserClassificationsTable from './UserClassificationsTable';
@@ -13,6 +13,7 @@ export const UserClassification = ({ users }) => {
   useEffect(() => {
 
     if (users && users.length > 0) {
+      console.log("users: " + users);
       dispatch(fetchClassifications(String(users),selectedSemester.selectedSemester)); // Dispatch the action to fetch classifications
     }
   }, [users,selectedSemester.selectedSemester, dispatch]);
@@ -36,6 +37,57 @@ export const UserClassification = ({ users }) => {
     );
   }
   
+};
+
+export default UserClassification;*/
+
+import React, { useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchClassifications } from '../actions/classificationActions';
+import UserClassificationsTable from './UserClassificationsTable';
+import UserClassificationsTableEditable from './UserClassificationsTableEditable';
+
+export const UserClassification = ({ users }) => {
+  const selectedSemester = useSelector((state) => state.semesterSelect);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (users && users.length > 0) {
+      dispatch(fetchClassifications(String(users), selectedSemester.selectedSemester));
+    }
+  }, [users, selectedSemester.selectedSemester, dispatch]);
+
+  const classifications = useSelector((state) => state.gradesTable);
+
+  if (!classifications || !classifications.length) {
+    return null;
+  } else {
+    // Filter out duplicate entries
+    const uniqueClassifications = [];
+    const userIds = new Set();
+
+    classifications.forEach((classification) => {
+      const userId = classification.result?.id;
+      if (userId && !userIds.has(userId)) {
+        uniqueClassifications.push(classification);
+        userIds.add(userId);
+      }
+    });
+
+    return (
+      <div>
+        {uniqueClassifications.map((classificationOfStudent) => (
+          <div key={classificationOfStudent.result?.id} className="card">
+            <h3 className="card-header">Student: {classificationOfStudent.result?.name} {classificationOfStudent.result?.surname}</h3>
+            <div className="card-body">
+              <UserClassificationsTable classifications={classificationOfStudent.result?.classifications} />
+              <UserClassificationsTableEditable classifications={classificationOfStudent.result?.classifications} />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 };
 
 export default UserClassification;

@@ -9,7 +9,7 @@ export const fetchClassifications = (selectedStudent, selectedSemester) => async
     for (const studentId of studentIds) {
       const response = await ClassificationByUserQuery(studentId);
       const data = await response.json();
-      if(selectedSemester >= 1 && selectedSemester <= 10){
+      if(selectedSemester >= 1 && selectedSemester <= 10 && data.data.result.classifications.length() > 0) {
         const classifications = data.data.result.classifications || [];
         console.log("classifications: "+classifications);
         console.log("classifications orders: "+classifications[0].semester.order);
