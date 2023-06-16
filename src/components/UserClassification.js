@@ -3,7 +3,6 @@ import { useDispatch,useSelector } from 'react-redux';
 import { fetchClassifications } from '../actions/classificationActions';
 import UserClassificationsTable from './UserClassificationsTable';
 import UserClassificationsTableEditable from './UserClassificationsTableEditable';
-import { useSelector } from "react-redux";
 
 
 export const UserClassification = ({ users }) => {

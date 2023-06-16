@@ -39,5 +39,3 @@ export const fetchClassifications = (selectedStudent, selectedSemester) => async
     console.log(error);
   }
 };
-
-};

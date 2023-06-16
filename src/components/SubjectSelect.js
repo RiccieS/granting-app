@@ -72,14 +72,10 @@ export default function SubjectSelect() {
   };
 
   return (
-<<<<<<< Updated upstream
-    <div>
-      <label htmlFor="subject-select">Předmět:</label>
-=======
+
     <div className="card">
       <h3 className="card-header" htmlFor="subject-select">Předmět:</h3>
       <div className="card-body">
->>>>>>> Stashed changes
       <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
         <option value="">- Vyberte -</option>
         {subjectNames.map((subject) => (

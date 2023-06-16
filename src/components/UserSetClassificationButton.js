@@ -1,10 +1,6 @@
-
-
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateClassification } from '../slices/GradesTableSlice';
-import Button from 'react-bootstrap/Button';
 import { UserClassificationMutationQuery } from 'queries/UserClassificationMutationQuery';
 
 import { XLg, SendFill } from "react-bootstrap-icons";
@@ -32,7 +28,7 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
   };
 
       //vnitrni stavova promenna definujici, zda je cervene tlacitko zobrazene nebo neni
-      const [ state, setState ] = useState(0)
+      const [ state, setState ] = useState(0);
 
       //nastavi, ze se cervene tlacitko nezobrazuje
       const setState0 = useCallback(() => setState(0))
