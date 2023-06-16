@@ -64,8 +64,9 @@ export default function SubjectSemesterSelect() {
   };
 
   return (
-    <div>
-      <label htmlFor="subject-select">Semestr předmětu:</label>
+    <div className="card">
+      <h3 className="card-header" htmlFor="subject-select">Semestr předmětu:</h3>
+      <div className="card-body">
       <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
         <option value="">- Vyberte -</option>
         {subjectNames.map((subject) => (
@@ -74,8 +75,9 @@ export default function SubjectSemesterSelect() {
           </option>
         ))}
       </select>
-      <div className="card-body">
+      <div>
         <canvas id="subjectSemester-chart"></canvas>
+      </div>
       </div>
     </div>
   );

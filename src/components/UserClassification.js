@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { fetchClassifications } from '../actions/classificationActions';
 import UserClassificationsTable from './UserClassificationsTable';
 import UserClassificationsTableEditable from './UserClassificationsTableEditable';
 import { useSelector } from "react-redux";
 
+
 export const UserClassification = ({ users }) => {
+  const selectedSemester = useSelector((state) => state.semesterSelect);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
+
     if (users && users.length > 0) {
-      dispatch(fetchClassifications(String(users))); // Dispatch the action to fetch classifications
+      dispatch(fetchClassifications(String(users),selectedSemester.selectedSemester)); // Dispatch the action to fetch classifications
     }
   }, [users, dispatch]);
 
@@ -21,10 +25,12 @@ export const UserClassification = ({ users }) => {
     return (
       <div>
         {classifications.map((clasificationOfStudent) => (
-          <div key={clasificationOfStudent.result?.id}>
-            <h3>Jmeno: {clasificationOfStudent.result?.name} {clasificationOfStudent.result?.surname}</h3>
+          <div key={clasificationOfStudent.result?.id} className="card">
+            <h3 className="card-header">Student: {clasificationOfStudent.result?.name} {clasificationOfStudent.result?.surname}</h3>
+            <div className="card-body">
             <UserClassificationsTable classifications={clasificationOfStudent.result?.classifications} />
             <UserClassificationsTableEditable classifications={clasificationOfStudent.result?.classifications} />
+            </div>
           </div>
         ))}
       </div>
