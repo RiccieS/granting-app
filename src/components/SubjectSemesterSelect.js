@@ -44,23 +44,32 @@ export default function SubjectSemesterSelect() {
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedSubject(newValue));
-    console.log('Selected subject: ' + newValue);
-    const [subjectID, semesterID] = newValue.split(',');
-    const parameters = [2, subjectID, semesterID];
-    const filteredData = await fetchClassificationStatData(parameters);
-    const levelsOverview = createLevelsOverview(filteredData);
-    dispatch(setClassificationsData(filteredData));
-    Object.entries(levelsOverview).forEach(([groupName, levels]) => {
-      console.log(`Group Name: ${groupName}`);
-      console.log(`Count of A: ${levels.countOfA}`);
-      console.log(`Count of B: ${levels.countOfB}`);
-      console.log(`Count of C: ${levels.countOfC}`);
-      console.log(`Count of D: ${levels.countOfD}`);
-      console.log(`Count of E: ${levels.countOfE}`);
-      console.log(`Count of F: ${levels.countOfF}`);
-      console.log('-----------------------------------');
-      createBarChart(groupName, levels, 'subjectSemester-chart');
-    });
+    if (newValue === "") {
+      // Clear the canvas
+      const canvas = document.getElementById("subjectSemester-chart");
+      const context = canvas.getContext("2d");
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    else{
+      console.log('Selected subject: ' + newValue);
+      const [subjectID, semesterID] = newValue.split(',');
+      const parameters = [2, subjectID, semesterID];
+      const filteredData = await fetchClassificationStatData(parameters);
+      const levelsOverview = createLevelsOverview(filteredData);
+      dispatch(setClassificationsData(filteredData));
+      Object.entries(levelsOverview).forEach(([groupName, levels]) => {
+        console.log(`Group Name: ${groupName}`);
+        console.log(`Count of A: ${levels.countOfA}`);
+        console.log(`Count of B: ${levels.countOfB}`);
+        console.log(`Count of C: ${levels.countOfC}`);
+        console.log(`Count of D: ${levels.countOfD}`);
+        console.log(`Count of E: ${levels.countOfE}`);
+        console.log(`Count of F: ${levels.countOfF}`);
+        console.log('-----------------------------------');
+        createBarChart(groupName, levels, 'subjectSemester-chart');
+      });
+    }
+
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { updateClassification } from '../slices/GradesTableSlice';
 import { UserClassificationMutationQuery } from 'queries/UserClassificationMutationQuery';
 
@@ -7,7 +7,6 @@ import { XLg, SendFill } from "react-bootstrap-icons";
 
 export const UserSetClassificationButton = ({ classification, newlevel }) => {
   const dispatch = useDispatch();
-  const gradesTable = useSelector((state) => state.gradesTable);
 
   useEffect(() => {
     // Empty dependency array, runs only once when the component mounts
@@ -27,14 +26,14 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
       });
   };
 
-      //vnitrni stavova promenna definujici, zda je cervene tlacitko zobrazene nebo neni
+      //vnitrni stavova promenna definujici, zda je zobrazeno tlacitko pro vyber znamky nebo tlacitka pro jeji ulozeni/zruseni
       const [ state, setState ] = useState(0);
 
-      //nastavi, ze se cervene tlacitko nezobrazuje
-      const setState0 = useCallback(() => setState(0))
+      //nastavi, ze je zobrazeno tlacitko znamky
+      const setState0 = useCallback(() => setState(0), []);
   
-      //nastavi, ze se cervene tlacitko zobrazuje
-      const setState1 = useCallback(() => setState(1))
+      //nastavi, ze se zobrazi editacni tlacitka
+      const setState1 = useCallback(() => setState(1), []);
   
   const onClick = () => {
     setState0();

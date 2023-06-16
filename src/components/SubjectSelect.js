@@ -54,6 +54,13 @@ export default function SubjectSelect() {
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedSubject(newValue));
+    if (newValue === "") {
+      // Clear the canvas
+      const canvas = document.getElementById("subject-chart");
+      const context = canvas.getContext("2d");
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    else{
     const parameters = [3, newValue];
     const filteredData = await fetchClassificationStatData(parameters);
     const levelsOverview = createLevelsOverview(filteredData);
@@ -69,6 +76,8 @@ export default function SubjectSelect() {
       console.log('-----------------------------------');
       createBarChart(groupName, levels, 'subject-chart');
     });
+    }
+    
   };
 
   return (

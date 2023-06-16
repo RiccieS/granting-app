@@ -34,23 +34,32 @@ export default function ProgramSelect() {
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedProgram(newValue));
-    const parameters = [1, newValue];
-    const filteredData = await fetchClassificationStatData(parameters);
-    const levelsOverview = createLevelsOverview(filteredData);
-
-    // Output the levels overview for each group name
-    Object.entries(levelsOverview).forEach(([groupName, levels]) => {
-      console.log(`Group Name: ${groupName}`);
-      console.log(`Count of A: ${levels.countOfA}`);
-      console.log(`Count of B: ${levels.countOfB}`);
-      console.log(`Count of C: ${levels.countOfC}`);
-      console.log(`Count of D: ${levels.countOfD}`);
-      console.log(`Count of E: ${levels.countOfE}`);
-      console.log(`Count of F: ${levels.countOfF}`);
-      console.log('-----------------------------------');
-      createBarChart(groupName, levels, 'program-chart');
-    });
-    dispatch(setClassificationData(filteredData));
+    if (newValue === "") {
+      // Clear the canvas
+      const canvas = document.getElementById("program-chart");
+      const context = canvas.getContext("2d");
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    else{
+      const parameters = [1, newValue];
+      const filteredData = await fetchClassificationStatData(parameters);
+      const levelsOverview = createLevelsOverview(filteredData);
+      dispatch(setClassificationData(filteredData));
+      // Output the levels overview for each group name
+      Object.entries(levelsOverview).forEach(([groupName, levels]) => {
+        console.log(`Group Name: ${groupName}`);
+        console.log(`Count of A: ${levels.countOfA}`);
+        console.log(`Count of B: ${levels.countOfB}`);
+        console.log(`Count of C: ${levels.countOfC}`);
+        console.log(`Count of D: ${levels.countOfD}`);
+        console.log(`Count of E: ${levels.countOfE}`);
+        console.log(`Count of F: ${levels.countOfF}`);
+        console.log('-----------------------------------');
+        createBarChart(groupName, levels, 'program-chart');
+      });
+      
+    }
+    
   };
 
   return (
@@ -58,7 +67,7 @@ export default function ProgramSelect() {
       <h3 className="card-header" htmlFor="program-select">Studijní program:</h3>
       <div className="card-body">
       <select className="form-select" id="program-select" value={selectedProgram} onChange={handleChange}>
-        <option value="none">- Vyberte -</option>
+        <option value="">- Vyberte -</option>
         {programNames.map((program) => (
           <option key={program.id} value={program.id}>
             {program.name} - {program.type.title.name}

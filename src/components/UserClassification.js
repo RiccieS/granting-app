@@ -15,7 +15,7 @@ export const UserClassification = ({ users }) => {
     if (users && users.length > 0) {
       dispatch(fetchClassifications(String(users),selectedSemester.selectedSemester)); // Dispatch the action to fetch classifications
     }
-  }, [users, dispatch]);
+  }, [users,selectedSemester.selectedSemester, dispatch]);
 
   const classifications = useSelector((state) => state.gradesTable);
   if (!classifications || !classifications.length) {

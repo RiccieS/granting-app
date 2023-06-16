@@ -15,7 +15,7 @@ export const fetchClassifications = (selectedStudent, selectedSemester) => async
         console.log("classifications orders: "+classifications[0].semester.order);
         console.log("semester: "+selectedSemester);
         const filteredClassifications = classifications.filter(
-          (classification) => classification.semester.order === selectedSemester.toString()
+          (classification) => classification.semester.order.toString() === selectedSemester.toString()
         );
         console.log("filtered: "+filteredClassifications);
         const updatedData = { ...data.data, result: { ...data.data.result, classifications: filteredClassifications } };
