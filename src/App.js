@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
-  const [, setSelectedSemester] = useState('all'); 
+  const [, setSelectedSemester] = useState('all');
   const users = useSelector((state) => state.studentSelect.selectedStudent);
   //console.log(users);
 
@@ -24,34 +24,34 @@ export default function App() {
   };
 
   return (
-      <div>
-        <div className="container-fluid p-5 bg-success text-white text-center">
-          <h1>Aplikace pro správu klasifikace</h1>
-        </div>
-        <div className="container mt-5">
-          <div className="card">
-            <h2 className="card-header">Přehled studentů</h2>
-            <div className="card-body">
-              <BranchSelect onBranchSelect={handleBranchSelect} />
-              <SemesterSelect onSemesterChange={handleSemesterChange} />
-              <StudentSelect key={selectedBranch} selectedBranch={selectedBranch} />
-            </div>
-            <div className="card-body">
-              <UserClassification users={users} />
-              {/*<GradesTable selectedStudent={selectedStudent} />*/}
-            </div>
-           </div>
+    <div>
+      <div className="container-fluid p-5 bg-success text-white text-center">
+        <h1>Aplikace pro správu klasifikace</h1>
+      </div>
+      <div className="container mt-5">
+        <div className="card">
+          <h2 className="card-header">Přehled studentů</h2>
+          <div className="card-body">
+            <BranchSelect onBranchSelect={handleBranchSelect} />
+            <SemesterSelect onSemesterChange={handleSemesterChange} />
+            <StudentSelect key={selectedBranch} selectedBranch={selectedBranch} />
           </div>
-          <div className="container mt-5">
-          <div className="card">
-            <h2 className="card-header">Přehled statistik</h2>
-            <div className="card-body">
-              <ProgramSelect/>
-              <SubjectSemesterSelect/>
-              <SubjectSelect/>
-            </div>
+          <div className="card-body">
+            <UserClassification users={users} />
+            {/*<GradesTable selectedStudent={selectedStudent} />*/}
           </div>
         </div>
       </div>
+      <div className="container mt-5">
+        <div className="card">
+          <h2 className="card-header">Přehled statistik</h2>
+          <div className="card-body">
+            <ProgramSelect />
+            <SubjectSemesterSelect />
+            <SubjectSelect />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

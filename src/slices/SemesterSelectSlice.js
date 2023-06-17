@@ -10,10 +10,11 @@ const semesterSelectSlice = createSlice({
   reducers: {
     setSelectedSemester: (state, action) => {
       state.selectedSemester = action.payload;
+      console.log(action.payload);
     },
   },
 });
 
-export const { setSelectedSemester} = semesterSelectSlice.actions;
+export const { setSelectedSemester } = semesterSelectSlice.actions;
 
 export default semesterSelectSlice.reducer;
