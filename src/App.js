@@ -8,7 +8,7 @@ import SubjectSelect from 'components/SubjectSelect';
 import SemesterSelect from 'components/SemesterSelect';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
-
+import StudentsBySubjectSemesterSelect from "./components/StudentsBySubjectSemesterSelect";
 export default function App() {
   const [selectedBranch, setSelectedBranch] = useState('all');
   const [, setSelectedSemester] = useState('all');
@@ -39,6 +39,12 @@ export default function App() {
           <div className="card-body">
             <UserClassification users={users} />
             {/*<GradesTable selectedStudent={selectedStudent} />*/}
+          </div>
+        </div>
+        <div className='card'>
+          <h2 className="card-header">Přehled studentů podle předmětu</h2>
+          <div className="card-body">
+            <StudentsBySubjectSemesterSelect />
           </div>
         </div>
       </div>

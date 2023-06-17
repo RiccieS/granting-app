@@ -19,7 +19,12 @@ export const UserClassificationMutationQueryJSON = (id, lastchange, level_id) =>
               id
               lastchange
               order
-              semester { id, order }
+              semester { id, order
+                subject{
+                  id
+                  name
+                }
+               }
               level { id name }
               date
             }
@@ -30,6 +35,6 @@ export const UserClassificationMutationQueryJSON = (id, lastchange, level_id) =>
   `,
 })
 export const UserClassificationMutationQuery = (id, lastchange, level_id) =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(UserClassificationMutationQueryJSON(id, lastchange, level_id))
-    })
+  authorizedFetch('/gql', {
+    body: JSON.stringify(UserClassificationMutationQueryJSON(id, lastchange, level_id))
+  })

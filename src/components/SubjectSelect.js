@@ -60,24 +60,24 @@ export default function SubjectSelect() {
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
-    else{
-    const parameters = [3, newValue];
-    const filteredData = await fetchClassificationStatData(parameters);
-    const levelsOverview = createLevelsOverview(filteredData);
-    dispatch(setClassificationsData(filteredData));
-    Object.entries(levelsOverview).forEach(([groupName, levels]) => {
-      console.log(`Group Name: ${groupName}`);
-      console.log(`Count of A: ${levels.countOfA}`);
-      console.log(`Count of B: ${levels.countOfB}`);
-      console.log(`Count of C: ${levels.countOfC}`);
-      console.log(`Count of D: ${levels.countOfD}`);
-      console.log(`Count of E: ${levels.countOfE}`);
-      console.log(`Count of F: ${levels.countOfF}`);
-      console.log('-----------------------------------');
-      createBarChart(groupName, levels, 'subject-chart');
-    });
+    else {
+      const parameters = [3, newValue];
+      const filteredData = await fetchClassificationStatData(parameters);
+      const levelsOverview = createLevelsOverview(filteredData);
+      dispatch(setClassificationsData(filteredData));
+      Object.entries(levelsOverview).forEach(([groupName, levels]) => {
+        console.log(`Group Name: ${groupName}`);
+        console.log(`Count of A: ${levels.countOfA}`);
+        console.log(`Count of B: ${levels.countOfB}`);
+        console.log(`Count of C: ${levels.countOfC}`);
+        console.log(`Count of D: ${levels.countOfD}`);
+        console.log(`Count of E: ${levels.countOfE}`);
+        console.log(`Count of F: ${levels.countOfF}`);
+        console.log('-----------------------------------');
+        createBarChart(groupName, levels, 'subject-chart');
+      });
     }
-    
+
   };
 
   return (
@@ -85,17 +85,17 @@ export default function SubjectSelect() {
     <div className="card">
       <h3 className="card-header" htmlFor="subject-select">Předmět:</h3>
       <div className="card-body">
-      <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
-        <option value="">- Vyberte -</option>
-        {subjectNames.map((subject) => (
-          <option key={subject.subjectID} value={subject.subjectID}>
-            {subject.subjectName}
-          </option>
-        ))}
-      </select>
-      <div>
-        <canvas id="subject-chart"></canvas>
-      </div>
+        <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
+          <option value="">- Vyberte -</option>
+          {subjectNames.map((subject) => (
+            <option key={subject.subjectID} value={subject.subjectID}>
+              {subject.subjectName}
+            </option>
+          ))}
+        </select>
+        <div>
+          <canvas id="subject-chart"></canvas>
+        </div>
       </div>
 
     </div>

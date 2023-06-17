@@ -1,7 +1,7 @@
 import { authorizedFetch } from '../queries/authorizedFetch'
 
 export const ClassificationByUserQueryJSON = (id) => ({
-"query":`
+  "query": `
   query {        
     result: userById(id: "${id}") {
       id
@@ -13,6 +13,10 @@ export const ClassificationByUserQueryJSON = (id) => ({
         semester {
           id
           order
+          subject{
+            id
+            name
+          }
         }
         level {
           id

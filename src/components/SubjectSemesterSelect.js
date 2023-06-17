@@ -50,7 +50,7 @@ export default function SubjectSemesterSelect() {
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
-    else{
+    else {
       console.log('Selected subject: ' + newValue);
       const [subjectID, semesterID] = newValue.split(',');
       const parameters = [2, subjectID, semesterID];
@@ -76,17 +76,17 @@ export default function SubjectSemesterSelect() {
     <div className="card">
       <h3 className="card-header" htmlFor="subject-select">Semestr předmětu:</h3>
       <div className="card-body">
-      <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
-        <option value="">- Vyberte -</option>
-        {subjectNames.map((subject) => (
-          <option key={[subject.subjectID, subject.semesterID]} value={[subject.subjectID, subject.semesterID]}>
-            {subject.subjectName}-{subject.semesterOrder}
-          </option>
-        ))}
-      </select>
-      <div>
-        <canvas id="subjectSemester-chart"></canvas>
-      </div>
+        <select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
+          <option value="">- Vyberte -</option>
+          {subjectNames.map((subject) => (
+            <option key={[subject.subjectID, subject.semesterID]} value={[subject.subjectID, subject.semesterID]}>
+              {subject.subjectName}-{subject.semesterOrder}
+            </option>
+          ))}
+        </select>
+        <div>
+          <canvas id="subjectSemester-chart"></canvas>
+        </div>
       </div>
     </div>
   );

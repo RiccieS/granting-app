@@ -14,7 +14,6 @@ export const UserClassificationsTable = ({ classifications }) => {
     classifications,
     (classification) => [classification.semester.id, classification.semester]
   );
-
   return (
     <Table>
       <thead>
@@ -33,7 +32,7 @@ export const UserClassificationsTable = ({ classifications }) => {
               key={semesterId}
               classifications={clist}
             >
-              <td>{semesterIndex[semesterId].order}</td>
+              <td>{semesterIndex[semesterId]?.subject?.name} {semesterIndex[semesterId].order}</td>
             </UserClassificationsRow>
           )
         )}

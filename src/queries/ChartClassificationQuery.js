@@ -3,8 +3,8 @@ import { authorizedFetch } from './authorizedFetch'
 //klasifikace pro budouci trideni podle studijnich programu
 
 export const ChartClassificationQueryJSON = () => ({
-    "query":
-        `query {
+  "query":
+    `query {
           acsemesterPage {
             classifications {
               id
@@ -25,6 +25,9 @@ export const ChartClassificationQueryJSON = () => ({
                 name
               }
               user{
+                id
+                name
+                surname
                 membership{
                   group{
                     id,
@@ -41,6 +44,6 @@ export const ChartClassificationQueryJSON = () => ({
  * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
  */
 export const ChartClassificationQuery = () =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(ChartClassificationQueryJSON()),
-    })
+  authorizedFetch('/gql', {
+    body: JSON.stringify(ChartClassificationQueryJSON()),
+  })
