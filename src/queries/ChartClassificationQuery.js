@@ -8,6 +8,7 @@ export const ChartClassificationQueryJSON = () => ({
           acsemesterPage {
             classifications {
               id
+              order
               semester {
                 id
                 order

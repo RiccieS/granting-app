@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
 import { setSubjectNamesForTable, setSelectedSubjectForTable, setClassificationsData } from '../slices/StudentsBySubjectSemesterSelectSlice';
 import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
+import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
 import StudentsBySubjectSemesterTable from "./StudentsBySubjectSemesterTable";
+import groupDataByUser from "../utils/groupDataByUser";
+
 export default function StudentsBySubjectSemesterSelect() {
 
     const dispatch = useDispatch();
@@ -44,10 +47,24 @@ export default function StudentsBySubjectSemesterSelect() {
         const newValue = event.target.value;
         dispatch(setSelectedSubjectForTable(newValue));
         const [subjectID, semesterID] = newValue.split(',');
-        const parameters = [2, subjectID, semesterID];
-        const filteredData = await fetchClassificationStatData(parameters);
-        setFilteredData(filteredData);
-        console.log(filteredData);
+
+        const response = await ChartClassificationQuery();
+        const responseData = await response.json();
+        const acsemesterPage = responseData.data.acsemesterPage;
+
+        const filteredAcsemesterPage = acsemesterPage.filter(
+            (entry) => entry.classifications.length > 0
+        );
+
+        const filteredData = filteredAcsemesterPage.filter((entry) => {
+            return (
+                entry.classifications[0].semester.id === semesterID &&
+                entry.classifications[0].semester.subject.id === subjectID
+            );
+        });
+
+        const filteredData2 = groupDataByUser(filteredData);
+        setFilteredData(filteredData2);
     };
 
     return (
