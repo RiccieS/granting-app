@@ -41,13 +41,17 @@ export default function App() {
             {/*<GradesTable selectedStudent={selectedStudent} />*/}
           </div>
         </div>
+        </div>
+        <div className="container mt-5">
         <div className='card'>
           <h2 className="card-header">Přehled studentů podle předmětu</h2>
           <div className="card-body">
             <StudentsBySubjectSemesterSelect />
           </div>
         </div>
-      </div>
+        </div>
+        
+      
       <div className="container mt-5">
         <div className="card">
           <h2 className="card-header">Přehled statistik</h2>
