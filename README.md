@@ -35,3 +35,10 @@ pro semestr předmětu => vybraná skupina jinak všechny skupiny
 ===> to všechno půjde do bar diagramu
 
 ****************************************************************************************************************************************************
+
+Tasks 2:
+
+upravit mutateData na globalni funkci
+zkontrolovat vsechny async funkce
+checkbox pro hromadnou zmenu znamek stdentu(pomoci selectu znamek)
+js docs
