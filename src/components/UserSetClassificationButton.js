@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch} from 'react-redux';
-import { updateClassification } from '../slices/GradesTableSlice';
-import { UserClassificationMutationQuery } from 'queries/UserClassificationMutationQuery';
 
+import {UpdateUserClassification} from './UpdateUserClassification';
 import { XLg, SendFill } from "react-bootstrap-icons";
 
 export const UserSetClassificationButton = ({ classification, newlevel }) => {
@@ -12,18 +11,8 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
     // Empty dependency array, runs only once when the component mounts
   }, []);
 
-  const mutateData = () => (dispatch, getState) => {
-    UserClassificationMutationQuery(classification.id, classification.lastchange, newlevel.id)
-      .then(response => response.json())
-      .then(json => {
-        const updatedUser = json.data?.result.classification.user;
-        if (updatedUser) {
-          const result = {result: updatedUser}
-          // Dispatch the 'loadClassification' action with the updated gradesTable
-          console.log(result)
-          dispatch(updateClassification(result));
-        }
-      });
+  const mutateData = (classification,newlevel,dispatch) => (dispatch, getState) => {
+    UpdateUserClassification(classification,newlevel,dispatch);
   };
 
       //vnitrni stavova promenna definujici, zda je zobrazeno tlacitko pro vyber znamky nebo tlacitka pro jeji ulozeni/zruseni
@@ -37,7 +26,7 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
   
   const onClick = () => {
     setState0();
-    dispatch(mutateData(classification));
+    dispatch(mutateData(classification,newlevel,dispatch));
   };
   if (state === 0) {
     return <button className='btn btn-success' onClick={setState1}>{newlevel.name}</button>;

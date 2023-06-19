@@ -1,5 +1,6 @@
 import UserClassificationCell from "./UserClassificationCell";
 import UserSetClassificationButton from "./UserSetClassificationButton";
+import UserSetClassificationSelect  from "./UserSetClassificationSelect";
 export const UserClassificationsRowEditable = ({classifications, children, cols=5}) => {
     const sorted = [...classifications].sort((c1, c2) => c1.order - c2.order)
     const dummy = new Array(cols - 1 - sorted.length).fill('')
@@ -22,7 +23,8 @@ export const UserClassificationsRowEditable = ({classifications, children, cols=
                         <UserSetClassificationButton classification={classification} newlevel={levelC}/>{" "}
                         <UserSetClassificationButton classification={classification} newlevel={levelD}/>{" "}
                         <UserSetClassificationButton classification={classification} newlevel={levelE}/>{" "}
-                        <UserSetClassificationButton classification={classification} newlevel={levelF}/>
+                        <UserSetClassificationButton classification={classification} newlevel={levelF}/>{" "}
+                        <UserSetClassificationSelect classification={classification} levels={[levelA, levelB, levelC, levelD, levelE, levelF]} />
                     </UserClassificationCell>    
             )}
             {dummy.map(

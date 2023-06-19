@@ -38,7 +38,7 @@ pro semestr předmětu => vybraná skupina jinak všechny skupiny
 
 Tasks 2:
 
-upravit mutateData na globalni funkci
+upravit mutateData na globalni funkci Asi hotovo
 zkontrolovat vsechny async funkce
 checkbox pro hromadnou zmenu znamek stdentu(pomoci selectu znamek)
 js docs
