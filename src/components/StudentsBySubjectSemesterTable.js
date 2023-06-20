@@ -1,11 +1,17 @@
 import React from 'react';
 import Table from "react-bootstrap/Table";
+import SemesterSubjectSetClassificationSelect from './SemesterSubjectSetClassificationSelect';
 
 export default function StudentsBySubjectSemesterTable({ filteredData }) {
     if (!Array.isArray(filteredData)) {
         return null; // Render null or a placeholder if filteredData is not an array
     }
-
+    const levelA = {id: '5fae9dd8-b095-11ed-9bd8-0242ac110002', name: 'A'}
+    const levelB = {id: '5faea134-b095-11ed-9bd8-0242ac110002', name: 'B'}
+    const levelC = {id: '5faea21a-b095-11ed-9bd8-0242ac110002', name: 'C'}
+    const levelD = {id: '5faea2d8-b095-11ed-9bd8-0242ac110002', name: 'D'}
+    const levelE = {id: '5faea332-b095-11ed-9bd8-0242ac110002', name: 'E'}
+    const levelF = {id: '5faea396-b095-11ed-9bd8-0242ac110002', name: 'F'}
     const maxLevels = Math.max(...filteredData.map((entry) => entry.length));
 
     return (
@@ -16,7 +22,9 @@ export default function StudentsBySubjectSemesterTable({ filteredData }) {
                         <th>Name</th>
                         <th>Surname</th>
                         {Array.from({ length: maxLevels }, (_, index) => (
-                            <th key={index}> {index + 1}.</th>
+                            <th key={index}> {index + 1}.
+                        <SemesterSubjectSetClassificationSelect index={index+1} filteredData={filteredData} levels={[levelA, levelB, levelC, levelD, levelE, levelF]}/>
+                            </th>
                         ))}
                     </tr>
                 </thead>

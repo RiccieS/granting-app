@@ -26,8 +26,7 @@ export const fetchClassifications = (selectedStudent, selectedSemester) => async
         for (const studentId of studentIds) {
           const response = await ClassificationByUserQuery(studentId);
           const data = await response.json();
-          const classification = data.data;
-          console.log(classification);
+          const classification = data.data.result;
           classificationResults.push(classification);
         }
       }

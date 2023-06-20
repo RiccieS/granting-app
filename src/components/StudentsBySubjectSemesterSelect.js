@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
-import { setSubjectNamesForTable, setSelectedSubjectForTable, setClassificationsData } from '../slices/StudentsBySubjectSemesterSelectSlice';
-import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
+import { setSubjectNamesForTable, setSelectedSubjectForTable } from '../slices/StudentsBySubjectSemesterSelectSlice';
 import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
 import StudentsBySubjectSemesterTable from "./StudentsBySubjectSemesterTable";
 import groupDataByUser from "../utils/groupDataByUser";
@@ -46,10 +45,12 @@ export default function StudentsBySubjectSemesterSelect() {
     const handleChange = async (event) => {
         const newValue = event.target.value;
         dispatch(setSelectedSubjectForTable(newValue));
+
         const [subjectID, semesterID] = newValue.split(',');
 
         const response = await ChartClassificationQuery();
         const responseData = await response.json();
+        console.log(responseData)
         const acsemesterPage = responseData.data.acsemesterPage;
 
         const filteredAcsemesterPage = acsemesterPage.filter(
@@ -64,6 +65,7 @@ export default function StudentsBySubjectSemesterSelect() {
         });
 
         const filteredData2 = groupDataByUser(filteredData);
+       // console.log(filteredData2);
         setFilteredData(filteredData2);
     };
 
@@ -74,7 +76,7 @@ export default function StudentsBySubjectSemesterSelect() {
                 <select className="form-select" id="subject-select" value={selectedSubjectForTable} onChange={handleChange}>
                     <option value="">- Vyberte -</option>
                     {subjectNamesForTable.map((subject) => (
-                        <option key={[subject.subjectID, subject.semesterID]} value={[subject.subjectID, subject.semesterID]}>
+                        <option key={subject.subjectID} value={[subject.subjectID, subject.semesterID]}>
                             {subject.subjectName}-{subject.semesterOrder}
                         </option>
                     ))}

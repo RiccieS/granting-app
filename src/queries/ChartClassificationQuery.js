@@ -9,12 +9,15 @@ export const ChartClassificationQueryJSON = () => ({
             classifications {
               id
               order
+              lastchange
+
               semester {
                 id
                 order
                 subject {
                   id
                   name
+                  
                   program {
                     id
                     name

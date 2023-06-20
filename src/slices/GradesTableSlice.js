@@ -10,8 +10,8 @@ const gradesTableSlice = createSlice({
     },
 
     updateClassification: (state, action) => {
-      const newTable = state.map((user) => user.result.id === action.payload.result.id ? action.payload : user)
-
+      const newTable = state.map((user) => user.id === action.payload.id ? action.payload : user)
+      console.log(newTable)
       state = newTable;
       return state;
     },

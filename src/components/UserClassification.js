@@ -67,7 +67,7 @@ export const UserClassification = ({ users }) => {
     const userIds = new Set();
 
     classifications.forEach((classification) => {
-      const userId = classification.result?.id;
+      const userId = classification?.id;
       if (userId && !userIds.has(userId)) {
         uniqueClassifications.push(classification);
         userIds.add(userId);
@@ -77,11 +77,11 @@ export const UserClassification = ({ users }) => {
     return (
       <div>
         {uniqueClassifications.map((classificationOfStudent) => (
-          <div key={classificationOfStudent.result?.id} className="card">
-            <h3 className="card-header">Student: {classificationOfStudent.result?.name} {classificationOfStudent.result?.surname}</h3>
+          <div key={classificationOfStudent?.id} className="card">
+            <h3 className="card-header">Student: {classificationOfStudent?.name} {classificationOfStudent?.surname}</h3>
             <div className="card-body">
-              <UserClassificationsTable classifications={classificationOfStudent.result?.classifications} />
-              <UserClassificationsTableEditable classifications={classificationOfStudent.result?.classifications} />
+              <UserClassificationsTable classifications={classificationOfStudent?.classifications} />
+              <UserClassificationsTableEditable classifications={classificationOfStudent?.classifications} />
             </div>
           </div>
         ))}

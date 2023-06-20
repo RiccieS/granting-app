@@ -11,8 +11,8 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
     // Empty dependency array, runs only once when the component mounts
   }, []);
 
-  const mutateData = (classification,newlevel,dispatch) => (dispatch, getState) => {
-    UpdateUserClassification(classification,newlevel,dispatch);
+  const mutateData = (classification,newlevel) => (dispatch, getState) => {
+    dispatch(UpdateUserClassification(classification,newlevel));
   };
 
       //vnitrni stavova promenna definujici, zda je zobrazeno tlacitko pro vyber znamky nebo tlacitka pro jeji ulozeni/zruseni
@@ -26,7 +26,7 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
   
   const onClick = () => {
     setState0();
-    dispatch(mutateData(classification,newlevel,dispatch));
+    dispatch(mutateData(classification,newlevel));
   };
   if (state === 0) {
     return <button className='btn btn-success' onClick={setState1}>{newlevel.name}</button>;
