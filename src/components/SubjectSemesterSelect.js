@@ -11,10 +11,13 @@ export default function SubjectSemesterSelect() {
   const { subjectNames, selectedSubject } = useSelector((state) => state.subjectSemesterSelect);
 
   useEffect(() => {
+    // Načtení seznamu předmětů a semestrů při načtení komponenty
     const fetchData = async () => {
       try {
         const response = await SubjectSelectQuery();
         const data = await response.json();
+
+        // Filtruje duplicity předmětů a vytváří pole s názvy předmětů a příslušnými semestry
         const filteredSubjectNames = data.data.acsemesterPage.reduce((filtered, item) => {
           const subjectID = item.subject.id;
           const isDuplicate = filtered.some((subject) => subject.subjectID === subjectID);
@@ -43,20 +46,30 @@ export default function SubjectSemesterSelect() {
 
   const handleChange = async (event) => {
     const newValue = event.target.value;
+
+    // Nastaví vybraný předmět pomocí dispečera
     dispatch(setSelectedSubject(newValue));
+
     if (newValue === "") {
-      // Clear the canvas
+      // Pokud není vybrán žádný předmět, vyčistí plátno grafu
       const canvas = document.getElementById("subjectSemester-chart");
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    else {
+    } else {
       console.log('Selected subject: ' + newValue);
       const [subjectID, semesterID] = newValue.split(',');
       const parameters = [2, subjectID, semesterID];
+
+      // Získá statistická data klasifikací pomocí asynchronní akce
       const filteredData = await fetchClassificationStatData(parameters);
+
+      // Vytvoří přehled úrovní klasifikací pomocí funkce createLevelsOverview
       const levelsOverview = createLevelsOverview(filteredData);
+
+      // Nastaví data klasifikací pomocí dispečera
       dispatch(setClassificationsData(filteredData));
+
+      // Vytvoří a zobrazí sloupcový graf pro každou skupinu úrovní
       Object.entries(levelsOverview).forEach(([groupName, levels]) => {
         console.log(`Group Name: ${groupName}`);
         console.log(`Count of A: ${levels.countOfA}`);
@@ -69,7 +82,6 @@ export default function SubjectSemesterSelect() {
         createBarChart(groupName, levels, 'subjectSemester-chart');
       });
     }
-
   };
 
   return (

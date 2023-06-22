@@ -9,18 +9,19 @@ import SemesterSelect from 'components/SemesterSelect';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
 import StudentsBySubjectSemesterSelect from "./components/StudentsBySubjectSemesterSelect";
+
 export default function App() {
-  const [selectedBranch, setSelectedBranch] = useState('all');
-  const [, setSelectedSemester] = useState('all');
+  const [selectedBranch, setSelectedBranch] = useState('all'); // Stav pro vybranou větev
+  const [, setSelectedSemester] = useState('all'); // Stav pro vybraný semestr
   const users = useSelector((state) => state.studentSelect.selectedStudent);
   //console.log(users);
 
   const handleBranchSelect = (branch) => {
-    setSelectedBranch(branch);
+    setSelectedBranch(branch); // Funkce pro aktualizaci vybrané skupiny
   };
 
   const handleSemesterChange = (semester) => {
-    setSelectedSemester(semester);
+    setSelectedSemester(semester); // Funkce pro aktualizaci vybraného semestru
   };
 
   return (
@@ -32,33 +33,30 @@ export default function App() {
         <div className="card">
           <h2 className="card-header">Přehled studentů</h2>
           <div className="card-body">
-            <BranchSelect onBranchSelect={handleBranchSelect} />
-            <SemesterSelect onSemesterChange={handleSemesterChange} />
-            <StudentSelect key={selectedBranch} selectedBranch={selectedBranch} />
+            <BranchSelect onBranchSelect={handleBranchSelect} /> {/* Komponenta pro výběr skupiny */}
+            <SemesterSelect onSemesterChange={handleSemesterChange} /> {/* Komponenta pro výběr semestru */}
+            <StudentSelect key={selectedBranch} selectedBranch={selectedBranch} /> {/* Komponenta pro výběr studenta */}
           </div>
           <div className="card-body">
-            <UserClassification users={users} />
-            {/*<GradesTable selectedStudent={selectedStudent} />*/}
+            <UserClassification users={users} /> {/* Komponenta pro zobrazení a editaci klasifikace uživatele */}
           </div>
         </div>
-        </div>
-        <div className="container mt-5">
+      </div>
+      <div className="container mt-5">
         <div className='card'>
           <h2 className="card-header">Přehled studentů podle předmětu</h2>
           <div className="card-body">
-            <StudentsBySubjectSemesterSelect />
+            <StudentsBySubjectSemesterSelect /> {/* Komponenta pro výběr studentů podle předmětu a semestru předmětu */}
           </div>
         </div>
-        </div>
-        
-      
+      </div>
       <div className="container mt-5">
         <div className="card">
           <h2 className="card-header">Přehled statistik</h2>
           <div className="card-body">
-            <ProgramSelect />
-            <SubjectSemesterSelect />
-            <SubjectSelect />
+            <ProgramSelect /> {/* Komponenta pro výběr programu */}
+            <SubjectSemesterSelect /> {/* Komponenta pro výběr předmětu a semestru */}
+            <SubjectSelect /> {/* Komponenta pro výběr předmětu */}
           </div>
         </div>
       </div>

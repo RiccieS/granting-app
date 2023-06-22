@@ -11,11 +11,15 @@ export default function StudentsBySubjectSemesterSelect() {
     const dispatch = useDispatch();
     const { subjectNamesForTable, selectedSubjectForTable } = useSelector((state) => state.subjectSemesterSelectForStudentsDisplay);
     const [filteredData, setFilteredData] = useState(null);
+
     useEffect(() => {
+        // Funkce pro načítání názvů předmětů pro výběr
         const fetchData = async () => {
             try {
                 const response = await SubjectSelectQuery();
                 const data = await response.json();
+
+                // Filtrace a formátování názvů předmětů a semestrů
                 const filteredSubjectNames = data.data.acsemesterPage.reduce((filtered, item) => {
                     const subjectID = item.subject.id;
                     const isDuplicate = filtered.some((subject) => subject.subjectID === subjectID);
@@ -35,24 +39,27 @@ export default function StudentsBySubjectSemesterSelect() {
 
                 dispatch(setSubjectNamesForTable(filteredSubjectNames));
             } catch (error) {
-                console.error('Error fetching subject names:', error);
+                console.error('Chyba při načítání názvů předmětů:', error);
             }
         };
 
         fetchData();
     }, [dispatch]);
 
+    // Funkce pro změnu vybraného předmětu a semestru
     const handleChange = async (event) => {
         const newValue = event.target.value;
         dispatch(setSelectedSubjectForTable(newValue));
 
         const [subjectID, semesterID] = newValue.split(',');
 
+        // Načítání dat pro tabulku z API
         const response = await ChartClassificationQuery();
         const responseData = await response.json();
         console.log(responseData)
         const acsemesterPage = responseData.data.acsemesterPage;
 
+        // Filtrace dat podle vybraného předmětu a semestru
         const filteredAcsemesterPage = acsemesterPage.filter(
             (entry) => entry.classifications.length > 0
         );
@@ -65,7 +72,7 @@ export default function StudentsBySubjectSemesterSelect() {
         });
 
         const filteredData2 = groupDataByUser(filteredData);
-       // console.log(filteredData2);
+        // console.log(filteredData2);
         setFilteredData(filteredData2);
     };
 

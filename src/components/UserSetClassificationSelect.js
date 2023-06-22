@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { UpdateUserClassification } from './UpdateUserClassification';
+import { UpdateUserClassification } from '../utils/UpdateUserClassification';
 
 export const UserSetClassificationSelect = ({ classification, levels }) => {
   const dispatch = useDispatch();

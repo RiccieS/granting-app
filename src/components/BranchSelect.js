@@ -8,6 +8,7 @@ export default function BranchSelect({ onBranchSelect }) {
   const { groupNames, selectedBranch } = useSelector((state) => state.branchSelect);
 
   useEffect(() => {
+    // Funkce pro načítání názvů skupin pro výběr
     const fetchData = async () => {
       try {
         const response = await GroupsSelectQuery();
@@ -21,6 +22,7 @@ export default function BranchSelect({ onBranchSelect }) {
     fetchData();
   }, [dispatch]);
 
+  // Funkce pro změnu vybraného oboru
   const handleChange = (event) => {
     const newValue = event.target.value;
     dispatch(setBranch(newValue));

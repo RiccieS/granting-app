@@ -1,29 +1,29 @@
 const createLevelsOverview = (data) => {
-    // Initialize an object to store the counts for each grade
-    const levelsOverview = {};
-  
-    // Iterate over the data and count the grades for each group name
-    data.forEach((item) => {
-      const groupName = item.groupName;
-      const levelName = item.levelName;
-  
-      if (!levelsOverview[groupName]) {
-        // If the group name doesn't exist in the levels overview, initialize it
-        levelsOverview[groupName] = {
-          countOfA: 0,
-          countOfB: 0,
-          countOfC: 0,
-          countOfD: 0,
-          countOfE: 0,
-          countOfF: 0,
-        };
-      }
-  
-      // Increment the count for the corresponding grade
-      levelsOverview[groupName]['countOf' + levelName]++;
-    });
-  
-    return levelsOverview;
-  };
+  // Inicializace objektu pro ukládání počtů známek pro každou skupinu
+  const levelsOverview = {};
 
-  export default createLevelsOverview;
+  // Iterace přes data a počítání známek pro každé jméno skupiny
+  data.forEach((item) => {
+    const groupName = item.groupName;
+    const levelName = item.levelName;
+
+    if (!levelsOverview[groupName]) {
+      // Pokud jméno skupiny neexistuje v přehledu známek, inicializuje se
+      levelsOverview[groupName] = {
+        countOfA: 0,
+        countOfB: 0,
+        countOfC: 0,
+        countOfD: 0,
+        countOfE: 0,
+        countOfF: 0,
+      };
+    }
+
+    // Inkrementace počtu pro odpovídající známku
+    levelsOverview[groupName]['countOf' + levelName]++;
+  });
+
+  return levelsOverview;
+};
+
+export default createLevelsOverview;

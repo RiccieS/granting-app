@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  selectedSemester: 'all',
+  selectedSemester: 'all', // Vybraný semestr
 };
 
 const semesterSelectSlice = createSlice({
-  name: 'semesterSelect',
-  initialState,
+  name: 'semesterSelect', // Název slicu
+  initialState, // Počáteční stav
   reducers: {
     setSelectedSemester: (state, action) => {
-      state.selectedSemester = action.payload;
-      console.log(action.payload);
+      state.selectedSemester = action.payload; // Nastaví vybraný semestr
+      console.log(action.payload); // Vypíše vybraný semestr do konzole
     },
   },
 });

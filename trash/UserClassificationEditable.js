@@ -8,11 +8,13 @@ export const UserClassificationEditable = ({ user }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Provádí se pouze, pokud neexistují žádné klasifikace pro uživatele
     if (!classifications) {
+      // Vyvolává asynchronní akci pro získání klasifikací uživatele
       dispatch(UserClassificationFetchAsyncAction(user.id));
     }
   }, [classifications, dispatch, user.id]);
 
   return <UserClassificationsTableEditable user={user} />;
 };
-export default UserClassificationFetchAsyncAction;
+export default UserClassificationEditable;

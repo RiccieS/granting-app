@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { UpdateUserClassification } from './UpdateUserClassification';
+import { UpdateUserClassification } from '../utils/UpdateUserClassification';
 
 export const SemesterSubjectSetClassificationSelect = ({ index, filteredData, levels}) => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const SemesterSubjectSetClassificationSelect = ({ index, filteredData, le
         console.log(classification)
         if (classification.order === index) {
           dispatch(UpdateUserClassification(classification, newLevel));
-          {/*disptach(funkce co to změní ve storu pro tabulku)*/}
+          /*disptach(funkce co to změní ve storu pro tabulku)*/
         }
       })
     });

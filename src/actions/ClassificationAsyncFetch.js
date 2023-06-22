@@ -2,115 +2,112 @@ import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
 
 const fetchClassificationStatData = async (parameters) => {
   console.log("vybrany typ fetche: "+parameters[0]);
+
+  // Fetch typu 1 - Filtrace dat podle vybraného programu
   if(parameters[0] === 1)
   {
     try {
-      const [,programID] = parameters;
+      const [, programID] = parameters;
       const response = await ChartClassificationQuery();
       const data = await response.json();
       console.log(data);
-      // Filtrovani dat podle programu
-      // const filteredData = data.data.acsemesterPage.filter(item => item.classifications.semester.subject.program.id === selectedProgram);
-  
-      // Extract the classifications from the data
+
+      // Extrahování klasifikací z dat
       const classifications = data.data.acsemesterPage[0].classifications;
-      console.log("classifications: ", classifications);  // Print classifications
-  
-      // Filter the classifications based on the selectedProgram
+      console.log("classifications: ", classifications);  // Výpis klasifikací
+
+      // Filtrování klasifikací na základě vybraného programu
       const filteredClassifications = classifications.filter(
         (classification) =>
           classification.semester.subject.program.id === programID
       );
-      console.log("filteredClassifications: ", filteredClassifications);  // Print filteredClassifications
-  
-      // Create an array of objects with the desired attributes
+      console.log("filteredClassifications: ", filteredClassifications);  // Výpis filtrovaných klasifikací
+
+      // Vytvoření pole objektů se žádoucími atributy
       const filteredData = filteredClassifications.map((classification) => ({
         levelName: classification.level.name,
         programId: classification.semester.subject.program.id,
         groupName: classification.user.membership[0].group.name,
         groupId: classification.user.membership[0].group.id,
       }));
-  
-      console.log("filteredData: ", filteredData);  // Print filteredData
-  
+
+      console.log("filteredData: ", filteredData);  // Výpis filtrovaných dat
+
       return filteredData;
-      // dispatch(setClassificationData(filteredData));
     } catch (error) {
-      console.error('Chyba při dotazovani statistickych klasifikaci:', error);
+      console.error('Chyba při dotazování statistických klasifikací:', error);
     }
   }
 
+  // Fetch typu 2 - Filtrace dat podle vybraného předmětu a semestru
   else if(parameters[0] === 2){
     try {
-      const [,subjectID, semesterID] = parameters;
+      const [, subjectID, semesterID] = parameters;
       const response = await ChartClassificationQuery();
       const data = await response.json();
       console.log(data);
-      // Filtrovani dat podle programu
-      // const filteredData = data.data.acsemesterPage.filter(item => item.classifications.semester.subject.program.id === selectedProgram);
-  
-      // Extract the classifications from the data
+
+      // Extrahování klasifikací z dat
       const classifications = data.data.acsemesterPage[0].classifications;
-      console.log("classifications: ", classifications);  // Print classifications
+      console.log("classifications: ", classifications);  // Výpis klasifikací
       console.log("parameters check: subjectID "+subjectID+" semesterID "+semesterID);
-      // Filter the classifications based on the selectedProgram
+
+      // Filtrování klasifikací na základě vybraného předmětu a semestru
       const filteredClassifications = classifications.filter(
         (classification) =>
           classification.semester.subject.id === subjectID && classification.semester.id === semesterID
       );
-      console.log("filteredClassifications: ", filteredClassifications);  // Print filteredClassifications
-  
-      // Create an array of objects with the desired attributes
+      console.log("filteredClassifications: ", filteredClassifications);  // Výpis filtrovaných klasifikací
+
+      // Vytvoření pole objektů se žádoucími atributy
       const filteredData = filteredClassifications.map((classification) => ({
         levelName: classification.level.name,
         programId: classification.semester.subject.program.id,
         groupName: classification.user.membership[0].group.name,
         groupId: classification.user.membership[0].group.id,
       }));
-  
-      console.log("filteredData: ", filteredData);  // Print filteredData
-  
+
+      console.log("filteredData: ", filteredData);  // Výpis filtrovaných dat
+
       return filteredData;
-      // dispatch(setClassificationData(filteredData));
     } catch (error) {
-      console.error('Chyba při dotazovani statistickych klasifikaci:', error);
+      console.error('Chyba při dotazování statistických klasifikací:', error);
     }
   }
 
+  // Fetch typu 3 - Filtrace dat podle vybraného předmětu
   else if(parameters[0] === 3){
     try {
-      const [,subjectID] = parameters;
+      const [, subjectID] = parameters;
       const response = await ChartClassificationQuery();
       const data = await response.json();
       console.log(data);
-      // Filtrovani dat podle programu
-      // const filteredData = data.data.acsemesterPage.filter(item => item.classifications.semester.subject.program.id === selectedProgram);
-  
-      // Extract the classifications from the data
+
+      // Extrahování klasifikací z dat
       const classifications = data.data.acsemesterPage[0].classifications;
-      console.log("classifications: ", classifications);  // Print classifications
+      console.log("classifications: ", classifications);  // Výpis klasifikací
       console.log("parameters check: subjectID "+subjectID);
-      // Filter the classifications based on the selectedProgram
+
+      // Filtrování klasifikací na základě vybraného předmětu
       const filteredClassifications = classifications.filter(
         (classification) =>
           classification.semester.subject.id === subjectID
       );
-      console.log("filteredClassifications: ", filteredClassifications);  // Print filteredClassifications
-  
-      // Create an array of objects with the desired attributes
+      console.log("filteredClassifications: ", filteredClassifications);  // Výpis filtrovaných klasifikací
+
+      // Vytvoření pole objektů se žádoucími atributy
       const filteredData = filteredClassifications.map((classification) => ({
         levelName: classification.level.name,
         programId: classification.semester.subject.program.id,
         groupName: classification.user.membership[0].group.name,
         groupId: classification.user.membership[0].group.id,
       }));
-  
-      console.log("filteredData: ", filteredData);  // Print filteredData
-  
+
+      console.log("filteredData: ", filteredData);  // Výpis filtrovaných dat
+
       return filteredData;
-      // dispatch(setClassificationData(filteredData));
     } catch (error) {
-      console.error('Chyba při dotazovani statistickych klasifikaci:', error);
+      console.error('Chyba při dotazování statistických klasifikací:', error);
     }
   }
 

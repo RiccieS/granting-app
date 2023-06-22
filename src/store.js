@@ -1,15 +1,15 @@
 // store.js
 import { configureStore } from '@reduxjs/toolkit';
-import StudentSelectReducer from './slices/StudentSelectSlice'; // Import your studentSelect reducer
-import BranchSelectReducer from './slices/BranchSelectSlice';
-import GradesTableReducer from './slices/GradesTableSlice';
-import ProgramSelectReducer from './slices/ProgramSelectSlice';
-import ClassificationStatDataReducer from 'slices/ClassificationStatDataSlice';
-import StudentsBySubjectSemesterSelectReducer from './slices/StudentsBySubjectSemesterSelectSlice';
-import SubjectSemesterSelectReducer from './slices/SubjectSemesterSelectSlice';
+import StudentSelectReducer from './slices/StudentSelectSlice'; // Importujte reducer pro výběr studenta
+import BranchSelectReducer from './slices/BranchSelectSlice'; // Importujte reducer pro výběr větve
+import GradesTableReducer from './slices/GradesTableSlice'; // Importujte reducer pro tabulku známek
+import ProgramSelectReducer from './slices/ProgramSelectSlice'; // Importujte reducer pro výběr programu
+import ClassificationStatDataReducer from 'slices/ClassificationStatDataSlice'; // Importujte reducer pro statistiky klasifikace
+import StudentsBySubjectSemesterSelectReducer from './slices/StudentsBySubjectSemesterSelectSlice'; // Importujte reducer pro výběr studentů podle předmětu a semestru
+import SubjectSemesterSelectReducer from './slices/SubjectSemesterSelectSlice'; // Importujte reducer pro výběr předmětu a semestru
 
-import SubjectSelectReducer from './slices/SubjectSelectSlice';
-import SemesterSelectReducer from './slices/SemesterSelectSlice';
+import SubjectSelectReducer from './slices/SubjectSelectSlice'; // Importujte reducer pro výběr předmětu
+import SemesterSelectReducer from './slices/SemesterSelectSlice'; // Importujte reducer pro výběr semestru
 
 const rootReducer = {
   studentSelect: StudentSelectReducer,

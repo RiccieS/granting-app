@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch} from 'react-redux';
 
-import {UpdateUserClassification} from './UpdateUserClassification';
+import {UpdateUserClassification} from '../utils/UpdateUserClassification';
 import { XLg, SendFill } from "react-bootstrap-icons";
 
 export const UserSetClassificationButton = ({ classification, newlevel }) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Empty dependency array, runs only once when the component mounts
-  }, []);
+ 
 
   const mutateData = (classification,newlevel) => (dispatch, getState) => {
     dispatch(UpdateUserClassification(classification,newlevel));

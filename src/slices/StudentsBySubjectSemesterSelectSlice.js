@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    subjectNamesForTable: [],
-    classificationsData: [],
-    selectedSubjectForTable: [],
+    subjectNamesForTable: [], // Pole názvů předmětů pro tabulku
+    classificationsData: [], // Data o klasifikacích
+    selectedSubjectForTable: [], // Vybraný předmět pro tabulku
 };
 
 const StudentsBySubjectSemesterSelectSlice = createSlice({
-    name: 'subjectSemesterSelect',
-    initialState,
+    name: 'subjectSemesterSelect', // Název slicu
+    initialState, // Počáteční stav
     reducers: {
         setSubjectNamesForTable: (state, action) => {
-            state.subjectNamesForTable = action.payload;
+            state.subjectNamesForTable = action.payload; // Nastaví pole názvů předmětů pro tabulku
         },
         setSelectedSubjectForTable: (state, action) => {
-            state.selectedSubjectForTable = action.payload;
+            state.selectedSubjectForTable = action.payload; // Nastaví vybraný předmět pro tabulku
         },
         setClassificationsData: (state, action) => {
-            state.classificationsDataForTable = action.payload;
+            state.classificationsDataForTable = action.payload; // Nastaví data o klasifikacích
         },
     },
 });

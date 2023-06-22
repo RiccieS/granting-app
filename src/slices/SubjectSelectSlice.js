@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  subjectNames: [],
-  classificationsData: [],
-  selectedSubject: [],
+  subjectNames: [], // Pole názvů předmětů
+  classificationsData: [], // Pole klasifikačních dat
+  selectedSubject: [], // Vybraný předmět
 };
 
-const subjectSelectSlice = createSlice({
-  name: 'subjectSelect',
-  initialState,
+const subjectSemesterSelectSlice = createSlice({
+  name: 'subjectSemesterSelect', // Název slicu
+  initialState, // Počáteční stav
   reducers: {
     setSubjectNames: (state, action) => {
-      state.subjectNames = action.payload;
+      state.subjectNames = action.payload; // Nastaví pole názvů předmětů
     },
     setSelectedSubject: (state, action) => {
-      state.selectedSubject = action.payload;
+      state.selectedSubject = action.payload; // Nastaví vybraný předmět
     },
     setClassificationsData: (state, action) => {
-      state.classificationsData = action.payload;
+      state.classificationsData = action.payload; // Nastaví pole klasifikačních dat
     },
   },
 });
 
-export const { setSubjectNames, setSelectedSubject, setClassificationsData} = subjectSelectSlice.actions;
+export const { setSubjectNames, setSelectedSubject, setClassificationsData } = subjectSemesterSelectSlice.actions;
 
-export default subjectSelectSlice.reducer;
+export default subjectSemesterSelectSlice.reducer;

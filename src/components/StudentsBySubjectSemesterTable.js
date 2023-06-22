@@ -4,7 +4,7 @@ import SemesterSubjectSetClassificationSelect from './SemesterSubjectSetClassifi
 
 export default function StudentsBySubjectSemesterTable({ filteredData }) {
     if (!Array.isArray(filteredData)) {
-        return null; // Render null or a placeholder if filteredData is not an array
+        return null; // Renderovat null nebo zástupný obsah, pokud filteredData není pole
     }
     const levelA = {id: '5fae9dd8-b095-11ed-9bd8-0242ac110002', name: 'A'}
     const levelB = {id: '5faea134-b095-11ed-9bd8-0242ac110002', name: 'B'}
@@ -19,11 +19,11 @@ export default function StudentsBySubjectSemesterTable({ filteredData }) {
             <Table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
+                        <th>Jméno</th>
+                        <th>Příjmení</th>
                         {Array.from({ length: maxLevels }, (_, index) => (
                             <th key={index}> {index + 1}.
-                        <SemesterSubjectSetClassificationSelect index={index+1} filteredData={filteredData} levels={[levelA, levelB, levelC, levelD, levelE, levelF]}/>
+                                <SemesterSubjectSetClassificationSelect index={index+1} filteredData={filteredData} levels={[levelA, levelB, levelC, levelD, levelE, levelF]}/>
                             </th>
                         ))}
                     </tr>
@@ -31,7 +31,7 @@ export default function StudentsBySubjectSemesterTable({ filteredData }) {
                 <tbody>
                     {filteredData.map((entry) => {
                         if (!entry[0].user || !entry[0].level) {
-                            return null; // Skip rendering if user or level is missing
+                            return null; // Přeskočit vykreslování, pokud chybí uživatel nebo úroveň
                         }
 
                         return (

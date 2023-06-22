@@ -13,6 +13,7 @@ export default function StudentSelect({ selectedBranch }) {
   };
 
   useEffect(() => {
+    // Načítání studentů při načtení komponenty nebo změně vybraného oboru
     const fetchStudents = async () => {
       dispatch(setLoading(true));
 
@@ -42,7 +43,7 @@ export default function StudentSelect({ selectedBranch }) {
   } else {
     return (
       <div>
-        <label htmlFor="student-select">Students:</label>
+        <label htmlFor="student-select">Studenti:</label>
         <select
           className="form-select"
           id="student-select"
@@ -50,7 +51,7 @@ export default function StudentSelect({ selectedBranch }) {
           multiple
           onChange={(e) => handleStudentChange(e.target.selectedOptions)}
         >
-          <option value="">Select students</option>
+          <option value="">Vyberte studenty</option>
           {students.map((student) => (
             <option key={student.id} value={student.id}>
               {student.name} {student.surname}

@@ -12,12 +12,13 @@ export default function ProgramSelect() {
   const { programNames, selectedProgram } = useSelector((state) => state.programSelect);
 
   useEffect(() => {
+    // Funkce pro načítání názvů programů pro výběr
     const fetchData = async () => {
       try {
         const response = await ProgramSelectQuery();
         const data = await response.json();
 
-        // Filter out duplicates based on ID
+        // Filtrace duplikátů na základě ID
         const uniqueProgramNames = data.data.programPage.filter((program, index, self) => {
           return self.findIndex((p) => p.id === program.id) === index;
         });
@@ -31,11 +32,12 @@ export default function ProgramSelect() {
     fetchData();
   }, [dispatch]);
 
+  // Funkce pro změnu vybraného programu
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedProgram(newValue));
     if (newValue === "") {
-      // Clear the canvas
+      // Vymazání plátna
       const canvas = document.getElementById("program-chart");
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -45,15 +47,15 @@ export default function ProgramSelect() {
       const filteredData = await fetchClassificationStatData(parameters);
       const levelsOverview = createLevelsOverview(filteredData);
       dispatch(setClassificationData(filteredData));
-      // Output the levels overview for each group name
+      // Výpis přehledu úrovní pro každý název skupiny
       Object.entries(levelsOverview).forEach(([groupName, levels]) => {
-        console.log(`Group Name: ${groupName}`);
-        console.log(`Count of A: ${levels.countOfA}`);
-        console.log(`Count of B: ${levels.countOfB}`);
-        console.log(`Count of C: ${levels.countOfC}`);
-        console.log(`Count of D: ${levels.countOfD}`);
-        console.log(`Count of E: ${levels.countOfE}`);
-        console.log(`Count of F: ${levels.countOfF}`);
+        console.log(`Název skupiny: ${groupName}`);
+        console.log(`Počet A: ${levels.countOfA}`);
+        console.log(`Počet B: ${levels.countOfB}`);
+        console.log(`Počet C: ${levels.countOfC}`);
+        console.log(`Počet D: ${levels.countOfD}`);
+        console.log(`Počet E: ${levels.countOfE}`);
+        console.log(`Počet F: ${levels.countOfF}`);
         console.log('-----------------------------------');
         createBarChart(groupName, levels, 'program-chart');
       });
@@ -66,19 +68,18 @@ export default function ProgramSelect() {
     <div className="card">
       <h3 className="card-header" htmlFor="program-select">Studijní program:</h3>
       <div className="card-body">
-      <select className="form-select" id="program-select" value={selectedProgram} onChange={handleChange}>
-        <option value="">- Vyberte -</option>
-        {programNames.map((program) => (
-          <option key={program.id} value={program.id}>
-            {program.name} - {program.type.title.name}
-          </option>
-        ))}
-      </select>
-      <div>
-        <canvas id="program-chart"></canvas>
+        <select className="form-select" id="program-select" value={selectedProgram} onChange={handleChange}>
+          <option value="">- Vyberte -</option>
+          {programNames.map((program) => (
+            <option key={program.id} value={program.id}>
+              {program.name} - {program.type.title.name}
+            </option>
+          ))}
+        </select>
+        <div>
+          <canvas id="program-chart"></canvas>
+        </div>
       </div>
-      </div>
-      
     </div>
   );
 }

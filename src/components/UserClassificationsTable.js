@@ -5,15 +5,18 @@ import pivotmap from "../utils/pivotmap";
 import keyedmap from "../utils/keyedmap";
 
 export const UserClassificationsTable = ({ classifications }) => {
-
+  // Vytvoření mapy klasifikací dle semestru
   const classificationsBySemester = pivotmap(
     classifications,
     (classification) => [classification.semester.id, classification]
   );
+
+  // Vytvoření indexu semestrů
   const semesterIndex = keyedmap(
     classifications,
     (classification) => [classification.semester.id, classification.semester]
   );
+
   return (
     <Table>
       <thead>

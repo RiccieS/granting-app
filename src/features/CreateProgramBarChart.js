@@ -1,18 +1,18 @@
 import { Chart, LinearScale, CategoryScale, registerables } from 'chart.js';
 
-// Create a single Chart instance
+// Vytvoření jedné instance Chart
 Chart.register(LinearScale, CategoryScale, ...registerables);
 
 const createBarChart = (groupName, levels, id) => {
-  // Get the canvas element
+  // Získání elementu canvas
   const canvas = document.getElementById(id);
   console.log("canvas "+canvas);
   if (canvas.chart) {
-    // Dispose of the existing chart
+    // Zrušení existujícího grafu
     canvas.chart.destroy();
   }
 
-  // Create a new chart instance
+  // Vytvoření nové instance grafu
   Chart.register(...registerables);
   canvas.chart = new Chart(canvas, {
     type: 'bar',
@@ -54,7 +54,7 @@ const createBarChart = (groupName, levels, id) => {
       plugins: {
         title: {
           display: true,
-          text: `Bar diagram pro skupinu: ${groupName}`,
+          text: `Sloupcový diagram pro skupinu: ${groupName}`,
           padding: {
             top: 10,
             bottom: 20,

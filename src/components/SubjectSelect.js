@@ -11,16 +11,17 @@ export default function SubjectSelect() {
   const { subjectNames, selectedSubject } = useSelector((state) => state.subjectSelect);
 
   useEffect(() => {
+    // Načtení seznamu předmětů při načtení komponenty
     const fetchData = async () => {
       try {
         const response = await SubjectSelectQuery();
         const data = await response.json();
 
-        const uniqueSubjectIds = new Set(); // Store unique subject IDs
+        const uniqueSubjectIds = new Set(); // Uchovává jedinečná ID předmětů
         const subjectNames = data.data.acsemesterPage.reduce((subjects, item) => {
           if (Array.isArray(item.subject)) {
             item.subject.forEach((s) => {
-              if (!uniqueSubjectIds.has(s.id)) { // Check if the subject ID is already added
+              if (!uniqueSubjectIds.has(s.id)) { // Zkontroluje, zda je ID předmětu již přidané
                 const subject = {
                   subjectID: s.id,
                   subjectName: s.name,
@@ -55,7 +56,7 @@ export default function SubjectSelect() {
     const newValue = event.target.value;
     dispatch(setSelectedSubject(newValue));
     if (newValue === "") {
-      // Clear the canvas
+      // Vymazání plátna
       const canvas = document.getElementById("subject-chart");
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -77,11 +78,9 @@ export default function SubjectSelect() {
         createBarChart(groupName, levels, 'subject-chart');
       });
     }
-
   };
 
   return (
-
     <div className="card">
       <h3 className="card-header" htmlFor="subject-select">Předmět:</h3>
       <div className="card-body">
@@ -97,7 +96,6 @@ export default function SubjectSelect() {
           <canvas id="subject-chart"></canvas>
         </div>
       </div>
-
     </div>
   );
 }
