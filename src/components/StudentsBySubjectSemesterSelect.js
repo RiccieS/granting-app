@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
 import { setSubjectNamesForTable, setSelectedSubjectForTable } from '../slices/StudentsBySubjectSemesterSelectSlice';
 import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
 import StudentsBySubjectSemesterTable from "./StudentsBySubjectSemesterTable";
 import groupDataByUser from "../utils/groupDataByUser";
+import { setClassificationsData } from 'slices/SubjectSemesterSelectSlice';
 
 export default function StudentsBySubjectSemesterSelect() {
 
     const dispatch = useDispatch();
     const { subjectNamesForTable, selectedSubjectForTable } = useSelector((state) => state.subjectSemesterSelectForStudentsDisplay);
-    const [filteredData, setFilteredData] = useState(null);
 
     useEffect(() => {
         // Funkce pro načítání názvů předmětů pro výběr
@@ -73,7 +73,7 @@ export default function StudentsBySubjectSemesterSelect() {
 
         const filteredData2 = groupDataByUser(filteredData);
         // console.log(filteredData2);
-        setFilteredData(filteredData2);
+        dispatch(setClassificationsData(filteredData2));
     };
 
     return (
@@ -89,7 +89,7 @@ export default function StudentsBySubjectSemesterSelect() {
                     ))}
                 </select>
             </div>
-            <StudentsBySubjectSemesterTable filteredData={filteredData} />
+            <StudentsBySubjectSemesterTable />
         </div>
     );
 }

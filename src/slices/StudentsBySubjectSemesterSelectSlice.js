@@ -17,11 +17,24 @@ const StudentsBySubjectSemesterSelectSlice = createSlice({
             state.selectedSubjectForTable = action.payload; // Nastaví vybraný předmět pro tabulku
         },
         setClassificationsData: (state, action) => {
-            state.classificationsDataForTable = action.payload; // Nastaví data o klasifikacích
+            state.classificationsData = action.payload; // Nastaví data o klasifikacích
         },
+        updateClassificationsData: (state, action) => {
+            const { id, newData } = action.payload;
+
+            // Iterate over the numerical keys of the classificationsData object
+            Object.keys(state.classificationsData).forEach((key) => {
+              // Access the array of classifications using the key
+              state.classificationsData[key] = state.classificationsData[key].map((item) =>
+                item.id === id ? newData : item
+              );
+            });
+          },
+          
+
     },
 });
 
-export const { setSubjectNamesForTable, setSelectedSubjectForTable, setClassificationsData } = StudentsBySubjectSemesterSelectSlice.actions;
+export const { setSubjectNamesForTable, setSelectedSubjectForTable, setClassificationsData, updateClassificationsData } = StudentsBySubjectSemesterSelectSlice.actions;
 
 export default StudentsBySubjectSemesterSelectSlice.reducer;
