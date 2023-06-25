@@ -4,8 +4,10 @@ import SemesterSubjectSetClassificationSelect from './SemesterSubjectSetClassifi
 
 export default function StudentsBySubjectSemesterTable() {
     const { classificationsData  } = useSelector((state) => state.subjectSemesterSelectForStudentsDisplay);
+    console.log("classif data ze Selectoru: "+classificationsData);
 
     if (!Array.isArray(classificationsData )) {
+        console.log("is array test failnul");   
         return null; // Renderovat null nebo zástupný obsah, pokud filteredData není pole
     }
     const levelA = {id: '5fae9dd8-b095-11ed-9bd8-0242ac110002', name: 'A'}
@@ -33,6 +35,9 @@ export default function StudentsBySubjectSemesterTable() {
                 <tbody>
                     {classificationsData.map((entry) => {
                         if (!entry[0].user || !entry[0].level) {
+                            console.log("neni uzivatel nebo level ");
+                            console.log("entry level: "+entry[0].level);
+                            console.log("entry user: "+entry[0].user);
                             return null; // Přeskočit vykreslování, pokud chybí uživatel nebo úroveň
                         }
 

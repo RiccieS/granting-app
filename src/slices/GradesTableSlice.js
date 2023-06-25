@@ -13,7 +13,6 @@ const gradesTableSlice = createSlice({
       const newTable = state.map((user) =>
         user.id === action.payload.id ? action.payload : user
       ); // Aktualizace klasifikace - nahradí existujícího uživatele novými daty
-      console.log(newTable);
       state = newTable; // Nastaví stav na aktualizovanou tabulku
       return state;
     },
