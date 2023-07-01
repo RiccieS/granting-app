@@ -21,15 +21,17 @@ const StudentsBySubjectSemesterSelectSlice = createSlice({
         },
         updateClassificationsData: (state, action) => {
             const { id, newData } = action.payload;
-
-            // Iterate over the numerical keys of the classificationsData object
-            Object.keys(state.classificationsData).forEach((key) => {
-              // Access the array of classifications using the key
-              state.classificationsData[key] = state.classificationsData[key].map((item) =>
-                item.id === id ? newData : item
+            const userIndex = state.classificationsData.findIndex((userClassifications) =>
+              userClassifications.some((c) => c.id === id)
+            );
+            if (userIndex !== -1) {
+              const updatedUserClassifications = state.classificationsData[userIndex].map((classification) =>
+                classification.id === id ? newData : classification
               );
-            });
+              state.classificationsData[userIndex] = updatedUserClassifications;
+            }
           },
+          
           
 
     },

@@ -9,7 +9,7 @@ export const SemesterSubjectSetClassificationSelect = ({ index, filteredData, le
   const handleLevelChange = (targetLevel, filteredData) => {
     const newLevel = levels.find((level) => level.id === targetLevel);
 
-   
+   console.log("filtered: "+filteredData);
     filteredData.forEach(user => {
       user.forEach(classification => {
         console.log(classification)
