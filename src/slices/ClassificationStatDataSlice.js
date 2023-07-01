@@ -1,3 +1,7 @@
+import { createSlice } from '@reduxjs/toolkit';
+const initialState = {
+  classificationData: [], // Počáteční stav - prázdné pole pro data klasifikace
+};
 /**
  * Reducer pro správu statistických dat klasifikace.
  * @param {object} state - Aktuální stav.
@@ -22,3 +26,4 @@ const ClassificationStatDataSlice = createSlice({
 export const { setClassificationData } = ClassificationStatDataSlice.actions;
 
 export default ClassificationStatDataSlice.reducer;
+

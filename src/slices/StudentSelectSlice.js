@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit';
+
 /**
  * Reducer pro správu výběru studenta.
  * @param {object} state - Aktuální stav.

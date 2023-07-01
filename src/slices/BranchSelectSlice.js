@@ -1,3 +1,8 @@
+import { createSlice } from '@reduxjs/toolkit';
+const initialState = {
+  groupNames: [], // Pole pro názvy skupin
+  selectedBranch: 'all', // Vybraná pobočka - výchozí hodnota je "all"
+};
 /**
  * Reducer pro správu výběru skupiny.
  * @param {object} state - Aktuální stav.
@@ -27,7 +32,7 @@ const branchSelectSlice = createSlice({
     /**
      * Akce pro nastavení vybrané skupiny.
      * @param {object} state - Aktuální stav.
-     * @param {object} action - Akce obsahující payload s vybranou skupinou.
+     * @param {object} action - Akce obsahující payload s vybranou skupiny.
      */
     setBranch: (state, action) => {
       state.selectedBranch = action.payload; // Nastavení vybrané pobočky na poskytnutou hodnotu

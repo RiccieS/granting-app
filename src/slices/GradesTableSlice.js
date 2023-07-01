@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit';
+
 /**
  * Reducer pro správu tabulky klasifikace.
  * @param {Array} state - Aktuální stav.

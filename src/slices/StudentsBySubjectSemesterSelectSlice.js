@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit';
+
 /**
  * Reducer pro správu výběru předmětu a semestru pro tabulku.
  * @param {object} state - Aktuální stav.
