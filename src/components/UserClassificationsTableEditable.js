@@ -3,13 +3,19 @@ import pivotmap from "../utils/pivotmap";
 import keyedmap from "../utils/keyedmap";
 import { UserClassificationsRowEditable } from "./UserClassificationsRowEditable";
 
+/**
+ * Komponenta pro editovatelnou tabulku klasifikací uživatele.
+ * @param {Object} props - Vstupní vlastnosti komponenty
+ * @param {Array} props.classifications - Klasifikace uživatele
+ * @returns {JSX.Element} Element komponenty UserClassificationsTableEditable
+ */
 export const UserClassificationsTableEditable = ({ classifications }) => {
   // Vytvoření mapy klasifikací dle semestru
   const classificationsBySemester = pivotmap(
     classifications,
     (classification) => [classification.semester.id, classification]
   );
-  
+
   // Vytvoření indexu semestrů
   const semesterIndex = keyedmap(
     classifications,

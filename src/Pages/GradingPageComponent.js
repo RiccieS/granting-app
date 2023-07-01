@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import BranchSelect from '../components/BranchSelect'
-import SemesterSelect from '../components/SemesterSelect'
-import StudentSelect from '../components/StudentSelect'
-import UserClassification from '../components/UserClassification'
-import StudentsBySubjectSemesterSelect from '../components/StudentsBySubjectSemesterSelect'
-import ProgramSelect from '../components/ProgramSelect'
-import SubjectSemesterSelect from '../components/SubjectSemesterSelect'
-import SubjectSelect from '../components/SubjectSelect'
+import { BranchSelect } from '../components/BranchSelect'
+import { SemesterSelect } from '../components/SemesterSelect'
+import { StudentSelect } from '../components/StudentSelect'
+import { UserClassification } from '../components/UserClassification'
+import { StudentsBySubjectSemesterSelect } from '../components/StudentsBySubjectSemesterSelect'
+import { ProgramSelect } from '../components/ProgramSelect'
+import { SubjectSemesterSelect } from '../components/SubjectSemesterSelect'
+import { SubjectSelect } from '../components/SubjectSelect'
 
+/**
+ * Komponenta GradingPageComponent pro stránku s hodnocením.
+ */
 export default function GradingPageComponent() {
     const [selectedBranch, setSelectedBranch] = useState('all'); // State pro vybranou studini skupinu
     const [, setSelectedSemester] = useState('all'); // State pro vybrany semestr
     const users = useSelector((state) => state.studentSelect.selectedStudent);
 
-
+    /**
+     * Funkce pro zachycení výběru studijní skupiny.
+     * @param {string} branch - Vybraná studijní skupina
+     */
     const handleBranchSelect = (branch) => {
         setSelectedBranch(branch);
     };
 
-
+    /**
+     * Funkce pro zachycení změny semestru.
+     * @param {string} semester - Vybraný semester
+     */
     const handleSemesterChange = (semester) => {
         setSelectedSemester(semester);
     };

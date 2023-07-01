@@ -1,8 +1,9 @@
-import { authorizedFetch } from '../queries/authorizedFetch'
+import { authorizedFetch } from '../queries/authorizedFetch';
 
 /**
- * Funkce
- *  
+ * Funkce, která vytváří JSON dotaz pro získání seznamu skupin.
+ * 
+ * @returns {object} - JSON dotaz.
  */
 export const GroupsSelectQueryJSON = () => ({
     "query":
@@ -15,7 +16,9 @@ export const GroupsSelectQueryJSON = () => ({
 })
 
 /**
- * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
+ * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
+ * 
+ * @returns {Promise<Response>} - Promise reprezentující odpověď ze serveru.
  */
 export const GroupsSelectQuery = () =>
     authorizedFetch('/gql', {

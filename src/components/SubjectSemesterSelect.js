@@ -6,12 +6,18 @@ import createLevelsOverview from '../features/CreateGroupLevelsOverview';
 import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
 import createBarChart from '../features/CreateProgramBarChart';
 
-export default function SubjectSemesterSelect() {
+/**
+ * Komponenta pro výběr předmětu a semestru.
+ * @returns {JSX.Element} Element komponenty SubjectSemesterSelect
+ */
+export function SubjectSemesterSelect() {
   const dispatch = useDispatch();
   const { subjectNames, selectedSubject } = useSelector((state) => state.subjectSemesterSelect);
 
   useEffect(() => {
-    // Načtení seznamu předmětů a semestrů při načtení komponenty
+    /**
+     * Načtení seznamu předmětů a semestrů při načtení komponenty.
+     */
     const fetchData = async () => {
       try {
         const response = await SubjectSelectQuery();
@@ -44,10 +50,14 @@ export default function SubjectSemesterSelect() {
     fetchData();
   }, [dispatch]);
 
+  /**
+   * Funkce pro zachycení události změny hodnoty výběru.
+   * @param {Object} event - Událost změny hodnoty výběru.
+   */
   const handleChange = async (event) => {
     const newValue = event.target.value;
 
-    // Nastaví vybraný předmět pomocí dispečera
+    // Nastaví vybraný předmět a semestr pomocí dispečera
     dispatch(setSelectedSubject(newValue));
 
     if (newValue === "") {

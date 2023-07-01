@@ -1,7 +1,9 @@
-import { authorizedFetch } from './authorizedFetch'
+import { authorizedFetch } from './authorizedFetch';
 
-//klasifikace pro budouci trideni podle studijnich programu
-
+/**
+ * Vytváří JSON dotaz pro získání klasifikací pro budoucí třídění podle studijních programů.
+ * @returns {object} - JSON dotaz.
+ */
 export const ChartClassificationQueryJSON = () => ({
   "query":
     `query {
@@ -42,12 +44,14 @@ export const ChartClassificationQueryJSON = () => ({
             }
           }
         }`
-})
+});
 
 /**
- * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
+ * Realizuje dotaz na server pro získání klasifikací podle studijních programů.
+ * Využívá funkci authorizedFetch pro komunikaci se serverem.
+ * @returns {Promise<Response>} - Promise reprezentující odpověď ze serveru.
  */
 export const ChartClassificationQuery = () =>
   authorizedFetch('/gql', {
     body: JSON.stringify(ChartClassificationQueryJSON()),
-  })
+  });

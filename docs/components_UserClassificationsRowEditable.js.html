@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/UserClassificationsRowEditable.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/UserClassificationsRowEditable.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import UserClassificationCell from "./UserClassificationCell";
+import UserSetClassificationButton from "./UserSetClassificationButton";
+import UserSetClassificationSelect from "./UserSetClassificationSelect";
+
+/**
+ * Komponenta pro řádek v tabulce klasifikací uživatele s možností úpravy.
+ * @param {Object} props - Vstupní vlastnosti komponenty
+ * @param {Array} props.classifications - Klasifikace
+ * @param {React.ReactNode} props.children - Vnořené elementy
+ * @param {number} props.cols - Počet sloupců
+ * @returns {JSX.Element} Element komponenty UserClassificationsRowEditable
+ */
+export const UserClassificationsRowEditable = ({ classifications, children, cols = 5 }) => {
+  // Seřazení klasifikací podle pořadí
+  const sorted = [...classifications].sort((c1, c2) => c1.order - c2.order);
+
+  // Vytvoření prázdného pole pro vyplnění prázdných buněk
+  const dummy = new Array(cols - 1 - sorted.length).fill("");
+
+  // Definice úrovní známek
+  const levelA = { id: '5fae9dd8-b095-11ed-9bd8-0242ac110002', name: 'A' };
+  const levelB = { id: '5faea134-b095-11ed-9bd8-0242ac110002', name: 'B' };
+  const levelC = { id: '5faea21a-b095-11ed-9bd8-0242ac110002', name: 'C' };
+  const levelD = { id: '5faea2d8-b095-11ed-9bd8-0242ac110002', name: 'D' };
+  const levelE = { id: '5faea332-b095-11ed-9bd8-0242ac110002', name: 'E' };
+  const levelF = { id: '5faea396-b095-11ed-9bd8-0242ac110002', name: 'F' };
+
+  return (
+    &lt;tr>
+      {children}
+      {sorted.map((classification) => (
+        &lt;UserClassificationCell key={classification.id} classification={classification}>
+          {" "}
+          &lt;UserSetClassificationButton classification={classification} newlevel={levelA} />{" "}
+          &lt;UserSetClassificationButton classification={classification} newlevel={levelB} />{" "}
+          &lt;UserSetClassificationButton classification={classification} newlevel={levelC} />{" "}
+          &lt;UserSetClassificationButton classification={classification} newlevel={levelD} />{" "}
+          &lt;UserSetClassificationButton classification={classification} newlevel={levelE} />{" "}
+          &lt;UserSetClassificationButton classification={classification} newlevel={levelF} />{" "}
+          &lt;UserSetClassificationSelect
+            classification={classification}
+            levels={[levelA, levelB, levelC, levelD, levelE, levelF]}
+          />
+        &lt;/UserClassificationCell>
+      ))}
+      {dummy.map((i, index) => &lt;td key={index}>&lt;/td>)}
+    &lt;/tr>
+  );
+};
+
+export default UserClassificationsRowEditable;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#BranchSelect">BranchSelect</a></li><li><a href="global.html#ChartClassificationQuery">ChartClassificationQuery</a></li><li><a href="global.html#ChartClassificationQueryJSON">ChartClassificationQueryJSON</a></li><li><a href="global.html#ClassificationByUserQuery">ClassificationByUserQuery</a></li><li><a href="global.html#ClassificationByUserQueryJSON">ClassificationByUserQueryJSON</a></li><li><a href="global.html#ClassificationStatDataSlice">ClassificationStatDataSlice</a></li><li><a href="global.html#GradesLevelsQuery">GradesLevelsQuery</a></li><li><a href="global.html#GradesLevelsQueryJSON">GradesLevelsQueryJSON</a></li><li><a href="global.html#GradesQuery">GradesQuery</a></li><li><a href="global.html#GradesQueryJSON">GradesQueryJSON</a></li><li><a href="global.html#GroupsSelectQuery">GroupsSelectQuery</a></li><li><a href="global.html#GroupsSelectQueryJSON">GroupsSelectQueryJSON</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ProgramSelectQuery">ProgramSelectQuery</a></li><li><a href="global.html#ProgramSelectQueryJSON">ProgramSelectQueryJSON</a></li><li><a href="global.html#SemesterSelect">SemesterSelect</a></li><li><a href="global.html#SemesterSubjectSetClassificationSelect">SemesterSubjectSetClassificationSelect</a></li><li><a href="global.html#StudentSelect">StudentSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelect">StudentsBySubjectSemesterSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelectSlice">StudentsBySubjectSemesterSelectSlice</a></li><li><a href="global.html#StudentsBySubjectSemesterTable">StudentsBySubjectSemesterTable</a></li><li><a href="global.html#StudentsQuery">StudentsQuery</a></li><li><a href="global.html#StudentsQueryJSON">StudentsQueryJSON</a></li><li><a href="global.html#SubjectClassificationQuery">SubjectClassificationQuery</a></li><li><a href="global.html#SubjectClassificationQueryJSON">SubjectClassificationQueryJSON</a></li><li><a href="global.html#SubjectSelect">SubjectSelect</a></li><li><a href="global.html#SubjectSelectQuery">SubjectSelectQuery</a></li><li><a href="global.html#SubjectSelectQueryJSON">SubjectSelectQueryJSON</a></li><li><a href="global.html#SubjectSemesterSelect">SubjectSemesterSelect</a></li><li><a href="global.html#UserClassification">UserClassification</a></li><li><a href="global.html#UserClassificationCell">UserClassificationCell</a></li><li><a href="global.html#UserClassificationMutationQuery">UserClassificationMutationQuery</a></li><li><a href="global.html#UserClassificationMutationQueryJSON">UserClassificationMutationQueryJSON</a></li><li><a href="global.html#UserClassificationsRow">UserClassificationsRow</a></li><li><a href="global.html#UserClassificationsRowEditable">UserClassificationsRowEditable</a></li><li><a href="global.html#UserClassificationsTable">UserClassificationsTable</a></li><li><a href="global.html#UserClassificationsTableEditable">UserClassificationsTableEditable</a></li><li><a href="global.html#UserSetClassificationButton">UserSetClassificationButton</a></li><li><a href="global.html#UserSetClassificationSelect">UserSetClassificationSelect</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#branchSelectSlice">branchSelectSlice</a></li><li><a href="global.html#createBarChart">createBarChart</a></li><li><a href="global.html#createLevelsOverview">createLevelsOverview</a></li><li><a href="global.html#fetchClassificationStatData">fetchClassificationStatData</a></li><li><a href="global.html#gradeSlice">gradeSlice</a></li><li><a href="global.html#gradesTableSlice">gradesTableSlice</a></li><li><a href="global.html#programSelectSlice">programSelectSlice</a></li><li><a href="global.html#semesterSelectSlice">semesterSelectSlice</a></li><li><a href="global.html#specificUserReducer">specificUserReducer</a></li><li><a href="global.html#studentSelectSlice">studentSelectSlice</a></li><li><a href="global.html#subjectSemesterSelectSlice">subjectSemesterSelectSlice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jul 01 2023 21:24:02 GMT+0200 (středoevropský letní čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

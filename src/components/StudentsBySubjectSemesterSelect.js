@@ -1,13 +1,17 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
 import { setSubjectNamesForTable, setSelectedSubjectForTable } from '../slices/StudentsBySubjectSemesterSelectSlice';
 import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
-import StudentsBySubjectSemesterTable from "./StudentsBySubjectSemesterTable";
+import { StudentsBySubjectSemesterTable } from "./StudentsBySubjectSemesterTable";
 import groupDataByUser from "../utils/groupDataByUser";
 import { setClassificationsData } from 'slices/SubjectSemesterSelectSlice';
 
-export default function StudentsBySubjectSemesterSelect() {
+/**
+ * Komponenta pro výběr studentů podle semestru předmětu.
+ * @returns {JSX.Element} Element komponenty StudentsBySubjectSemesterSelect
+ */
+export function StudentsBySubjectSemesterSelect() {
 
     const dispatch = useDispatch();
     const { subjectNamesForTable, selectedSubjectForTable } = useSelector((state) => state.subjectSemesterSelectForStudentsDisplay);
@@ -46,7 +50,10 @@ export default function StudentsBySubjectSemesterSelect() {
         fetchData();
     }, [dispatch]);
 
-    // Funkce pro změnu vybraného předmětu a semestru
+    /**
+     * Obsluha události změny výběru předmětu a semestru.
+     * @param {Event} event - Událost změny výběru
+     */
     const handleChange = async (event) => {
         const newValue = event.target.value;
         dispatch(setSelectedSubjectForTable(newValue));
@@ -56,7 +63,7 @@ export default function StudentsBySubjectSemesterSelect() {
         // Načítání dat pro tabulku z API
         const response = await ChartClassificationQuery();
         const responseData = await response.json();
-        console.log(responseData)
+        console.log(responseData);
         const acsemesterPage = responseData.data.acsemesterPage;
 
         // Filtrace dat podle vybraného předmětu a semestru

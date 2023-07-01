@@ -1,10 +1,12 @@
-import { authorizedFetch } from '../queries/authorizedFetch'
+import { authorizedFetch } from '../queries/authorizedFetch';
 
-//klasifikace pro budouci trideni podle studijnich programu
-
+/**
+ * Funkce, která vytváří JSON dotaz pro získání klasifikace předmětů pro budoucí třídění podle studijního programu.
+ * @returns {object} - JSON dotaz.
+ */
 export const SubjectClassificationQueryJSON = () => ({
-    "query":
-        `query {
+  "query":
+    `query {
             acsemesterPage {
               classifications {
                 id
@@ -33,12 +35,13 @@ export const SubjectClassificationQueryJSON = () => ({
               }
             }
           }`
-})
+});
 
 /**
- * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
+ * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
+ * @returns {Promise<Response>} - Promise reprezentující odpověď ze serveru.
  */
 export const SubjectClassificationQuery = () =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(SubjectClassificationQueryJSON()),
-    })
+  authorizedFetch('/gql', {
+    body: JSON.stringify(SubjectClassificationQueryJSON()),
+  });

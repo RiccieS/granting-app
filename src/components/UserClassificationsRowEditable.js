@@ -2,6 +2,14 @@ import UserClassificationCell from "./UserClassificationCell";
 import UserSetClassificationButton from "./UserSetClassificationButton";
 import UserSetClassificationSelect from "./UserSetClassificationSelect";
 
+/**
+ * Komponenta pro řádek v tabulce klasifikací uživatele s možností úpravy.
+ * @param {Object} props - Vstupní vlastnosti komponenty
+ * @param {Array} props.classifications - Klasifikace
+ * @param {React.ReactNode} props.children - Vnořené elementy
+ * @param {number} props.cols - Počet sloupců
+ * @returns {JSX.Element} Element komponenty UserClassificationsRowEditable
+ */
 export const UserClassificationsRowEditable = ({ classifications, children, cols = 5 }) => {
   // Seřazení klasifikací podle pořadí
   const sorted = [...classifications].sort((c1, c2) => c1.order - c2.order);

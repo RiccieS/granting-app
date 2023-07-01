@@ -1,9 +1,8 @@
-import { authorizedFetch } from '../queries/authorizedFetch'
+import { authorizedFetch } from '../queries/authorizedFetch';
 
 /**
- * Funkce, ktera id namapuje na json predstavujici "velky" (podrobny) dotaz na server
- * @param {*} id 
- * @returns 
+ * Funkce, která vytváří JSON dotaz pro získání seznamu studentů.
+ * @returns {object} - JSON dotaz.
  */
 export const StudentsQueryJSON = () => ({
   "query":
@@ -23,13 +22,11 @@ export const StudentsQueryJSON = () => ({
 }`
 });
 
-
 /**
- * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
- * @param {*} id 
- * @returns 
+ * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
+ * @returns {Promise<Response>} - Promise reprezentující odpověď ze serveru.
  */
 export const StudentsQuery = () =>
   authorizedFetch('/gql', {
     body: JSON.stringify(StudentsQueryJSON()),
-  })
+  });

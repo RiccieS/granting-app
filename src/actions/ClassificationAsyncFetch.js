@@ -1,11 +1,15 @@
-import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
+import { ChartClassificationQuery } from '../queries/ChartClassificationQuery'
 
+/**
+ * Načte statistická data klasifikací na základě zadaných parametrů.
+ * @param {Array} parameters - Pole parametrů obsahující typ fetche a další potřebné informace
+ * @returns {Promise<Array|String>} Pole filtrovaných dat nebo řetězec "none"
+ */
 const fetchClassificationStatData = async (parameters) => {
-  console.log("vybrany typ fetche: "+parameters[0]);
+  console.log("vybrany typ fetche: " + parameters[0]);
 
   // Fetch typu 1 - Filtrace dat podle vybraného programu
-  if(parameters[0] === 1)
-  {
+  if (parameters[0] === 1) {
     try {
       const [, programID] = parameters;
       const response = await ChartClassificationQuery();
@@ -40,7 +44,7 @@ const fetchClassificationStatData = async (parameters) => {
   }
 
   // Fetch typu 2 - Filtrace dat podle vybraného předmětu a semestru
-  else if(parameters[0] === 2){
+  else if (parameters[0] === 2) {
     try {
       const [, subjectID, semesterID] = parameters;
       const response = await ChartClassificationQuery();
@@ -50,7 +54,7 @@ const fetchClassificationStatData = async (parameters) => {
       // Extrahování klasifikací z dat
       const classifications = data.data.acsemesterPage[0].classifications;
       console.log("classifications: ", classifications);  // Výpis klasifikací
-      console.log("parameters check: subjectID "+subjectID+" semesterID "+semesterID);
+      console.log("parameters check: subjectID " + subjectID + " semesterID " + semesterID);
 
       // Filtrování klasifikací na základě vybraného předmětu a semestru
       const filteredClassifications = classifications.filter(
@@ -76,7 +80,7 @@ const fetchClassificationStatData = async (parameters) => {
   }
 
   // Fetch typu 3 - Filtrace dat podle vybraného předmětu
-  else if(parameters[0] === 3){
+  else if (parameters[0] === 3) {
     try {
       const [, subjectID] = parameters;
       const response = await ChartClassificationQuery();
@@ -86,7 +90,7 @@ const fetchClassificationStatData = async (parameters) => {
       // Extrahování klasifikací z dat
       const classifications = data.data.acsemesterPage[0].classifications;
       console.log("classifications: ", classifications);  // Výpis klasifikací
-      console.log("parameters check: subjectID "+subjectID);
+      console.log("parameters check: subjectID " + subjectID);
 
       // Filtrování klasifikací na základě vybraného předmětu
       const filteredClassifications = classifications.filter(

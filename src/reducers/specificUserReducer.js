@@ -1,9 +1,9 @@
-const initialState = {
-  userData: null, // Data uživatele - výchozí hodnota je null
-  loading: false, // Indikátor načítání - výchozí hodnota je false
-  error: null, // Chyba - výchozí hodnota je null
-};
-
+/**
+ * Reducer pro správu stavu konkrétního uživatele.
+ * @param {object} state - Aktuální stav.
+ * @param {object} action - Akce provedená nad stavem.
+ * @returns {object} - Nový stav.
+ */
 const specificUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_SPECIFIC_USER_SUCCESS':

@@ -1,13 +1,21 @@
-
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedSemester } from 'slices/SemesterSelectSlice';
 
-export default function SemesterSelect({ onSemesterChange }) {
+/**
+ * Komponenta pro výběr semestru.
+ * @param {Function} onSemesterChange - Funkce volaná po změně vybraného semestru
+ * @returns {JSX.Element} Element komponenty SemesterSelect
+ */
+export function SemesterSelect({ onSemesterChange }) {
   const dispatch = useDispatch();
   const { selectedSemester } = useSelector((state) => state.semesterSelect);
 
   // Funkce pro změnu vybraného semestru
+  /**
+   * Obsluha události změny výběru semestru.
+   * @param {Object} event - Událost změny
+   */
   const handleChange = (event) => {
     const selectedSemester = event.target.value;
     dispatch(setSelectedSemester(selectedSemester));

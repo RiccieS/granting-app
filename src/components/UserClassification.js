@@ -4,6 +4,11 @@ import { fetchClassifications } from '../actions/classificationActions';
 import UserClassificationsTable from './UserClassificationsTable';
 import UserClassificationsTableEditable from './UserClassificationsTableEditable';
 
+/**
+ * Komponenta pro zobrazení klasifikací uživatele.
+ * @param {Object[]} users - Pole uživatelů
+ * @returns {JSX.Element|null} Element komponenty UserClassification nebo null
+ */
 export const UserClassification = ({ users }) => {
   const selectedSemester = useSelector((state) => state.semesterSelect);
   const dispatch = useDispatch();

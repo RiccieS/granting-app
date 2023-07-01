@@ -7,7 +7,11 @@ import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
 import createLevelsOverview from '../features/CreateGroupLevelsOverview';
 import createBarChart from '../features/CreateProgramBarChart';
 
-export default function ProgramSelect() {
+/**
+ * Komponenta pro výběr studijního programu.
+ * @returns {JSX.Element} Element komponenty ProgramSelect
+ */
+export function ProgramSelect() {
   const dispatch = useDispatch();
   const { programNames, selectedProgram } = useSelector((state) => state.programSelect);
 
@@ -33,6 +37,10 @@ export default function ProgramSelect() {
   }, [dispatch]);
 
   // Funkce pro změnu vybraného programu
+  /**
+   * Obsluha události změny výběru programu.
+   * @param {Object} event - Událost změny
+   */
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedProgram(newValue));
@@ -41,8 +49,7 @@ export default function ProgramSelect() {
       const canvas = document.getElementById("program-chart");
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    else{
+    } else {
       const parameters = [1, newValue];
       const filteredData = await fetchClassificationStatData(parameters);
       const levelsOverview = createLevelsOverview(filteredData);
@@ -59,9 +66,7 @@ export default function ProgramSelect() {
         console.log('-----------------------------------');
         createBarChart(groupName, levels, 'program-chart');
       });
-      
     }
-    
   };
 
   return (

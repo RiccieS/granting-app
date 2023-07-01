@@ -3,10 +3,16 @@ import { Chart, LinearScale, CategoryScale, registerables } from 'chart.js';
 // Vytvoření jedné instance Chart
 Chart.register(LinearScale, CategoryScale, ...registerables);
 
+/**
+ * Funkce pro vytvoření sloupcového grafu.
+ * @param {string} groupName - Název skupiny
+ * @param {Object} levels - Přehled počtů známek
+ * @param {string} id - ID elementu canvas
+ */
 const createBarChart = (groupName, levels, id) => {
   // Získání elementu canvas
   const canvas = document.getElementById(id);
-  console.log("canvas "+canvas);
+  console.log("canvas " + canvas);
   if (canvas.chart) {
     // Zrušení existujícího grafu
     canvas.chart.destroy();

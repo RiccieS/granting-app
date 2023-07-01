@@ -1,12 +1,13 @@
-import { authorizedFetch } from '../queries/authorizedFetch'
+import { authorizedFetch } from '../queries/authorizedFetch';
 
 /**
- * Funkce
- *  
+ * Funkce, která vytváří JSON dotaz pro získání seznamu studijních programů.
+ * 
+ * @returns {object} - JSON dotaz.
  */
 export const ProgramSelectQueryJSON = () => ({
-    "query":
-        `query{
+  "query":
+    `query{
             programPage{
               id,
               name,
@@ -21,9 +22,11 @@ export const ProgramSelectQueryJSON = () => ({
 })
 
 /**
- * Realizace dotazu na server. Vyuziva autorizedFetch (zapouzdreni)
+ * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
+ * 
+ * @returns {Promise<Response>} - Promise reprezentující odpověď ze serveru.
  */
 export const ProgramSelectQuery = () =>
-    authorizedFetch('/gql', {
-        body: JSON.stringify(ProgramSelectQueryJSON()),
-    })
+  authorizedFetch('/gql', {
+    body: JSON.stringify(ProgramSelectQueryJSON()),
+  })

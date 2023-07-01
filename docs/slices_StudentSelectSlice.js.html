@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: slices/StudentSelectSlice.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: slices/StudentSelectSlice.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Reducer pro správu výběru studenta.
+ * @param {object} state - Aktuální stav.
+ * @param {object} action - Akce provedená nad stavem.
+ * @returns {object} - Nový stav.
+ */
+const studentSelectSlice = createSlice({
+  name: 'studentSelect', // Název slicu
+  initialState: {
+    students: [], // Pole studentů
+    loading: false, // Příznak načítání
+    error: null, // Chybová zpráva
+    selectedStudent: '', // Vybraný student
+  }, // Počáteční stav
+  reducers: {
+    /**
+     * Akce pro nastavení pole studentů.
+     * @param {object} state - Aktuální stav.
+     * @param {object} action - Akce obsahující payload se seznamem studentů.
+     */
+    setStudents: (state, action) => {
+      state.students = action.payload; // Nastaví pole studentů
+    },
+    /**
+     * Akce pro nastavení příznaku načítání.
+     * @param {object} state - Aktuální stav.
+     * @param {object} action - Akce obsahující payload s hodnotou příznaku načítání.
+     */
+    setLoading: (state, action) => {
+      state.loading = action.payload; // Nastaví příznak načítání
+    },
+    /**
+     * Akce pro nastavení chybové zprávy.
+     * @param {object} state - Aktuální stav.
+     * @param {object} action - Akce obsahující payload s chybovou zprávou.
+     */
+    setError: (state, action) => {
+      state.error = action.payload; // Nastaví chybovou zprávu
+    },
+    /**
+     * Akce pro aktualizaci vybraného studenta.
+     * @param {object} state - Aktuální stav.
+     * @param {object} action - Akce obsahující payload s ID vybraného studenta.
+     */
+    setSelectedStudent: (state, action) => {
+      state.selectedStudent = action.payload; // Aktualizuje vybraného studenta
+    },
+  },
+});
+
+export const {
+  setStudents,
+  setLoading,
+  setError,
+  setSelectedStudent,
+} = studentSelectSlice.actions;
+
+export default studentSelectSlice.reducer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#BranchSelect">BranchSelect</a></li><li><a href="global.html#ChartClassificationQuery">ChartClassificationQuery</a></li><li><a href="global.html#ChartClassificationQueryJSON">ChartClassificationQueryJSON</a></li><li><a href="global.html#ClassificationByUserQuery">ClassificationByUserQuery</a></li><li><a href="global.html#ClassificationByUserQueryJSON">ClassificationByUserQueryJSON</a></li><li><a href="global.html#ClassificationStatDataSlice">ClassificationStatDataSlice</a></li><li><a href="global.html#GradesLevelsQuery">GradesLevelsQuery</a></li><li><a href="global.html#GradesLevelsQueryJSON">GradesLevelsQueryJSON</a></li><li><a href="global.html#GradesQuery">GradesQuery</a></li><li><a href="global.html#GradesQueryJSON">GradesQueryJSON</a></li><li><a href="global.html#GroupsSelectQuery">GroupsSelectQuery</a></li><li><a href="global.html#GroupsSelectQueryJSON">GroupsSelectQueryJSON</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ProgramSelectQuery">ProgramSelectQuery</a></li><li><a href="global.html#ProgramSelectQueryJSON">ProgramSelectQueryJSON</a></li><li><a href="global.html#SemesterSelect">SemesterSelect</a></li><li><a href="global.html#SemesterSubjectSetClassificationSelect">SemesterSubjectSetClassificationSelect</a></li><li><a href="global.html#StudentSelect">StudentSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelect">StudentsBySubjectSemesterSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelectSlice">StudentsBySubjectSemesterSelectSlice</a></li><li><a href="global.html#StudentsBySubjectSemesterTable">StudentsBySubjectSemesterTable</a></li><li><a href="global.html#StudentsQuery">StudentsQuery</a></li><li><a href="global.html#StudentsQueryJSON">StudentsQueryJSON</a></li><li><a href="global.html#SubjectClassificationQuery">SubjectClassificationQuery</a></li><li><a href="global.html#SubjectClassificationQueryJSON">SubjectClassificationQueryJSON</a></li><li><a href="global.html#SubjectSelect">SubjectSelect</a></li><li><a href="global.html#SubjectSelectQuery">SubjectSelectQuery</a></li><li><a href="global.html#SubjectSelectQueryJSON">SubjectSelectQueryJSON</a></li><li><a href="global.html#SubjectSemesterSelect">SubjectSemesterSelect</a></li><li><a href="global.html#UserClassification">UserClassification</a></li><li><a href="global.html#UserClassificationCell">UserClassificationCell</a></li><li><a href="global.html#UserClassificationMutationQuery">UserClassificationMutationQuery</a></li><li><a href="global.html#UserClassificationMutationQueryJSON">UserClassificationMutationQueryJSON</a></li><li><a href="global.html#UserClassificationsRow">UserClassificationsRow</a></li><li><a href="global.html#UserClassificationsRowEditable">UserClassificationsRowEditable</a></li><li><a href="global.html#UserClassificationsTable">UserClassificationsTable</a></li><li><a href="global.html#UserClassificationsTableEditable">UserClassificationsTableEditable</a></li><li><a href="global.html#UserSetClassificationButton">UserSetClassificationButton</a></li><li><a href="global.html#UserSetClassificationSelect">UserSetClassificationSelect</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#branchSelectSlice">branchSelectSlice</a></li><li><a href="global.html#createBarChart">createBarChart</a></li><li><a href="global.html#createLevelsOverview">createLevelsOverview</a></li><li><a href="global.html#fetchClassificationStatData">fetchClassificationStatData</a></li><li><a href="global.html#gradeSlice">gradeSlice</a></li><li><a href="global.html#gradesTableSlice">gradesTableSlice</a></li><li><a href="global.html#programSelectSlice">programSelectSlice</a></li><li><a href="global.html#semesterSelectSlice">semesterSelectSlice</a></li><li><a href="global.html#specificUserReducer">specificUserReducer</a></li><li><a href="global.html#studentSelectSlice">studentSelectSlice</a></li><li><a href="global.html#subjectSemesterSelectSlice">subjectSemesterSelectSlice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jul 01 2023 21:24:02 GMT+0200 (středoevropský letní čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -6,12 +6,18 @@ import createLevelsOverview from '../features/CreateGroupLevelsOverview';
 import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
 import createBarChart from '../features/CreateProgramBarChart';
 
-export default function SubjectSelect() {
+/**
+ * Komponenta pro výběr předmětu.
+ * @returns {JSX.Element} Element komponenty SubjectSelect
+ */
+export function SubjectSelect() {
   const dispatch = useDispatch();
   const { subjectNames, selectedSubject } = useSelector((state) => state.subjectSelect);
 
   useEffect(() => {
-    // Načtení seznamu předmětů při načtení komponenty
+    /**
+     * Načtení seznamu předmětů při načtení komponenty.
+     */
     const fetchData = async () => {
       try {
         const response = await SubjectSelectQuery();
@@ -52,6 +58,10 @@ export default function SubjectSelect() {
     fetchData();
   }, [dispatch]);
 
+  /**
+   * Funkce pro zachycení události změny hodnoty výběru.
+   * @param {Object} event - Událost změny hodnoty výběru.
+   */
   const handleChange = async (event) => {
     const newValue = event.target.value;
     dispatch(setSelectedSubject(newValue));
@@ -60,8 +70,7 @@ export default function SubjectSelect() {
       const canvas = document.getElementById("subject-chart");
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    else {
+    } else {
       const parameters = [3, newValue];
       const filteredData = await fetchClassificationStatData(parameters);
       const levelsOverview = createLevelsOverview(filteredData);

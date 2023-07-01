@@ -1,3 +1,8 @@
+/**
+ * Funkce pro vytvoření přehledu počtů známek pro každou skupinu.
+ * @param {Array} data - Vstupní data obsahující informace o známkách a jménech skupin
+ * @returns {Object} Přehled počtů známek pro každou skupinu
+ */
 const createLevelsOverview = (data) => {
   // Inicializace objektu pro ukládání počtů známek pro každou skupinu
   const levelsOverview = {};

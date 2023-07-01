@@ -3,10 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StudentsQuery } from '../queries/StudentsQuery';
 import { setStudents, setLoading, setError, setSelectedStudent } from '../slices/StudentSelectSlice';
 
-export default function StudentSelect({ selectedBranch }) {
+/**
+ * Komponenta pro výběr studentů.
+ * @param {string} selectedBranch - Vybraný obor
+ * @returns {JSX.Element} Element komponenty StudentSelect
+ */
+export function StudentSelect({ selectedBranch }) {
   const dispatch = useDispatch();
   const { students, loading, error, selectedStudents } = useSelector((state) => state.studentSelect);
 
+  /**
+   * Funkce pro změnu vybraných studentů.
+   * @param {HTMLCollection} selectedOptions - Vybrané možnosti v selectu
+   */
   const handleStudentChange = (selectedOptions) => {
     const selectedValues = Array.from(selectedOptions).map((option) => option.value);
     dispatch(setSelectedStudent(selectedValues));
