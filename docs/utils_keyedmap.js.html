@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: queries/StudentsQuery.js</title>
+    <title>JSDoc: Source: utils/keyedmap.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: queries/StudentsQuery.js</h1>
+    <h1 class="page-title">Source: utils/keyedmap.js</h1>
 
     
 
@@ -26,38 +26,27 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { authorizedFetch } from '../queries/authorizedFetch';
-
-/**
- * Funkce, která vytváří JSON dotaz pro získání seznamu studentů.
- * @returns {object} - JSON dotaz.
+            <pre class="prettyprint source linenums"><code>/**
+ * Funkce pro vytvoření mapy s klíči a hodnotami na základě pole.
+ * @param {Array} a - Vstupní pole.
+ * @param {Function} f - Funkce aplikovaná na každý prvek pole pro získání klíče a hodnoty.
+ * @returns {Object} - Výsledná mapa s klíči a hodnotami.
  */
-export const StudentsQueryJSON = () => ({
-  "query":
-    `query {
-            userPage {
-              id
-              name
-              surname    
-              membership {
-                id
-                group {
-                  name
-                  id
-                }
-              }
-            }
-}`
-});
+const keyedmap = (a, f) => {
+  let result = {};
+  if (a instanceof Array) { // Pokud je 'a' instancí pole
+    a.forEach((i) => {
+      let [key, value] = f(i); // Aplikuje funkci 'f' na každý prvek pole 'a' a destrukturováním získá klíč a hodnotu
+      result[key] = value; // Přiřadí klíč a hodnotu do výsledného objektu
+    });
+  } else {
+    console.log("Parametr a v keyedmap je prázdný/nebyl pole"); // Vypíše chybovou zprávu, pokud 'a' není pole
+  }
 
-/**
- * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
- * @returns {Promise&lt;Response>} - Promise reprezentující odpověď ze serveru.
- */
-export const StudentsQuery = () =>
-  authorizedFetch('/gql', {
-    body: JSON.stringify(StudentsQueryJSON()),
-  });
+  return result; // Vrátí výsledek
+};
+
+export default keyedmap;
 </code></pre>
         </article>
     </section>

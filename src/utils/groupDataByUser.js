@@ -1,3 +1,8 @@
+/**
+ * Funkce pro seskupení dat podle uživatele.
+ * @param {Array} inputData - Vstupní data obsahující klasifikace.
+ * @returns {Array} - Seskupená data podle uživatele.
+ */
 export const groupDataByUser = (inputData) => {
   return inputData.reduce((acc, entry, index) => {
     const sortedClassifications = entry.classifications.sort((a, b) => a.order - b.order);

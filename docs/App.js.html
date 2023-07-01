@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: queries/StudentsQuery.js</title>
+    <title>JSDoc: Source: App.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: queries/StudentsQuery.js</h1>
+    <h1 class="page-title">Source: App.js</h1>
 
     
 
@@ -26,38 +26,21 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { authorizedFetch } from '../queries/authorizedFetch';
+            <pre class="prettyprint source linenums"><code>import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import GradingPageComponent from './Pages/GradingPageComponent';
 
 /**
- * Funkce, která vytváří JSON dotaz pro získání seznamu studentů.
- * @returns {object} - JSON dotaz.
+ * Hlavní komponenta aplikace.
+ * @returns {JSX.Element} - Hlavní komponenta aplikace obsahující GradingPageComponent.
  */
-export const StudentsQueryJSON = () => ({
-  "query":
-    `query {
-            userPage {
-              id
-              name
-              surname    
-              membership {
-                id
-                group {
-                  name
-                  id
-                }
-              }
-            }
-}`
-});
-
-/**
- * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
- * @returns {Promise&lt;Response>} - Promise reprezentující odpověď ze serveru.
- */
-export const StudentsQuery = () =>
-  authorizedFetch('/gql', {
-    body: JSON.stringify(StudentsQueryJSON()),
-  });
+export default function App() {
+  return (
+    &lt;div>
+      &lt;GradingPageComponent />
+    &lt;/div>
+  );
+}
 </code></pre>
         </article>
     </section>
