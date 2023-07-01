@@ -26,7 +26,7 @@ export default function BranchSelect({ onBranchSelect }) {
   const handleChange = (event) => {
     const newValue = event.target.value;
     dispatch(setBranch(newValue));
-    onBranchSelect(newValue); 
+    onBranchSelect(newValue);
   };
 
   return (
