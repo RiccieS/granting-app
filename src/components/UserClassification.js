@@ -12,7 +12,6 @@ import UserClassificationsTableEditable from './UserClassificationsTableEditable
 export const UserClassification = ({ users }) => {
   const selectedSemester = useSelector((state) => state.semesterSelect);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (users && users.length > 0) {
       // Pokud existují uživatelé a jejich počet je větší než 0, spusť akci pro načtení klasifikací
