@@ -1,0 +1,100 @@
+﻿# Timeline projektu - Granting App
+
+- 20.3.2023
+  - Obdržení zadání projektu
+- 12.4.2023
+  - Počáteční commit na GitHub
+  - Utvoření počátečního designu stránky
+- 13.4.2023
+  - Vytvoření komponenty Branch select
+- 15.4.2023
+  - Vytvoření komponenty Grades Table
+  - Úprava stávajícího designu komponent
+- 16.4.2023
+  - Přidání komentářů a začátek BranchGradeTable (průměrná známka v předmětu pro studijní skupinu) <= nakonec odstraněno
+- 17.4.2023
+  - Úprava komentářů
+  - 1.projektový den – představení zobrazovacích komponent 
+  - Tabulky pro zobrazení klasifikací pro studenta a klasifikací studentů pro skupiny
+  - Tabulky jsou opatřeny triviálními selecty pro filtrování dat
+  - Data jsou poskytována z provizorních datasetů v souborech json
+- 20.4.2023
+  - Zprovoznění Dockeru (respektive serveru s GQL databází)
+- 16.5.2023
+  - Úprava a restrukturalizace kódu
+  - Počátek implementace reduxu
+- 17.5.2023
+  - Implementace classification query
+- 18.5.2023
+  - Spolužák Daniel Mašek svým commintem „new approach“ způsobil zpoždění prací
+- 19.5.2023
+  - Implementace GroupSelectQuery
+- 20.5.2023
+  - Update stávajících komponent a implementace bootstrap  v Appu
+  - Vytvoření základů updatu klasifikací (mutace)
+- 25.5.2023
+  - Merge Richi\_branch s mainem
+  - Kompletní přetvoření přístupu ke klasifikacím (App, BranchSelect, GradesTable, StudentSelect, SubjectSelect, queries)
+- 30.5.2023 
+  - Úpravy GradesTable, GradesQuery a mutace
+- 31.5.2023
+  - Oprava funkčnosti úpravy známek, vytvoření fakeLevelsQuery
+  - Přidání komentářů
+  - 2. projektový den
+- 1.6.2023
+  - Rozčlenění UserClassification podle kodu prof. Štefka na mikrokomponenty (Table, Row, Cell...)
+- 3.6.2023
+  - Úpravy komponent klasifikací, implementace reduxu
+- 4.6.2023
+  - Práce na reduxu a jeho funkčnosti
+  - EditGradeButton, reload tabulky klasifikací
+- 5.6.2023
+  - Úprava komentářů
+- 6.6.2023
+  - Úpravy v EditGradeButton a Appu po konzultaci
+- 7.6.2023
+  - Vytvoření funkcí a komponent (classificationActions, SemesterClassificationsTable, UserClassificationEditable)
+  - Propojení UserClassification se storem
+- 8.6.2023
+  - Změny a implementace reduxu
+  - Konzultace s externím specialistou Tadeášem Paldusem
+- 11.6.2023
+  - Vytvoření grafu pro studijní program, příprava dalších grafů
+- 13.6.2023
+  - Vytvoření grafu pro předmět
+- 14.6.2023
+  - Vytvoření grafu pro semestr předmětu
+  - Možnost výběru klasifikací více studentů
+  - Vytvoření opatření proti duplicitě možností v selectech pro grafy
+- 15.6.2023
+  - Mutace pro více uživatelů, přidání reduceru pro update konkrétní klasifikace
+  - Tvorba semestr selectu (vybírá se ze semestru 1-10 v selectu nad první tabulkou)
+- 16.6.2023
+  - Úprava selectu semestru a ošetření chyb
+  - Přemazání canvasu grafu při nevybrané hodnotě v selectu
+- 17.6.2023
+  - Tvorba tabulky 
+- 18.6.2023
+  - Zprovoznění a úpravy tabulky známek studentů
+- 19.6.2023
+  - Designové úpravy
+  - Tvorba selectu pro hromadnou změnu známek uživatelů
+- 20.6.2023
+  - Editace selectu pro hromadnou změnu známek uživatelů
+- 22.6.2023
+  - Přidány komentáře v celém projektu
+- 24.6.2023
+  - Úprava reduxu v tabulce známek studentů podle semestru předmětu
+- 25.6.2023
+  - Úpravy ve fungování selectu editace známek pro první pokus
+- 1.7.2023
+  - Zprovoznění selectu editace známek pro všechny pokusy
+  - Úpravy kódu a tvorba dokumentace jsdocs
+- 2.7.2023
+  - Rozpracování NPM
+  - Vyřešení bugů ve funkčnosti aplikace
+- 3.7.2023
+  - Dokončení NPM
+  - Finální úpravy kódu
+
+
