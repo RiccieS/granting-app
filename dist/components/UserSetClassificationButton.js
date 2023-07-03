@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { UpdateUserClassification } from '../utils/UpdateUserClassification';
-import { XLg, SendFill } from "react-bootstrap-icons";
-
+import UserSetClassificationSubmitButton from "./UserSetClassificationSubmitButton";
 /**
  * Komponenta pro tlačítko pro nastavení klasifikace uživatele.
  * @param {Object} props - Vstupní vlastnosti komponenty
@@ -43,13 +42,10 @@ export const UserSetClassificationButton = ({
       onClick: setState1
     }, newlevel.name);
   } else {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-success",
-      onClick: onClick
-    }, /*#__PURE__*/React.createElement(SendFill, null)), /*#__PURE__*/React.createElement("button", {
-      className: "btn btn-outline-success",
-      onClick: setState0
-    }, /*#__PURE__*/React.createElement(XLg, null)));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(UserSetClassificationSubmitButton, {
+      onClick: onClick,
+      setState0: setState0
+    }));
   }
 };
 export default UserSetClassificationButton;
