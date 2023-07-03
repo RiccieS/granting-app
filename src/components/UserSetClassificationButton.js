@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { UpdateUserClassification } from '../utils/UpdateUserClassification';
-import { XLg, SendFill } from "react-bootstrap-icons";
-
+import UserSetClassificationSubmitButton from "./UserSetClassificationSubmitButton"
 /**
  * Komponenta pro tlačítko pro nastavení klasifikace uživatele.
  * @param {Object} props - Vstupní vlastnosti komponenty
@@ -41,8 +40,7 @@ export const UserSetClassificationButton = ({ classification, newlevel }) => {
   } else {
     return (
       <>
-        <button className='btn btn-success' onClick={onClick}><SendFill /></button>
-        <button className='btn btn-outline-success' onClick={setState0}><XLg /></button>
+      <UserSetClassificationSubmitButton onClick={onClick} setState0={setState0} />
       </>
     );
   }
