@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
+import { SemesterSubjectSelectQuery } from '../queries/SemesterSubjectSelectQuery';
 import { setSubjectNamesForTable, setSelectedSubjectForTable } from '../slices/StudentsBySubjectSemesterSelectSlice';
 import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
 import { StudentsBySubjectSemesterTable } from "./StudentsBySubjectSemesterTable";
@@ -9,7 +9,7 @@ import { setClassificationsData } from 'slices/SubjectSemesterSelectSlice';
 
 /**
  * Komponenta pro výběr studentů podle semestru předmětu.
- * @returns {JSX.Element} Element komponenty StudentsBySubjectSemesterSelect
+ * @returns {JSX.Element} Element komponenty StudentsBySubjectSemesterSelect.
  */
 export function StudentsBySubjectSemesterSelect() {
 
@@ -20,7 +20,7 @@ export function StudentsBySubjectSemesterSelect() {
         // Funkce pro načítání názvů předmětů pro výběr
         const fetchData = async () => {
             try {
-                const response = await SubjectSelectQuery();
+                const response = await SemesterSubjectSelectQuery();
                 const data = await response.json();
 
                 // Filtrace a formátování názvů předmětů a semestrů
@@ -52,7 +52,8 @@ export function StudentsBySubjectSemesterSelect() {
 
     /**
      * Obsluha události změny výběru předmětu a semestru.
-     * @param {Event} event - Událost změny výběru
+     * @param {Event} event - Událost změny výběru.
+     * @returns {Promise<void>} Void.
      */
     const handleChange = async (event) => {
         const newValue = event.target.value;
@@ -63,7 +64,6 @@ export function StudentsBySubjectSemesterSelect() {
         // Načítání dat pro tabulku z API
         const response = await ChartClassificationQuery();
         const responseData = await response.json();
-        console.log(responseData);
         const acsemesterPage = responseData.data.acsemesterPage;
 
         // Filtrace dat podle vybraného předmětu a semestru

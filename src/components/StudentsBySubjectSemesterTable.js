@@ -4,7 +4,7 @@ import SemesterSubjectSetClassificationSelect from './SemesterSubjectSetClassifi
 
 /**
  * Komponenta pro zobrazení tabulky studentů podle předmětu a semestru.
- * @returns {JSX.Element} Element komponenty StudentsBySubjectSemesterTable
+ * @returns {JSX.Element} Element komponenty StudentsBySubjectSemesterTable.
  */
 export function StudentsBySubjectSemesterTable() {
     const { classificationsData } = useSelector((state) => state.subjectSemesterSelectForStudentsDisplay);
@@ -14,12 +14,12 @@ export function StudentsBySubjectSemesterTable() {
         console.log("is array test failnul");
         return null; // Renderovat null nebo zástupný obsah, pokud filteredData není pole
     }
-    const levelA = { id: '5fae9dd8-b095-11ed-9bd8-0242ac110002', name: 'A' }
-    const levelB = { id: '5faea134-b095-11ed-9bd8-0242ac110002', name: 'B' }
-    const levelC = { id: '5faea21a-b095-11ed-9bd8-0242ac110002', name: 'C' }
-    const levelD = { id: '5faea2d8-b095-11ed-9bd8-0242ac110002', name: 'D' }
-    const levelE = { id: '5faea332-b095-11ed-9bd8-0242ac110002', name: 'E' }
-    const levelF = { id: '5faea396-b095-11ed-9bd8-0242ac110002', name: 'F' }
+    const levelA = { id: '5fae9dd8-b095-11ed-9bd8-0242ac110002', name: 'A' };
+    const levelB = { id: '5faea134-b095-11ed-9bd8-0242ac110002', name: 'B' };
+    const levelC = { id: '5faea21a-b095-11ed-9bd8-0242ac110002', name: 'C' };
+    const levelD = { id: '5faea2d8-b095-11ed-9bd8-0242ac110002', name: 'D' };
+    const levelE = { id: '5faea332-b095-11ed-9bd8-0242ac110002', name: 'E' };
+    const levelF = { id: '5faea396-b095-11ed-9bd8-0242ac110002', name: 'F' };
     const maxLevels = Math.max(...classificationsData.map((entry) => entry.length));
 
     return (
@@ -38,10 +38,10 @@ export function StudentsBySubjectSemesterTable() {
                 </thead>
                 <tbody>
                     {classificationsData.map((entry) => {
-                        if (!entry[0].user || !entry[0].level) {
+                        if (!entry[0] || !entry[0].user || !entry[0].level) {
                             console.log("neni uzivatel nebo level ");
-                            console.log("entry level: " + entry[0].level);
-                            console.log("entry user: " + entry[0].user);
+                            //console.log("entry level: " + entry[0].level);
+                            //console.log("entry user: " + entry[0].user);
                             return null; // Přeskočit vykreslování, pokud chybí uživatel nebo úroveň
                         }
 

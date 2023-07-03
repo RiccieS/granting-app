@@ -1,30 +1,32 @@
 import { authorizedFetch } from './authorizedFetch';
 
 /**
- * Funkce, která vytváří JSON dotaz pro získání seznamu předmětů pro výběr.
+ * Funkce vytvářející JSON dotaz pro získání seznamu předmětů pro výběr.
  * @returns {object} - JSON dotaz.
  */
 export const SubjectSelectQueryJSON = () => ({
+  /**
+   * GraphQL dotaz pro získání předmětů.
+   */
   "query":
     `query {
             acsemesterPage {
                 subject {
                   id
                   name
-                  semesters {
-                    id
-                    order
-                  }
                 }
               }
         }`
 });
 
 /**
- * Realizuje dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
+ * Provede dotaz na server. Využívá funkci authorizedFetch pro komunikaci se serverem.
  * @returns {Promise<Response>} - Promise reprezentující odpověď ze serveru.
  */
 export const SubjectSelectQuery = () =>
   authorizedFetch('/gql', {
+    /**
+     * Tělo požadavku obsahuje JSON dotaz.
+     */
     body: JSON.stringify(SubjectSelectQueryJSON()),
   });

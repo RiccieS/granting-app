@@ -1,9 +1,12 @@
 {
-  "name": "granting-app",
+  "name": "uo-granting-app",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "/ui",
   "proxy": "http://localhost:31180/",
+  "babel":{
+    "presets":["@babel/preset-react"]
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -11,7 +14,6 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.0",
     "chart.js": "^4.3.0",
-    "granting-app": "file:grantingApp",
     "jsdoc": "^4.0.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0-beta.1",
@@ -27,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publish:npm": "babel src/components -d dist/components --copy-files && babel src/actions -d dist/actions --copy-files  && babel src/features -d dist/features --copy-files && babel src/Pages -d dist/Pages --copy-files && babel src/queries -d dist/queries --copy-files && babel src/reducers -d dist/reducers --copy-files && babel src/slices -d dist/slices --copy-files && babel src/utils -d dist/utils --copy-files" 
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +51,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
     "jsdoc": "^4.0.2"
   }
 }

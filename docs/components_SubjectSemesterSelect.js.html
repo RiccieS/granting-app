@@ -28,7 +28,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SubjectSelectQuery } from '../queries/SubjectSelectQuery';
+import { SemesterSubjectSelectQuery } from '../queries/SemesterSubjectSelectQuery';
 import { setSubjectNames, setSelectedSubject, setClassificationsData } from '../slices/SubjectSemesterSelectSlice';
 import createLevelsOverview from '../features/CreateGroupLevelsOverview';
 import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
@@ -36,7 +36,7 @@ import createBarChart from '../features/CreateProgramBarChart';
 
 /**
  * Komponenta pro výběr předmětu a semestru.
- * @returns {JSX.Element} Element komponenty SubjectSemesterSelect
+ * @returns {JSX.Element} Element komponenty SubjectSemesterSelect.
  */
 export function SubjectSemesterSelect() {
   const dispatch = useDispatch();
@@ -48,26 +48,32 @@ export function SubjectSemesterSelect() {
      */
     const fetchData = async () => {
       try {
-        const response = await SubjectSelectQuery();
+        const response = await SemesterSubjectSelectQuery();
         const data = await response.json();
-
+        console.log("subject semester: " + JSON.stringify(data, null, 2));
         // Filtruje duplicity předmětů a vytváří pole s názvy předmětů a příslušnými semestry
-        const filteredSubjectNames = data.data.acsemesterPage.reduce((filtered, item) => {
+        const filteredSubjectNames = [];
+        const uniqueCombinations = new Set();
+
+        data.data.acsemesterPage.forEach((item) => {
           const subjectID = item.subject.id;
-          const isDuplicate = filtered.some((subject) => subject.subjectID === subjectID);
-          if (!isDuplicate) {
-            item.subject.semesters.forEach((semester) => {
-              const subject = {
-                subjectName: item.subject.name,
-                semesterOrder: semester.order,
-                semesterID: semester.id,
+          const subjectName = item.subject.name;
+          item.subject.semesters.forEach((semester) => {
+            const semesterOrder = semester.order;
+            const semesterID = semester.id;
+            const combination = subjectID + '-' + semesterID;
+
+            if (!uniqueCombinations.has(combination)) {
+              uniqueCombinations.add(combination);
+              filteredSubjectNames.push({
+                subjectName: subjectName,
+                semesterOrder: semesterOrder,
+                semesterID: semesterID,
                 subjectID: subjectID,
-              };
-              filtered.push(subject);
-            });
-          }
-          return filtered;
-        }, []);
+              });
+            }
+          });
+        });
 
         dispatch(setSubjectNames(filteredSubjectNames));
       } catch (error) {
@@ -100,33 +106,39 @@ export function SubjectSemesterSelect() {
 
       // Získá statistická data klasifikací pomocí asynchronní akce
       const filteredData = await fetchClassificationStatData(parameters);
+      if (filteredData.length === 0) {
+        // Jestli je filteredData prázdné, vykreslí prázdný graf
+        const canvas = document.getElementById("subjectSemester-chart");
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      } else {
+        // Vytvoří přehled úrovní klasifikací pomocí funkce createLevelsOverview
+        const levelsOverview = createLevelsOverview(filteredData);
 
-      // Vytvoří přehled úrovní klasifikací pomocí funkce createLevelsOverview
-      const levelsOverview = createLevelsOverview(filteredData);
+        // Nastaví data klasifikací pomocí dispečera
+        dispatch(setClassificationsData(filteredData));
 
-      // Nastaví data klasifikací pomocí dispečera
-      dispatch(setClassificationsData(filteredData));
-
-      // Vytvoří a zobrazí sloupcový graf pro každou skupinu úrovní
-      Object.entries(levelsOverview).forEach(([groupName, levels]) => {
-        console.log(`Group Name: ${groupName}`);
-        console.log(`Count of A: ${levels.countOfA}`);
-        console.log(`Count of B: ${levels.countOfB}`);
-        console.log(`Count of C: ${levels.countOfC}`);
-        console.log(`Count of D: ${levels.countOfD}`);
-        console.log(`Count of E: ${levels.countOfE}`);
-        console.log(`Count of F: ${levels.countOfF}`);
-        console.log('-----------------------------------');
-        createBarChart(groupName, levels, 'subjectSemester-chart');
-      });
+        // Vytvoří a zobrazí sloupcový graf pro každou skupinu úrovní
+        Object.entries(levelsOverview).forEach(([groupName, levels]) => {
+          console.log(`Group Name: ${groupName}`);
+          console.log(`Count of A: ${levels.countOfA}`);
+          console.log(`Count of B: ${levels.countOfB}`);
+          console.log(`Count of C: ${levels.countOfC}`);
+          console.log(`Count of D: ${levels.countOfD}`);
+          console.log(`Count of E: ${levels.countOfE}`);
+          console.log(`Count of F: ${levels.countOfF}`);
+          console.log('-----------------------------------');
+          createBarChart(groupName, levels, 'subjectSemester-chart');
+        });
+      }
     }
   };
 
   return (
     &lt;div className="card">
-      &lt;h3 className="card-header" htmlFor="subject-select">Semestr předmětu:&lt;/h3>
+      &lt;h3 className="card-header" htmlFor="subjectSemester-select">Semestr předmětu:&lt;/h3>
       &lt;div className="card-body">
-        &lt;select className="form-select" id="subject-select" value={selectedSubject} onChange={handleChange}>
+        &lt;select className="form-select" id="subjectSemester-select" value={selectedSubject} onChange={handleChange}>
           &lt;option value="">- Vyberte -&lt;/option>
           {subjectNames.map((subject) => (
             &lt;option key={[subject.subjectID, subject.semesterID]} value={[subject.subjectID, subject.semesterID]}>
@@ -151,13 +163,13 @@ export function SubjectSemesterSelect() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#BranchSelect">BranchSelect</a></li><li><a href="global.html#ChartClassificationQuery">ChartClassificationQuery</a></li><li><a href="global.html#ChartClassificationQueryJSON">ChartClassificationQueryJSON</a></li><li><a href="global.html#ClassificationByUserQuery">ClassificationByUserQuery</a></li><li><a href="global.html#ClassificationByUserQueryJSON">ClassificationByUserQueryJSON</a></li><li><a href="global.html#ClassificationStatDataSlice">ClassificationStatDataSlice</a></li><li><a href="global.html#GradesLevelsQuery">GradesLevelsQuery</a></li><li><a href="global.html#GradesLevelsQueryJSON">GradesLevelsQueryJSON</a></li><li><a href="global.html#GradesQuery">GradesQuery</a></li><li><a href="global.html#GradesQueryJSON">GradesQueryJSON</a></li><li><a href="global.html#GroupsSelectQuery">GroupsSelectQuery</a></li><li><a href="global.html#GroupsSelectQueryJSON">GroupsSelectQueryJSON</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ProgramSelectQuery">ProgramSelectQuery</a></li><li><a href="global.html#ProgramSelectQueryJSON">ProgramSelectQueryJSON</a></li><li><a href="global.html#SemesterSelect">SemesterSelect</a></li><li><a href="global.html#SemesterSubjectSetClassificationSelect">SemesterSubjectSetClassificationSelect</a></li><li><a href="global.html#StudentSelect">StudentSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelect">StudentsBySubjectSemesterSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelectSlice">StudentsBySubjectSemesterSelectSlice</a></li><li><a href="global.html#StudentsBySubjectSemesterTable">StudentsBySubjectSemesterTable</a></li><li><a href="global.html#StudentsQuery">StudentsQuery</a></li><li><a href="global.html#StudentsQueryJSON">StudentsQueryJSON</a></li><li><a href="global.html#SubjectClassificationQuery">SubjectClassificationQuery</a></li><li><a href="global.html#SubjectClassificationQueryJSON">SubjectClassificationQueryJSON</a></li><li><a href="global.html#SubjectSelect">SubjectSelect</a></li><li><a href="global.html#SubjectSelectQuery">SubjectSelectQuery</a></li><li><a href="global.html#SubjectSelectQueryJSON">SubjectSelectQueryJSON</a></li><li><a href="global.html#SubjectSemesterSelect">SubjectSemesterSelect</a></li><li><a href="global.html#UpdateUserClassification">UpdateUserClassification</a></li><li><a href="global.html#UserClassification">UserClassification</a></li><li><a href="global.html#UserClassificationCell">UserClassificationCell</a></li><li><a href="global.html#UserClassificationMutationQuery">UserClassificationMutationQuery</a></li><li><a href="global.html#UserClassificationMutationQueryJSON">UserClassificationMutationQueryJSON</a></li><li><a href="global.html#UserClassificationsRow">UserClassificationsRow</a></li><li><a href="global.html#UserClassificationsRowEditable">UserClassificationsRowEditable</a></li><li><a href="global.html#UserClassificationsTable">UserClassificationsTable</a></li><li><a href="global.html#UserClassificationsTableEditable">UserClassificationsTableEditable</a></li><li><a href="global.html#UserSetClassificationButton">UserSetClassificationButton</a></li><li><a href="global.html#UserSetClassificationSelect">UserSetClassificationSelect</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#branchSelectSlice">branchSelectSlice</a></li><li><a href="global.html#createBarChart">createBarChart</a></li><li><a href="global.html#createLevelsOverview">createLevelsOverview</a></li><li><a href="global.html#fetchClassificationStatData">fetchClassificationStatData</a></li><li><a href="global.html#gradeSlice">gradeSlice</a></li><li><a href="global.html#gradesTableSlice">gradesTableSlice</a></li><li><a href="global.html#groupDataByUser">groupDataByUser</a></li><li><a href="global.html#keyedmap">keyedmap</a></li><li><a href="global.html#pivotmap">pivotmap</a></li><li><a href="global.html#programSelectSlice">programSelectSlice</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#semesterSelectSlice">semesterSelectSlice</a></li><li><a href="global.html#specificUserReducer">specificUserReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#studentSelectSlice">studentSelectSlice</a></li><li><a href="global.html#subjectSemesterSelectSlice">subjectSemesterSelectSlice</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#BranchSelect">BranchSelect</a></li><li><a href="global.html#ChartClassificationQuery">ChartClassificationQuery</a></li><li><a href="global.html#ChartClassificationQueryJSON">ChartClassificationQueryJSON</a></li><li><a href="global.html#ClassificationByUserQuery">ClassificationByUserQuery</a></li><li><a href="global.html#ClassificationByUserQueryJSON">ClassificationByUserQueryJSON</a></li><li><a href="global.html#ClassificationStatDataSlice">ClassificationStatDataSlice</a></li><li><a href="global.html#GradesLevelsQuery">GradesLevelsQuery</a></li><li><a href="global.html#GradesLevelsQueryJSON">GradesLevelsQueryJSON</a></li><li><a href="global.html#GradesQuery">GradesQuery</a></li><li><a href="global.html#GradesQueryJSON">GradesQueryJSON</a></li><li><a href="global.html#GroupsSelectQuery">GroupsSelectQuery</a></li><li><a href="global.html#GroupsSelectQueryJSON">GroupsSelectQueryJSON</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ProgramSelectQuery">ProgramSelectQuery</a></li><li><a href="global.html#ProgramSelectQueryJSON">ProgramSelectQueryJSON</a></li><li><a href="global.html#SemesterSelect">SemesterSelect</a></li><li><a href="global.html#SemesterSubjectSelectQuery">SemesterSubjectSelectQuery</a></li><li><a href="global.html#SemesterSubjectSelectQueryJSON">SemesterSubjectSelectQueryJSON</a></li><li><a href="global.html#SemesterSubjectSetClassificationSelect">SemesterSubjectSetClassificationSelect</a></li><li><a href="global.html#StudentSelect">StudentSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelect">StudentsBySubjectSemesterSelect</a></li><li><a href="global.html#StudentsBySubjectSemesterSelectSlice">StudentsBySubjectSemesterSelectSlice</a></li><li><a href="global.html#StudentsBySubjectSemesterTable">StudentsBySubjectSemesterTable</a></li><li><a href="global.html#StudentsQuery">StudentsQuery</a></li><li><a href="global.html#StudentsQueryJSON">StudentsQueryJSON</a></li><li><a href="global.html#SubjectClassificationQuery">SubjectClassificationQuery</a></li><li><a href="global.html#SubjectClassificationQueryJSON">SubjectClassificationQueryJSON</a></li><li><a href="global.html#SubjectSelect">SubjectSelect</a></li><li><a href="global.html#SubjectSelectQuery">SubjectSelectQuery</a></li><li><a href="global.html#SubjectSelectQueryJSON">SubjectSelectQueryJSON</a></li><li><a href="global.html#SubjectSemesterSelect">SubjectSemesterSelect</a></li><li><a href="global.html#UpdateUserClassification">UpdateUserClassification</a></li><li><a href="global.html#UserClassification">UserClassification</a></li><li><a href="global.html#UserClassificationCell">UserClassificationCell</a></li><li><a href="global.html#UserClassificationMutationQuery">UserClassificationMutationQuery</a></li><li><a href="global.html#UserClassificationMutationQueryJSON">UserClassificationMutationQueryJSON</a></li><li><a href="global.html#UserClassificationsRow">UserClassificationsRow</a></li><li><a href="global.html#UserClassificationsRowEditable">UserClassificationsRowEditable</a></li><li><a href="global.html#UserClassificationsTable">UserClassificationsTable</a></li><li><a href="global.html#UserClassificationsTableEditable">UserClassificationsTableEditable</a></li><li><a href="global.html#UserSetClassificationButton">UserSetClassificationButton</a></li><li><a href="global.html#UserSetClassificationSelect">UserSetClassificationSelect</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#body">body</a></li><li><a href="global.html#branchSelectSlice">branchSelectSlice</a></li><li><a href="global.html#createBarChart">createBarChart</a></li><li><a href="global.html#createLevelsOverview">createLevelsOverview</a></li><li><a href="global.html#fetchClassificationStatData">fetchClassificationStatData</a></li><li><a href="global.html#fetchClassifications">fetchClassifications</a></li><li><a href="global.html#gradeSlice">gradeSlice</a></li><li><a href="global.html#gradesTableSlice">gradesTableSlice</a></li><li><a href="global.html#groupDataByUser">groupDataByUser</a></li><li><a href="global.html#keyedmap">keyedmap</a></li><li><a href="global.html#pivotmap">pivotmap</a></li><li><a href="global.html#programSelectSlice">programSelectSlice</a></li><li><a href="global.html#query">query</a></li><li><a href="global.html#rootReducer">rootReducer</a></li><li><a href="global.html#semesterSelectSlice">semesterSelectSlice</a></li><li><a href="global.html#specificUserReducer">specificUserReducer</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#studentSelectSlice">studentSelectSlice</a></li><li><a href="global.html#subjectSemesterSelectSlice">subjectSemesterSelectSlice</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jul 01 2023 21:55:48 GMT+0200 (středoevropský letní čas)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jul 03 2023 09:20:24 GMT+0200 (středoevropský letní čas)
 </footer>
 
 <script> prettyPrint(); </script>
