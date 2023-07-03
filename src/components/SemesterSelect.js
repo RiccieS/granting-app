@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedSemester } from 'slices/SemesterSelectSlice';
+import { setSelectedSemester } from '../slices/SemesterSelectSlice';
 
 /**
  * Komponenta pro výběr semestru.

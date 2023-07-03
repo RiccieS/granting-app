@@ -1,4 +1,4 @@
-import { UserClassificationMutationQuery } from 'queries/UserClassificationMutationQuery'; // Importujte dotaz na mutaci klasifikace uživatele
+import { UserClassificationMutationQuery } from '../queries/UserClassificationMutationQuery'; // Importujte dotaz na mutaci klasifikace uživatele
 import { updateClassification } from '../slices/GradesTableSlice'; // Import pro aktualizaci klasifikace v gradestable
 import { updateClassificationsData } from '../slices/StudentsBySubjectSemesterSelectSlice'; // Import pro aktualizaci klasifikace v gradestable
 

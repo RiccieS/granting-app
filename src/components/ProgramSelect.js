@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProgramSelectQuery } from '../queries/ProgramSelectQuery';
-import { setProgramNames, setSelectedProgram } from 'slices/ProgramSelectSlice';
+import { setProgramNames, setSelectedProgram } from '../slices/ProgramSelectSlice';
 import { setClassificationData } from '../slices/ClassificationStatDataSlice';
 import fetchClassificationStatData from '../actions/ClassificationAsyncFetch';
 import createLevelsOverview from '../features/CreateGroupLevelsOverview';

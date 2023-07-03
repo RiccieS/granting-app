@@ -5,7 +5,7 @@ import { setSubjectNamesForTable, setSelectedSubjectForTable } from '../slices/S
 import { ChartClassificationQuery } from '../queries/ChartClassificationQuery';
 import { StudentsBySubjectSemesterTable } from "./StudentsBySubjectSemesterTable";
 import groupDataByUser from "../utils/groupDataByUser";
-import { setClassificationsData } from 'slices/SubjectSemesterSelectSlice';
+import { setClassificationsData } from '../slices/SubjectSemesterSelectSlice';
 
 /**
  * Komponenta pro výběr studentů podle semestru předmětu.

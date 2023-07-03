@@ -1,6 +1,6 @@
 {
   "name": "uo-granting-app",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": false,
   "homepage": "/ui",
   "proxy": "http://localhost:31180/",
