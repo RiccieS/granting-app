@@ -52,7 +52,13 @@ export function ProgramSelect() {
     } else {
       const parameters = [1, newValue];
       const filteredData = await fetchClassificationStatData(parameters);
-      const levelsOverview = createLevelsOverview(filteredData);
+      if (filteredData.length === 0) {
+        // Pokud jsou data prázdná, vykreslení prázdného grafu
+        const canvas = document.getElementById("program-chart");
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }else{
+        const levelsOverview = createLevelsOverview(filteredData);
       dispatch(setClassificationData(filteredData));
       // Výpis přehledu úrovní pro každý název skupiny
       Object.entries(levelsOverview).forEach(([groupName, levels]) => {
@@ -66,6 +72,8 @@ export function ProgramSelect() {
         console.log('-----------------------------------');
         createBarChart(groupName, levels, 'program-chart');
       });
+      }
+      
     }
   };
 
